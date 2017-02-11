@@ -23,7 +23,6 @@ echo "-> create dirs .."
 mkdir -vp $HOME/dev/ak/{C,Go,Python,Scheme}
 
 
-echo "-> setup vim .."
 
 platform=$(uname)
 if [[ "$platform" == "Darwin" ]]; then  # Mac
@@ -31,13 +30,23 @@ if [[ "$platform" == "Darwin" ]]; then  # Mac
     brew install the_silver_searcher
     brew install fzf
     /usr/local/opt/fzf/install
+    brew install pyenv
+    brew install pyenv-virtualenvwrapper
+    brew install tmux
 elif [[ "$platform" == "Linux" ]]; then  # ubuntu for me
-    sudo apt-get install build-essential cmake python-dev ctags the_silver_searcher
-    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+    sudo apt-get install build-essential cmake python-dev ctags the_silver_searcher tmux
+    git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf
     ~/.fzf/install
+    git clone https://github.com/yyuu/pyenv.git $HOME/.pyenv
+    git clone https://github.com/yyuu/pyenv-virtualenvwrapper.git $HOME/.pyenv/plugins/pyenv-virtualenvwrapper
+    echo 'export PYENV_ROOT="$HOME/.pyenv"' >> $HOME/.zshrc
+    echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> $HOME/.zshrc
+    echo 'eval "$(pyenv init -)"' >> ~/.zshrc
 fi
 pip install pep8 pyflakes pylint -U
 go get -u github.com/jstemmer/gotags
+
+echo "-> setup vim .."
 
 curl -fLo $HOME/.vim/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
