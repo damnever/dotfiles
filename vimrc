@@ -265,14 +265,14 @@ let g:plug_url_format = 'git@github.com:%s.git'
 Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
 unlet g:plug_url_format
 
-let g:ycm_key_list_select_completion = ['<c-n>']
-" let g:ycm_key_list_select_completion = ['<Down>']
-let g:ycm_key_list_previous_completion = ['<c-p>']
-" let g:ycm_key_list_previous_completion = ['<Up>']
+" let g:ycm_key_list_select_completion = ['<c-n>']
+let g:ycm_key_list_select_completion = ['<Down>']
+" let g:ycm_key_list_previous_completion = ['<c-p>']
+let g:ycm_key_list_previous_completion = ['<Up>']
 let g:ycm_complete_in_comments = 1
 let g:ycm_complete_in_strings = 1
 let g:ycm_use_ultisnips_completer = 1
-let g:ycm_collect_identifiers_from_comments_and_strings = 0
+let g:ycm_collect_identifiers_from_comments_and_strings = 1
 let g:ycm_collect_identifiers_from_tags_files = 1
 let g:ycm_seed_identifiers_with_syntax = 1
 let g:ycm_goto_buffer_command = 'horizontal-split'
