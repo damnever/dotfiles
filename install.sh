@@ -34,7 +34,6 @@ go get -u github.com/jstemmer/gotags
 
 echo "-> link files .."
 files=(\
-    bitbar_plugins \
     zsh_damnever \
     gitconfig \
     pypirc \
