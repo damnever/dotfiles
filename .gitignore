@@ -1,3 +1,6 @@
 vim/plugins/
 vim/autoload/
+
+# private
 *.tar.xz
+eless_ci.20s.py
