@@ -1,0 +1,3 @@
+vim/plugins/
+vim/autoload/
+*.tar.xz

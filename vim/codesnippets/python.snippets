@@ -1,0 +1,58 @@
+snippet #coding
+# -*- coding: utf-8 -*-
+endsnippet
+
+
+snippet fi
+from __future__ import print_function, division, absolute_import
+endsnippet
+
+
+snippet traceback
+import traceback, sys
+traceback.print_exception(*sys.exc_info())
+endsnippet
+
+
+snippet try
+try:
+    pass
+except Exception:
+    pass
+else:
+    pass
+finally:
+    pass
+endsnippet
+
+
+snippet class
+class Name(object):
+
+    def __init__(self):
+        pass
+
+    def __repr__(self):
+        return ""
+    __str__ = __repr__
+endsnippet
+
+
+snippet deco
+def deco(func):
+    @functools.wraps(func)
+    def _wrap(*args, **kwargs):
+        return func(*args, **kwargs)
+    return _wrap
+endsnippet
+
+
+snippet decoa
+def decoa(val):
+    def _deco(func):
+        @functools.wraps(func)
+        def _wrap(*args, **kwargs):
+            return func(*args, **kwargs)
+        return _wrap
+    return _deco
+endsnippet

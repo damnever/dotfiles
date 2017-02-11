@@ -40,6 +40,7 @@ files=(\
     pypirc \
     tmux.conf \
     zshrc \
+    vim \
     vimrc \
 )
 
@@ -52,16 +53,13 @@ done
 echo "-> create dirs .."
 mkdir -vp $HOME/dev/ak/{C,Go,Python,Scheme}
 
-
 echo "-> setup vim .."
-
 curl -fLo $HOME/.vim/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 system_shell=$SHELL
 export SHELL="/bin/sh"
-# vim test.go is a trick for "Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }"
-vim test.go -u $HOME/.vimrc +PlugInstall! +PlugClean! +qall
+vim -u $HOME/.vimrc +PlugInstall! +PlugClean! +qall
 export SHELL=$system_shell
 
 

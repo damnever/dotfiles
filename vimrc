@@ -12,10 +12,10 @@ call plug#begin('~/.vim/plugins')
 " ==> themes
 " solarized
 Plug 'altercation/vim-colors-solarized'
-let g:solarized_termtrans=1
-let g:solarized_contrast="normal"
-let g:solarized_visibility="normal"
-let g:solarized_termcolors=256
+let g:solarized_termtrans = 1
+let g:solarized_contrast = "normal"
+let g:solarized_visibility = "normal"
+let g:solarized_termcolors = 256
 " molokai
 Plug 'tomasr/molokai'
 let g:molokai_original = 1
@@ -38,7 +38,7 @@ let g:airline_symbols.linenr = '¶'
 let g:airline_symbols.branch = '⎇'
 " https://github.com/bling/vim-airline/wiki/Screenshots
 " tomorrow, bubblegum ..
-let g:airline_theme='laederon'
+let g:airline_theme ='laederon'
 
 
 " ==> Better Rainbow Parentheses
@@ -142,7 +142,7 @@ au FileType python let b:delimitMate_nesting_quotes = ['"', "'"]
 " ==> intensely orgasmic commenting
 Plug 'scrooloose/nerdcommenter'
 
-let g:NERDSpaceDelims=1
+let g:NERDSpaceDelims = 1
 
 
 " ==> remove trailing whitespace [, + <Space>]
@@ -175,14 +175,15 @@ let g:ctrlp_cmd = 'CtrlP'
 map <leader>f :CtrlPMRU<CR>
 let g:ctrlp_custom_ignore = {
     \ 'dir':  '\v[\/]\.(git|hg|svn|rvm)$',
-    \ 'file': '\v\.(exe|so|dll|zip|tar|tar.gz|pyc)$',
+    \ 'file': '\v\.(o|so|zip|tar|tar.gz|pyc|pyo)$',
     \ }
-let g:ctrlp_working_path_mode=0
-let g:ctrlp_match_window_bottom=1
-let g:ctrlp_max_height=15
-let g:ctrlp_match_window_reversed=0
-let g:ctrlp_mruf_max=500
-let g:ctrlp_follow_symlinks=1
+let g:ctrlp_working_path_mode = 0
+let g:ctrlp_match_window_bottom = 1
+let g:ctrlp_max_height = 15
+let g:ctrlp_match_window_reversed = 0
+let g:ctrlp_mruf_max = 500
+let g:ctrlp_follow_symlinks = 1
+let g:ctrlp_show_hidden = 1
 if executable('ag')
     let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
     let g:ctrlp_use_caching = 0
@@ -238,6 +239,18 @@ let g:licenses_copyright_holders_name = 'XiaoChao Dong (@damnever) <dxc.wolf@gma
 let g:licenses_default_commands = ['Bsd3', 'mit']
 
 
+" ==> code snippets, edit snippets [, + es]
+Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+
+let g:UltiSnipsExpandTrigger = '<tab>'
+let g:UltiSnipsJumpForwardTrigger = '<tab>'
+let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
+let g:UltiSnipsSnippetDirectories  = ['codesnippets']
+let g:UltiSnipsSnippetsDir = '~/.vim/codesnippets'
+let g:UltiSnipsEditSplit = 'context'
+nnoremap <Leader>es :UltiSnipsEdit<Cr>
+
+
 " ==> A code-completion engine for Vim
 function! BuildYCM(info)
     " info is a dictionary with 3 fields
@@ -252,43 +265,36 @@ let g:plug_url_format = 'git@github.com:%s.git'
 Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
 unlet g:plug_url_format
 
-let g:ycm_key_list_select_completion=['<c-n>']
+let g:ycm_key_list_select_completion = ['<c-n>']
 " let g:ycm_key_list_select_completion = ['<Down>']
-let g:ycm_key_list_previous_completion=['<c-p>']
+let g:ycm_key_list_previous_completion = ['<c-p>']
 " let g:ycm_key_list_previous_completion = ['<Up>']
 let g:ycm_complete_in_comments = 1
 let g:ycm_complete_in_strings = 1
-let g:ycm_use_ultisnips_completer = 0
+let g:ycm_use_ultisnips_completer = 1
 let g:ycm_collect_identifiers_from_comments_and_strings = 0
 let g:ycm_collect_identifiers_from_tags_files = 1
-let g:ycm_seed_identifiers_with_syntax=1
+let g:ycm_seed_identifiers_with_syntax = 1
 let g:ycm_goto_buffer_command = 'horizontal-split'
 nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
 nnoremap <leader>gd :YcmCompleter GoToDeclaration<CR>
-" old version
-if !empty(glob("~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py"))
-    let g:ycm_global_ycm_extra_conf = "~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py"
-endif
-" new version
-if !empty(glob("~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py"))
-    let g:ycm_global_ycm_extra_conf = "~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py"
-endif
+let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
 " let g:ycm_key_invoke_completion = '<C-Space>'
 let g:ycm_filetype_blacklist = {
     \ 'tagbar' : 1,
     \ 'gitcommit' : 1,
     \}
-let g:ycm_server_to_python_interpreter = "/usr/bin/python"
+" let g:ycm_server_to_python_interpreter = '/usr/bin/python'
 
 
 " ==> syntax plugins
 Plug 'scrooloose/syntastic'
 
-let g:syntastic_error_symbol='>>'
-let g:syntastic_warning_symbol='>'
-let g:syntastic_check_on_open=1
-let g:syntastic_check_on_wq=0
-let g:syntastic_enable_highlighting=1
+let g:syntastic_error_symbol = '>>'
+let g:syntastic_warning_symbol = '>'
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_enable_highlighting = 1
 let g:syntastic_always_populate_loc_list = 0
 let g:syntastic_auto_loc_list = 0
 let g:syntastic_loc_list_height = 5
@@ -304,11 +310,11 @@ nnoremap <Leader>s :call ToggleErrors()<cr>
 highlight SyntasticErrorSign guifg=white guibg=black
 let g:syntastic_mode_map = {'mode': 'active', 'passive_filetypes': ['java'] }
 " python
-let g:syntastic_python_checkers=['pyflakes', 'pep8'] " 使用pyflakes,速度
+let g:syntastic_python_checkers = ['pyflakes', 'pep8']
 " error code: http://pep8.readthedocs.org/en/latest/intro.html#error-codes
 " W601: use 'in' replace 'has_key', but I got a method named 'has_key' sometimes...
 " E731: do not assign a lambda expression, use a def? fuck it...
-let g:syntastic_python_pep8_args='--ignore=E124,E225,E226,E227,E302,E501,E712,W601,E731'
+let g:syntastic_python_pep8_args = '--ignore=E124,E225,E226,E227,E302,E501,E712,W601,E731'
 " golang
 let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
 let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
@@ -321,7 +327,7 @@ Plug 'hynek/vim-python-pep8-indent', { 'for': 'python' }
 
 
 " ==> Golang
-Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries', 'for': 'go' }
+Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
 
 let g:go_highlight_functions = 1
 let g:go_highlight_methods = 1
@@ -342,7 +348,7 @@ Plug 'tmux-plugins/vim-tmux', {'for': 'tmux'}
 " ==> close open HTML/XML tags
 Plug 'docunext/closetag.vim', { 'for': ['html', 'xml'] }
 
-let g:closetag_html_style=1
+let g:closetag_html_style = 1
 
 
 " => markdown
@@ -539,15 +545,6 @@ function! AutoSetFileHead()
     if &filetype == 'sh'
         call setline(1, "\#!/bin/bash")
     endif
-
-    if &filetype == 'python'
-        call setline(1, "\# -*- coding: utf-8 -*-")
-        call append(1, "")
-        " call append(2, "from __future__ import print_function, division, absolute_import")
-    endif
-
-    normal G
-    normal o
 endfunc
 
 if has("autocmd")
