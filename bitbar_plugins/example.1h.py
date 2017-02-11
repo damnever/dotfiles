@@ -7,8 +7,12 @@
 # <bitbar.desc>Example crontab.</bitbar.desc>
 # <bitbar.dependencies>python</bitbar.dependencies>
 
+output = ''':smile:
+---
+:point_right: ^_^ | color=green href=https://github.com/damnever
+:heart: | bash="kill -9 $(ps -p $PPID -o ppid=)"
+'''
+
 
 if __name__ == '__main__':
-    print(':smile:')
-    print('---')
-    print(':point_right: ^_^ | color=green href=https://github.com/damnever')
+    print(output)
