@@ -1,3 +1,5 @@
 [user]
 	email = dxc.wolf@gmail.com
 	name = damnever
+[core]
+	editor = vim
