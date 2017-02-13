@@ -257,7 +257,7 @@ function! BuildYCM(info)
     " - name:   name of the plugin
     " - status: 'installed', 'updated', or 'unchanged'
     " - force:  set on PlugInstall! or PlugUpdate!
-    if a:info.status != 'installed' || a:info.force
+    if a:info.status == 'installed' || a:info.force
         !./install.py --clang-completer " --system-libclang --system-boost
     endif
 endfunction
