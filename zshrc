@@ -47,11 +47,19 @@ export LANG=en_US.UTF-8
 #   export EDITOR='mvim'
 # fi
 
+platform=$(uname)
 # Personal aliases
-alias vim='mvim -v'
+if [[ "$platform" == "Darwin" ]]; then  # Mac
+    alias vim='mvim -v'
+fi
 
 # Pyenv
-export PYENV_ROOT=/usr/local/var/pyenv
+if [[ "$platform" == "Darwin" ]]; then  # Mac
+    export PYENV_ROOT=/usr/local/var/pyenv
+else  # Linux
+    export PYENV_ROOT="$HOME/.pyenv"
+    export PATH="$PYENV_ROOT/bin:$PATH"
+fi
 eval "$(pyenv init -)"
 export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV="true"
 pyenv virtualenvwrapper
