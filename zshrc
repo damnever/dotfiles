@@ -11,7 +11,7 @@ ZSH_THEME="normal"
 # export UPDATE_ZSH_DAYS=7
 
 # Enable command auto-correction.
-ENABLE_CORRECTION="true"
+# ENABLE_CORRECTION="true"
 
 # Display red dots whilst waiting for completion.
 COMPLETION_WAITING_DOTS="true"
