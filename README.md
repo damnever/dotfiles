@@ -3,6 +3,6 @@
 ### Install
 
 ```
-git clone https://github.com/damnever/dotfiles
+git clone --recursive git@github.com:damnever/dotfiles.git
 cd dotfiles && ./install.sh
 ```
