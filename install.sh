@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cur_dir=$(dirname $0)
+cur_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 platform=$(uname)
 if [[ "$platform" == "Darwin" ]]; then  # Mac
@@ -32,7 +32,7 @@ pip install pep8 pyflakes pylint -U
 go get -u github.com/jstemmer/gotags
 
 
-echo "-> link files .."
+echo "-> setup config files .."
 files=(\
     zsh_damnever \
     gitconfig \
@@ -46,8 +46,10 @@ files=(\
 
 for f in "${files[@]}"
 do
-    ln -vsfn $(pwd)/$f $HOME/.$f
+    ln -vsfn $cur_dir/$f $HOME/.$f
 done
+source $cur_dir/third_configs/install.sh
+exit
 
 
 echo "-> create dirs .."

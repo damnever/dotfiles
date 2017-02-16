@@ -2,3 +2,6 @@
 	path = zsh_damnever/plugins/zsh-autosuggestions
 	url = git://github.com/zsh-users/zsh-autosuggestions
 	shallow = true
+[submodule "third_configs/gdb-dashboard"]
+	path = third_configs/gdb-dashboard
+	url = git@github.com:cyrus-and/gdb-dashboard.git
