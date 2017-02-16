@@ -2,5 +2,14 @@
 	email = dxc.wolf@gmail.com
 	name = damnever
 	signingkey = 54C374B5A76DC1A4
+
 [core]
 	editor = vim
+
+[diff "bin"]
+    # Use `hexdump` to diff binary files
+    textconv = hexdump -v -C
+
+[apply]
+    # Detect whitespace errors when applying a patch
+    whitespace = fix
