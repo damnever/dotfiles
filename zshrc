@@ -31,8 +31,18 @@ plugins=(git brew pip vagrant pyenv python go golang zsh-autosuggestions kocmd)
 
 
 # User configuration
+platform=$(uname)
+
 export PATH="$PATH:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin"
 # export MANPATH="/usr/local/man:$MANPATH"
+# brew install coreutils findutils gnu-getopt
+# brew ln gnu-getopt --force
+if [[ "$platform" == "Darwin" ]]; then  # Mac
+    export PATH="$PATH:/usr/local/opt/coreutils/libexec/gnubin"
+    export MANPATH="$MANPATH:/usr/local/opt/coreutils/libexec/gnuman"
+    export PATH="$PATH:/usr/local/opt/findutils/libexec/gnubin"
+    export MANPATH="$MANPATH:/usr/local/opt/findutils/libexec/gnuman"
+fi
 
 source $ZSH/oh-my-zsh.sh
 
@@ -47,7 +57,6 @@ export LANG=en_US.UTF-8
 #   export EDITOR='mvim'
 # fi
 
-platform=$(uname)
 # Personal aliases
 if [[ "$platform" == "Darwin" ]]; then  # Mac
     alias vim='mvim -v'
