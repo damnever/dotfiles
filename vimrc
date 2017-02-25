@@ -226,8 +226,8 @@ Plug 'tpope/vim-fugitive'
 " ==> shows a git diff in the gutter
 Plug 'airblade/vim-gitgutter'
 
+let g:gitgutter_enabled = 0
 let g:gitgutter_map_keys = 0
-let g:gitgutter_enabled = 1
 let g:gitgutter_highlight_lines = 0
 let g:gitgutter_max_signs = 666
 
