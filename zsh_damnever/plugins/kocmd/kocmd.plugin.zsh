@@ -11,7 +11,7 @@ kocmd() {
         echo "no enough args"
         return
     fi
-    
+
     name=""
     index=1
     for arg in "$*"; do
