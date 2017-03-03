@@ -5,6 +5,7 @@ platform=$(uname)
 
 
 install_requirements_for_mac() {
+    brew install readline xz
     brew install macvim --HEAD --with-cscope --with-lua --with-luajit --with-python3 --with-override-system-vim
     /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
     brew install zsh
@@ -15,30 +16,33 @@ install_requirements_for_mac() {
     brew install pyenv
     brew install pyenv-virtualenvwrapper
     brew install tmux
+    brew install coreutils findutils gnu-getopt
+    brew ln gnu-getopt --force
 }
 
 install_requirements_for_ubuntu() {
-    sudo apt-get install vim
-    sudo apt-get install zsh
-    sudo apt-get install build-essential cmake python-dev ctags the_silver_searcher
-    sudo apt-get install tmux
+    sudo apt-get update
+    sudo apt-get install -y vim
+    sudo apt-get install -y zsh
+    sudo apt-get install tmux -y
+    sudo apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev \
+        libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev xz-utils
+    sudo apt-get install -y build-essential cmake python-dev ctags the_silver_searcher
     git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf
     ~/.fzf/install
     git clone https://github.com/yyuu/pyenv.git $HOME/.pyenv
     git clone https://github.com/yyuu/pyenv-virtualenvwrapper.git $HOME/.pyenv/plugins/pyenv-virtualenvwrapper
-    echo 'export PYENV_ROOT="$HOME/.pyenv"' >> $HOME/.zshrc
-    echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> $HOME/.zshrc
-    echo 'eval "$(pyenv init -)"' >> ~/.zshrc
 }
 
 
 install_prerequirements() {
     if [[ "$platform" == "Darwin" ]]; then  # Mac
         install_requirements_for_mac
+        sudo chsh -s $(which zsh)
     elif [[ "$platform" == "Linux" ]]; then  # ubuntu for me
         install_requirements_for_ubuntu
+        sudo chsh -s $(which zsh) ubuntu # vagrant
     fi
-    chsh -s $(which zsh)
     sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
     pip install pep8 pyflakes pylint -U
     go get -u github.com/jstemmer/gotags
