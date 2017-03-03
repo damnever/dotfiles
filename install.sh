@@ -24,10 +24,10 @@ install_requirements_for_ubuntu() {
     sudo apt-get update
     sudo apt-get install -y vim
     sudo apt-get install -y zsh
-    sudo apt-get install tmux -y
+    sudo apt-get install -y tmux
     sudo apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev \
         libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev xz-utils
-    sudo apt-get install -y build-essential cmake python-dev ctags the_silver_searcher
+    sudo apt-get install -y build-essential cmake python-dev ctags silversearcher-ag
     git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf
     ~/.fzf/install
     git clone https://github.com/yyuu/pyenv.git $HOME/.pyenv
