@@ -23,6 +23,7 @@ COMPLETION_WAITING_DOTS="true"
 
 # Custom folder than $ZSH/custom
 ZSH_CUSTOM=$HOME/.zsh_damnever
+fpath+=~/.zfunc
 
 # Zsh plugins can be found in ~/.oh-my-zsh/plugins/*
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
@@ -76,11 +77,10 @@ export GOPATH=$HOME/.go:$HOME/dev/ak/Go
 export PATH=$PATH:/usr/local/go/bin:$HOME/.go/bin
 
 # Rust
-# racer
-# export PATH=$PATH:$HOME/.cargo/env
-# export PATH=$PATH:$HOME/.cargo/bin
-# rustup
-# fpath+=~/.zfunc
+# rustup/racer
+export PATH=$PATH:$HOME/.cargo/env
+export PATH=$PATH:$HOME/.cargo/bin
+export RUST_SRC_PATH="${HOME}/.multirust/toolchains/nightly-x86_64-apple-darwin/lib/rustlib/src/rust/src/"
 
 # YCM python
 export DYLD_FORCE_FLAT_NAMESPACE=1
