@@ -258,7 +258,7 @@ function! BuildYCM(info)
     " - status: 'installed', 'updated', or 'unchanged'
     " - force:  set on PlugInstall! or PlugUpdate!
     if a:info.status == 'installed' || a:info.force
-        !./install.py --clang-completer --racer-completer " --system-libclang --system-boost
+        !./install.py  --system-libclang --clang-completer --racer-completer " --system-boost
     endif
 endfunction
 let g:plug_url_format = 'git@github.com:%s.git'
