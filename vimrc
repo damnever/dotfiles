@@ -341,8 +341,8 @@ let g:go_play_open_browser = 0
 let g:go_fmt_command = 'goimports'
 
 " ==> Rust
-Plug 'racer-rust/vim-racer'
-Plug 'rust-lang/rust.vim'
+Plug 'racer-rust/vim-racer', { 'for': 'rust' }
+Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 
 let g:racer_cmd = '~/.cargo/bin/racer'
 let g:racer_experimental_completer = 1
