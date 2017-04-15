@@ -258,7 +258,7 @@ function! BuildYCM(info)
     " - status: 'installed', 'updated', or 'unchanged'
     " - force:  set on PlugInstall! or PlugUpdate!
     if a:info.status == 'installed' || a:info.force
-        !./install.py  --system-libclang --clang-completer --racer-completer " --system-boost
+        !./install.py  --system-libclang --clang-completer  " --racer-completer --system-boost
     endif
 endfunction
 let g:plug_url_format = 'git@github.com:%s.git'
@@ -285,7 +285,7 @@ let g:ycm_filetype_blacklist = {
     \ 'gitcommit' : 1,
     \}
 " let g:ycm_server_to_python_interpreter = '/usr/bin/python'
-let g:ycm_rust_src_path = '~/.multirust/toolchains/nightly-x86_64-apple-darwin/lib/rustlib/src/rust/src/'
+" let g:ycm_rust_src_path = '~/.multirust/toolchains/nightly-x86_64-apple-darwin/lib/rustlib/src/rust/src/'
 
 
 " ==> syntax plugins
@@ -341,13 +341,13 @@ let g:go_play_open_browser = 0
 let g:go_fmt_command = 'goimports'
 
 " ==> Rust
-Plug 'racer-rust/vim-racer', { 'for': 'rust' }
-Plug 'rust-lang/rust.vim', { 'for': 'rust' }
+" Plug 'racer-rust/vim-racer', { 'for': 'rust' }
+" Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 
-let g:racer_cmd = '~/.cargo/bin/racer'
-let g:racer_experimental_completer = 1
+" let g:racer_cmd = '~/.cargo/bin/racer'
+" let g:racer_experimental_completer = 1
 
-let g:rustfmt_autosave = 1
+" let g:rustfmt_autosave = 1
 
 
 " ==> tmux [Ctrl + h,i,j,k]

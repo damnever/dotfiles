@@ -78,9 +78,9 @@ export PATH=$PATH:/usr/local/go/bin:$HOME/.go/bin
 
 # Rust
 # rustup/racer
-export PATH=$PATH:$HOME/.cargo/env
-export PATH=$PATH:$HOME/.cargo/bin
-export RUST_SRC_PATH="${HOME}/.multirust/toolchains/nightly-x86_64-apple-darwin/lib/rustlib/src/rust/src/"
+# export PATH=$PATH:$HOME/.cargo/env
+# export PATH=$PATH:$HOME/.cargo/bin
+# export RUST_SRC_PATH="${HOME}/.multirust/toolchains/nightly-x86_64-apple-darwin/lib/rustlib/src/rust/src/"
 
 # YCM python
 export DYLD_FORCE_FLAT_NAMESPACE=1
