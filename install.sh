@@ -69,7 +69,7 @@ setup_config_files() {
     source $cur_dir/third_configs/install.sh
 
     echo "-> create dirs .."
-    mkdir -vp $HOME/dev/ak/{C,Go,Python,Scheme}
+    mkdir -vp $HOME/dev/ak/{C,Go,Python,Scheme,Erlang}
 }
 
 
