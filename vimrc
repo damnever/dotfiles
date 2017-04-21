@@ -286,6 +286,19 @@ let g:ycm_filetype_blacklist = {
     \}
 " let g:ycm_server_to_python_interpreter = '/usr/bin/python'
 " let g:ycm_rust_src_path = '~/.multirust/toolchains/nightly-x86_64-apple-darwin/lib/rustlib/src/rust/src/'
+let g:ycm_semantic_triggers =  {
+    \   'c' : ['->', '.'],
+    \   'objc' : ['->', '.', 're!\[[_a-zA-Z]+\w*\s', 're!^\s*[^\W\d]\w*\s',
+    \             're!\[.*\]\s'],
+    \   'ocaml' : ['.', '#'],
+    \   'cpp,objcpp' : ['->', '.', '::'],
+    \   'perl' : ['->'],
+    \   'php' : ['->', '::'],
+    \   'cs,java,javascript,typescript,d,python,perl6,scala,vb,elixir,go' : ['.'],
+    \   'ruby' : ['.', '::'],
+    \   'lua' : ['.', ':'],
+    \   'erlang' : [':'],
+    \ }
 
 
 " ==> syntax plugins
@@ -339,6 +352,12 @@ let g:go_highlight_build_constraints = 1
 let g:go_fmt_fail_silently = 0
 let g:go_play_open_browser = 0
 let g:go_fmt_command = 'goimports'
+
+
+" ==> Erlang
+Plug 'vim-erlang/vim-erlang-runtime', { 'for': 'erlang' }
+Plug 'vim-erlang/vim-erlang-omnicomplete', { 'for': 'erlang' }
+
 
 " ==> Rust
 " Plug 'racer-rust/vim-racer', { 'for': 'rust' }
