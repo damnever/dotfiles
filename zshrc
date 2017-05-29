@@ -28,7 +28,7 @@ fpath+=~/.zfunc
 # Zsh plugins can be found in ~/.oh-my-zsh/plugins/*
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git brew pip vagrant pyenv python go golang zsh-autosuggestions kocmd gopath)
+plugins=(git brew pip vagrant pyenv python go golang zsh-autosuggestions colors kocmd gopath)
 
 
 # User configuration
