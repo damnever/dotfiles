@@ -6,7 +6,7 @@ get_space() {
     local STR="$_PATH$(git_prompt_info)"
     local zero='%([BSUbfksu]|([FB]|){*})'
     local LENGTH=${#${(S%%)STR//$~zero/}}
-    (( LENGTH = ${COLUMNS} - $LENGTH - 16 ))
+    (( LENGTH = ${COLUMNS} - $LENGTH - 15 ))
     local SPACES=""
     for i in {0..$LENGTH}
     do
@@ -15,7 +15,7 @@ get_space() {
     echo $SPACES
 }
 
-PROMPT=' %{$FG[081]%}$_PATH%{$reset_color%} $(git_prompt_info) $(get_space) $FG[248][%*]%{$reset_color%}
+PROMPT='%{$FG[081]%}$_PATH%{$reset_color%} $(git_prompt_info) $(get_space) $FG[248][%*]%{$reset_color%}
 ${_ret_status}%{$reset_color%} '
 
 ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg_bold[cyan]%}git:(%{$fg[red]%}"
