@@ -1,22 +1,26 @@
 # Copyright (c) 2017 XiaoChao Dong (@damnever) <dxc.wolf@gmail.com>
 
+export VIRTUAL_ENV_DISABLE_PROMPT=1
 local _ret_status="%(?:%{$fg_bold[green]%}➜ :%{$fg_bold[red]%}➜ )"
 
+virtualenv_info() {
+    [ $VIRTUAL_ENV ] && echo '('`basename $VIRTUAL_ENV`') '
+}
+
 _format() {
-    local _PATH="${PWD/$HOME/~}"
-    local _GIT="$(git_prompt_info)"
-    local STR="${_PATH}${_GIT}"
+    local STR="$(virtualenv_info)%{$FG[081]%}${PWD/$HOME/~}%{$reset_color%} $(git_prompt_info)"
     local zero='%([BSUbfksu]|([FB]|){*})'
     local LENGTH=${#${(S%%)STR//$~zero/}}
 
-    (( LENGTH = ${COLUMNS} - $LENGTH - 15 ))
+    (( LENGTH = ${COLUMNS} - $LENGTH - 14 ))
+
     local SPACES=""
     for i in {0..$LENGTH}
     do
         SPACES="$SPACES "
     done
 
-    echo "%{$FG[081]%}${_PATH}%{$reset_color%} ${_GIT} $SPACES"
+    echo "$STR $SPACES"
 }
 
 PROMPT='$(_format) $FG[248][%*]%{$reset_color%}
