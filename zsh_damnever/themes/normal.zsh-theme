@@ -1,21 +1,25 @@
+# Copyright (c) 2017 XiaoChao Dong (@damnever) <dxc.wolf@gmail.com>
+
 local _ret_status="%(?:%{$fg_bold[green]%}➜ :%{$fg_bold[red]%}➜ )"
 
-_PATH="${PWD/$HOME/~}"
-
-get_space() {
-    local STR="$_PATH$(git_prompt_info)"
+_format() {
+    local _PATH="${PWD/$HOME/~}"
+    local _GIT="$(git_prompt_info)"
+    local STR="${_PATH}${_GIT}"
     local zero='%([BSUbfksu]|([FB]|){*})'
     local LENGTH=${#${(S%%)STR//$~zero/}}
+
     (( LENGTH = ${COLUMNS} - $LENGTH - 15 ))
     local SPACES=""
     for i in {0..$LENGTH}
     do
         SPACES="$SPACES "
     done
-    echo $SPACES
+
+    echo "%{$FG[081]%}${_PATH}%{$reset_color%} ${_GIT} $SPACES"
 }
 
-PROMPT='%{$FG[081]%}$_PATH%{$reset_color%} $(git_prompt_info) $(get_space) $FG[248][%*]%{$reset_color%}
+PROMPT='$(_format) $FG[248][%*]%{$reset_color%}
 ${_ret_status}%{$reset_color%} '
 
 ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg_bold[cyan]%}git:(%{$fg[red]%}"
