@@ -74,7 +74,7 @@ Plug 'scrooloose/nerdtree'
 
 nmap <leader>n :NERDTreeToggle<CR>
 let NERDTreeHighlightCursorline = 1
-let NERDTreeIgnore = [ '__pycache__', '\.pyc$', '\.pyo$', '\.obj$', '\.o$', '\.so$', '\.egg$', '^\.git$', '^\.svn$', '^\.hg$' ]
+let NERDTreeIgnore = [ '__pycache__', '\.pyc$', '\.pyo$', '\.obj$', '\.o$', '\.so$', '\.egg$', '\.beam$', '^\.git$', '^\.svn$', '^\.hg$' ]
 " automatically quit vim if NERDTree is last and only buffer
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 let g:NERDTreeMapOpenSplit = 's'
@@ -420,7 +420,7 @@ set history=1000
 set autoread
 set nobackup
 set noswapfile
-set wildignore=*.o,*.swp,*.bak,*.pyc,*.pyo,*.class,.svn,.git,__pycache__
+set wildignore=*.o,*.swp,*.bak,*.pyc,*.pyo,*.class,*.beam,.svn,.git,__pycache__
 set cursorcolumn " highlight the current column
 set cursorline " highlight current line
 set t_ti= t_te= " show screen shot after quit
