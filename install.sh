@@ -20,14 +20,14 @@ install_requirements_for_mac() {
     brew ln gnu-getopt --force
 }
 
-install_requirements_for_ubuntu() {
+install_requirements_for_pi() {
     sudo apt-get update
     sudo apt-get install -y vim
     sudo apt-get install -y zsh
-    sudo apt-get install -y tmux
+    # sudo apt-get install -y tmux
     sudo apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev \
         libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev xz-utils
-    sudo apt-get install -y build-essential cmake python-dev ctags silversearcher-ag
+    sudo apt-get install -y build-essential cmake python-dev ctags silversearcher-ag python-pip
     git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf
     ~/.fzf/install
     git clone https://github.com/yyuu/pyenv.git $HOME/.pyenv
@@ -39,13 +39,13 @@ install_prerequirements() {
     if [[ "$platform" == "Darwin" ]]; then  # Mac
         install_requirements_for_mac
         sudo chsh -s $(which zsh)
-    elif [[ "$platform" == "Linux" ]]; then  # ubuntu for me
+    elif [[ "$platform" == "Linux" ]]; then  # raspberry pi
         install_requirements_for_ubuntu
-        sudo chsh -s $(which zsh) ubuntu # vagrant
+        sudo chsh -s $(which zsh) pi
     fi
     sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
-    pip install pep8 pyflakes pylint -U
-    go get -u github.com/jstemmer/gotags
+    # pip install pep8 pyflakes pylint -U
+    # go get -u github.com/jstemmer/gotags
 }
 
 
@@ -59,13 +59,14 @@ setup_config_files() {
         tmux.conf \
         zshrc \
         vim \
-        vimrc \
+        # vimrc \
         pip \
     )
     for f in "${files[@]}"
     do
         ln -vsfn $cur_dir/$f $HOME/.$f
     done
+    curl https://raw.githubusercontent.com/wklken/vim-for-server/master/vimrc > ~/.vimrc
     source $cur_dir/third_configs/install.sh
 
     echo "-> create dirs .."

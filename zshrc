@@ -68,13 +68,14 @@ else  # Linux
     export PYENV_ROOT="$HOME/.pyenv"
     export PATH="$PYENV_ROOT/bin:$PATH"
 fi
+source /usr/local/bin/virtualenvwrapper.sh
 eval "$(pyenv init -)"
 export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV="true"
 pyenv virtualenvwrapper
 
 # Golang
-export GOPATH=$HOME/.go:$HOME/dev/ak/Go:$HOME/dev/eleme/go
-export PATH=$PATH:/usr/local/go/bin:$HOME/.go/bin:$HOME/dev/ak/Go/bin:$HOME/dev/eleme/go/bin
+export GOPATH=$HOME/.go:/mnt/dev/Go
+export PATH=$PATH:/usr/local/go/bin:$HOME/.go/bin:/mnt/dev/Go/bin
 
 # Rust
 # rustup/racer
