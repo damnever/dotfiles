@@ -379,6 +379,11 @@ Plug 'docunext/closetag.vim', { 'for': ['html', 'xml'] }
 
 let g:closetag_html_style = 1
 
+" Javascript
+
+Plug 'pangloss/vim-javascript', {'for': 'javascript'}
+Plug 'mxw/vim-jsx', {'for': 'javascript'}
+
 
 " => markdown
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
@@ -391,6 +396,7 @@ Plug 'solarnz/thrift.vim', { 'for': 'thrift' }
 Plug 'elzr/vim-json', { 'for': 'json' }
 Plug 'ekalinin/Dockerfile.vim', {'for': 'Dockerfile'}
 Plug 'fatih/vim-nginx' , {'for': 'nginx'}
+
 
 " smoji
 Plug 'junegunn/vim-emoji'

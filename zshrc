@@ -28,7 +28,7 @@ fpath+=~/.zfunc
 # Zsh plugins can be found in ~/.oh-my-zsh/plugins/*
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git brew pip vagrant pyenv python go golang zsh-autosuggestions colors kocmd gopath)
+plugins=(git brew pip vagrant pyenv python go golang zsh-autosuggestions colors kocmd gopath gobench)
 
 
 # User configuration
@@ -75,6 +75,8 @@ pyenv virtualenvwrapper
 # Golang
 export GOPATH=$HOME/.go:$HOME/dev/ak/Go:$HOME/dev/eleme/go
 export PATH=$PATH:/usr/local/go/bin:$HOME/.go/bin:$HOME/dev/ak/Go/bin:$HOME/dev/eleme/go/bin
+# for go-torch
+export PATH=$PATH:$HOME/.bin/FlameGraph
 
 # Rust
 # rustup/racer
