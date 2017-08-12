@@ -16,6 +16,13 @@ traceback.print_exception(*sys.exc_info())
 endsnippet
 
 
+snippet callloc
+import sys
+frame = sys._getframe($1)
+print('{0}:{1}'.format(frame.f_code.co_filename, frame.f_lineno))
+endsnippet
+
+
 snippet try
 try:
     $1
