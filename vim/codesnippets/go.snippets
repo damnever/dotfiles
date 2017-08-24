@@ -1,0 +1,16 @@
+snippet must
+func must(err error, ctxinfo ...interface{}) {
+    if err == nil {
+        return
+    }
+    if len(ctxinfo) > 0 {
+        info := []string{}
+        for _, a := range ctxinfo { // XXX: fmt.Sprint is not good enough..
+            info = append(info, fmt.Sprintf("%v", a))
+        }
+        panic(fmt.Sprintf("%v: %+v", strings.Join(info, " "), err))
+    } else {
+        panic(err)
+    }
+}
+endsnippet
