@@ -14,3 +14,9 @@ func must(err error, ctxinfo ...interface{}) {
     }
 }
 endsnippet
+
+snippet iferr
+if err != nil {
+    return $1 err
+}
+endsnippet
