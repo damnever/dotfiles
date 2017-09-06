@@ -13,3 +13,6 @@
 [apply]
     # Detect whitespace errors when applying a patch
     whitespace = fix
+
+[url "git@github.com:"]
+    insteadOf = https://github.com/

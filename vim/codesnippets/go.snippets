@@ -1,4 +1,18 @@
+snippet iferr
+if err != nil {
+    return $1 err
+}
+endsnippet
+
 snippet must
+func must(err error) {
+    if err != nil {
+        panic(err)
+    }
+}
+endsnippet
+
+snippet must2
 func must(err error, ctxinfo ...interface{}) {
     if err == nil {
         return
@@ -15,8 +29,10 @@ func must(err error, ctxinfo ...interface{}) {
 }
 endsnippet
 
-snippet iferr
-if err != nil {
-    return $1 err
-}
+snippet recover
+defer func() {
+    if e := recover(); e != nil {
+        fmt.Printf("panic: %v: %v\n", e, string(debug.Stack()))
+    }
+}()
 endsnippet
