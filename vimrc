@@ -360,13 +360,13 @@ Plug 'vim-erlang/vim-erlang-omnicomplete', { 'for': 'erlang' }
 
 
 " ==> Rust
-" Plug 'racer-rust/vim-racer', { 'for': 'rust' }
-" Plug 'rust-lang/rust.vim', { 'for': 'rust' }
+Plug 'racer-rust/vim-racer', { 'for': 'rust' }
+Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 
-" let g:racer_cmd = '~/.cargo/bin/racer'
-" let g:racer_experimental_completer = 1
+let g:racer_cmd = '~/.cargo/bin/racer'
+let g:racer_experimental_completer = 1
 
-" let g:rustfmt_autosave = 1
+let g:rustfmt_autosave = 1
 
 
 " ==> tmux [Ctrl + h,i,j,k]
