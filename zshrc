@@ -80,11 +80,9 @@ export PATH=$PATH:$HOME/.bin/FlameGraph
 
 # Rust
 # rustup/racer
+source $HOME/.cargo/env
 export PATH=$PATH:$HOME/.cargo/bin
 export RUST_SRC_PATH="${HOME}/.multirust/toolchains/nightly-x86_64-apple-darwin/lib/rustlib/src/rust/src/"
-
-# YCM python
-export DYLD_FORCE_FLAT_NAMESPACE=1
 
 # scp
 SHTERM_AUTH_KEY=`cat ~/.ssh/id_rsa`
