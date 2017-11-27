@@ -133,9 +133,9 @@ nmap <Leader>r <Plug>(quickrun)
 
 
 " ==> provides insert mode auto-completion for quotes, parens, brackets, etc.
-Plug 'Raimondi/delimitMate'
-
-au FileType python let b:delimitMate_nesting_quotes = ['"', "'"]
+" Plug 'Raimondi/delimitMate'
+" au FileType python let b:delimitMate_nesting_quotes = ['"', "'"]
+Plug 'jiangmiao/auto-pairs'
 
 
 " ==> intensely orgasmic commenting
@@ -256,6 +256,8 @@ Plug 'maralla/completor.vim'
 let g:completor_racer_binary = '~/.cargo/bin/racer'
 let g:completor_gocode_binary = '~/.go/bin/gocode'
 let g:completor_debug = 1
+let g:completor_auto_close_doc = 0
+let g:completor_completion_delay = 66  " ms
 
 
 " ==> Check syntax on the fly asynchronously (vim8 required).
@@ -263,11 +265,14 @@ Plug 'maralla/validator.vim'
 
 let g:validator_error_msg_format = "[ ● %d/%d issues ]"
 let g:validator_auto_open_quickfix = 0
-let g:validator_filetype_map = {"vue": "javascript"}
+" let g:validator_filetype_map = {"vue": "javascript"}
 let g:validator_permament_sign = 0
 let g:validator_ignore = ['java']
 let g:validator_python_flake8_args = '--ignore=E124,E225,E226,E227,E302,E501,E712,W601,E731'
 
+
+" ==> Python
+Plug 'hynek/vim-python-pep8-indent', { 'for': 'python' }
 
 " ==> Golang
 Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries', 'for': 'go' }
@@ -308,19 +313,23 @@ Plug 'docunext/closetag.vim', { 'for': ['html', 'xml'] }
 
 let g:closetag_html_style = 1
 
-" Javascript
-
+" ==> Javascript
 Plug 'pangloss/vim-javascript', {'for': 'javascript'}
 Plug 'mxw/vim-jsx', {'for': 'javascript'}
+" Vue.js
+Plug 'posva/vim-vue'
+
+autocmd FileType vue syntax sync fromstart
 
 
-" => markdown
+" ==> markdown
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 
 let g:vim_markdown_folding_disabled = 1
 
 
-" misc
+" ==> misc
+Plug 'uarun/vim-protobuf', { 'for': 'proto' }
 Plug 'solarnz/thrift.vim', { 'for': 'thrift' }
 Plug 'elzr/vim-json', { 'for': 'json' }
 Plug 'ekalinin/Dockerfile.vim', {'for': 'Dockerfile'}
@@ -499,7 +508,7 @@ autocmd FileType html set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
 autocmd FileType css set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
 autocmd FileType javascript set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
 autocmd BufRead,BufNewFile *.md,*.mkd,*.markdown set filetype=markdown.mkd
-autocmd BufRead,BufNewFile *.vue,*.part set filetype=html
+autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css
 
 fun! <SID>StripTrailingWhitespaces()
     let l = line(".")
