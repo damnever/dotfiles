@@ -1,5 +1,4 @@
 " VIM configs for damnever.
-" Inspired by wklken/k-vim
 
 
 let mapleader = ','
@@ -134,9 +133,9 @@ nmap <Leader>r <Plug>(quickrun)
 
 
 " ==> provides insert mode auto-completion for quotes, parens, brackets, etc.
-Plug 'Raimondi/delimitMate'
-
-au FileType python let b:delimitMate_nesting_quotes = ['"', "'"]
+" Plug 'Raimondi/delimitMate'
+" au FileType python let b:delimitMate_nesting_quotes = ['"', "'"]
+Plug 'jiangmiao/auto-pairs'
 
 
 " ==> intensely orgasmic commenting
@@ -251,94 +250,29 @@ let g:UltiSnipsEditSplit = 'context'
 nnoremap <Leader>es :UltiSnipsEdit<Cr>
 
 
-" ==> A code-completion engine for Vim
-function! BuildYCM(info)
-    " info is a dictionary with 3 fields
-    " - name:   name of the plugin
-    " - status: 'installed', 'updated', or 'unchanged'
-    " - force:  set on PlugInstall! or PlugUpdate!
-    if a:info.status == 'installed' || a:info.force
-        !./install.py  --system-libclang --clang-completer  " --racer-completer --system-boost
-    endif
-endfunction
-let g:plug_url_format = 'git@github.com:%s.git'
-Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
-unlet g:plug_url_format
+" ==> Async completion framework (vim8 required).
+Plug 'maralla/completor.vim'
 
-" let g:ycm_key_list_select_completion = ['<c-n>']
-let g:ycm_key_list_select_completion = ['<Down>']
-" let g:ycm_key_list_previous_completion = ['<c-p>']
-let g:ycm_key_list_previous_completion = ['<Up>']
-let g:ycm_complete_in_comments = 1
-let g:ycm_complete_in_strings = 1
-let g:ycm_use_ultisnips_completer = 1
-let g:ycm_collect_identifiers_from_comments_and_strings = 1
-let g:ycm_collect_identifiers_from_tags_files = 1
-let g:ycm_seed_identifiers_with_syntax = 1
-let g:ycm_goto_buffer_command = 'horizontal-split'
-nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
-nnoremap <leader>gd :YcmCompleter GoToDeclaration<CR>
-let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
-" let g:ycm_key_invoke_completion = '<C-Space>'
-let g:ycm_filetype_blacklist = {
-    \ 'tagbar' : 1,
-    \ 'gitcommit' : 1,
-    \}
-" let g:ycm_server_to_python_interpreter = '/usr/bin/python'
-" let g:ycm_rust_src_path = '~/.multirust/toolchains/nightly-x86_64-apple-darwin/lib/rustlib/src/rust/src/'
-let g:ycm_semantic_triggers =  {
-    \   'c' : ['->', '.'],
-    \   'objc' : ['->', '.', 're!\[[_a-zA-Z]+\w*\s', 're!^\s*[^\W\d]\w*\s',
-    \             're!\[.*\]\s'],
-    \   'ocaml' : ['.', '#'],
-    \   'cpp,objcpp' : ['->', '.', '::'],
-    \   'perl' : ['->'],
-    \   'php' : ['->', '::'],
-    \   'cs,java,javascript,typescript,d,python,perl6,scala,vb,elixir,go' : ['.'],
-    \   'ruby' : ['.', '::'],
-    \   'lua' : ['.', ':'],
-    \   'erlang' : [':'],
-    \ }
+let g:completor_racer_binary = '~/.cargo/bin/racer'
+let g:completor_gocode_binary = '~/.go/bin/gocode'
+let g:completor_debug = 1
+let g:completor_auto_close_doc = 0
+let g:completor_completion_delay = 66  " ms
 
 
-" ==> syntax plugins
-Plug 'scrooloose/syntastic'
+" ==> Check syntax on the fly asynchronously (vim8 required).
+Plug 'maralla/validator.vim'
 
-let g:syntastic_error_symbol = '>>'
-let g:syntastic_warning_symbol = '>'
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_enable_highlighting = 1
-let g:syntastic_always_populate_loc_list = 0
-let g:syntastic_auto_loc_list = 0
-let g:syntastic_loc_list_height = 5
-function! ToggleErrors()
-    let old_last_winnr = winnr('$')
-    lclose
-    if old_last_winnr == winnr('$')
-        " Nothing was closed, open syntastic_error location panel
-        Errors
-    endif
-endfunction
-nnoremap <Leader>s :call ToggleErrors()<cr>
-highlight SyntasticErrorSign guifg=white guibg=black
-let g:syntastic_mode_map = {'mode': 'active', 'passive_filetypes': ['java'] }
-" python
-let g:syntastic_python_checkers = ['pyflakes', 'pep8']
-" error code: http://pep8.readthedocs.org/en/latest/intro.html#error-codes
-" W601: use 'in' replace 'has_key', but I got a method named 'has_key' sometimes...
-" E731: do not assign a lambda expression, use a def? fuck it...
-let g:syntastic_python_pep8_args = '--ignore=E124,E225,E226,E227,E302,E501,E712,W601,E731'
-" golang
-let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
-let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
+let g:validator_error_msg_format = "[ ● %d/%d issues ]"
+let g:validator_auto_open_quickfix = 0
+" let g:validator_filetype_map = {"vue": "javascript"}
+let g:validator_permament_sign = 0
+let g:validator_ignore = ['java']
+let g:validator_python_flake8_args = '--ignore=E124,E225,E226,E227,E302,E501,E712,W601,E731'
 
-" ==> Python, pip install pep8 pyflakes pylint
-Plug 'hdima/python-syntax', { 'for': 'python' }
-let python_highlight_all = 1
 
+" ==> Python
 Plug 'hynek/vim-python-pep8-indent', { 'for': 'python' }
-
 
 " ==> Golang
 Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries', 'for': 'go' }
@@ -379,19 +313,23 @@ Plug 'docunext/closetag.vim', { 'for': ['html', 'xml'] }
 
 let g:closetag_html_style = 1
 
-" Javascript
-
+" ==> Javascript
 Plug 'pangloss/vim-javascript', {'for': 'javascript'}
 Plug 'mxw/vim-jsx', {'for': 'javascript'}
+" Vue.js
+Plug 'posva/vim-vue'
+
+autocmd FileType vue syntax sync fromstart
 
 
-" => markdown
+" ==> markdown
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 
 let g:vim_markdown_folding_disabled = 1
 
 
-" misc
+" ==> misc
+Plug 'uarun/vim-protobuf', { 'for': 'proto' }
 Plug 'solarnz/thrift.vim', { 'for': 'thrift' }
 Plug 'elzr/vim-json', { 'for': 'json' }
 Plug 'ekalinin/Dockerfile.vim', {'for': 'Dockerfile'}
@@ -570,7 +508,7 @@ autocmd FileType html set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
 autocmd FileType css set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
 autocmd FileType javascript set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
 autocmd BufRead,BufNewFile *.md,*.mkd,*.markdown set filetype=markdown.mkd
-autocmd BufRead,BufNewFile *.vue,*.part set filetype=html
+autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css
 
 fun! <SID>StripTrailingWhitespaces()
     let l = line(".")
