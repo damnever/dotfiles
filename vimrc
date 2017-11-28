@@ -265,6 +265,8 @@ let g:completor_completion_delay = 66  " ms
 " ==> Check syntax on the fly asynchronously (vim8 required).
 Plug 'maralla/validator.vim'
 
+let g:validator_debug = 1
+let g:validator_go_checkers = ['gometalinter']
 let g:validator_error_msg_format = "[ ● %d/%d issues ]"
 let g:validator_auto_open_quickfix = 0
 " let g:validator_filetype_map = {"vue": "javascript"}
