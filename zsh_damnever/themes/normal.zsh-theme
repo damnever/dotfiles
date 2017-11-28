@@ -9,7 +9,7 @@ virtualenv_info() {
 
 _format() {
     local STR="$(virtualenv_info)%{$FG[081]%}${PWD/$HOME/~}%{$reset_color%} $(git_prompt_info)"
-    local zero='%([BSUbfksu]|([FB]|){*})'
+    local zero='%([BSUbfksu]|([FK]|){*})'
     local LENGTH=${#${(S%%)STR//$~zero/}}
 
     (( LENGTH = ${COLUMNS} - $LENGTH - 14 ))

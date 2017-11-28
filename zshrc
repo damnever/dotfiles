@@ -14,7 +14,7 @@ ZSH_THEME="normal"
 # ENABLE_CORRECTION="true"
 
 # Display red dots whilst waiting for completion.
-COMPLETION_WAITING_DOTS="true"
+# COMPLETION_WAITING_DOTS="true"
 
 # Uncomment the following line if you want to change the command execution time
 # stamp shown in the history command output.
