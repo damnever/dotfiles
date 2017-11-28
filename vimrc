@@ -137,6 +137,8 @@ nmap <Leader>r <Plug>(quickrun)
 " au FileType python let b:delimitMate_nesting_quotes = ['"', "'"]
 Plug 'jiangmiao/auto-pairs'
 
+let g:AutoPairs = {'(':')', '[':']', '{':'}',"'":"'",'"':'"', '`':'`', '<': '>'}
+
 
 " ==> intensely orgasmic commenting
 Plug 'scrooloose/nerdcommenter'
@@ -308,17 +310,14 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'tmux-plugins/vim-tmux', {'for': 'tmux'}
 
 
-" ==> close open HTML/XML tags
+" ==> HTML/CSS/Javascript
 Plug 'docunext/closetag.vim', { 'for': ['html', 'xml'] }
-
 let g:closetag_html_style = 1
 
-" ==> Javascript
 Plug 'pangloss/vim-javascript', {'for': 'javascript'}
 Plug 'mxw/vim-jsx', {'for': 'javascript'}
 " Vue.js
 Plug 'posva/vim-vue'
-
 autocmd FileType vue syntax sync fromstart
 
 
