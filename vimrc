@@ -258,9 +258,42 @@ Plug 'maralla/completor.vim'
 let g:completor_racer_binary = '~/.cargo/bin/racer'
 let g:completor_gocode_binary = '~/.go/bin/gocode'
 let g:completor_debug = 1
-let g:completor_auto_close_doc = 0
+let g:completor_auto_close_doc = 1
 let g:completor_completion_delay = 66  " ms
+let g:completor_disable_filename = 0
+let g:completor_disable_buffer = 0
 
+
+" ==> Syntax checking hacks for vim.
+" Plug 'scrooloose/syntastic'
+" let g:syntastic_error_symbol = '>>'
+" let g:syntastic_warning_symbol = '>'
+" let g:syntastic_check_on_open = 1
+" let g:syntastic_check_on_wq = 0
+" let g:syntastic_enable_highlighting = 1
+" let g:syntastic_always_populate_loc_list = 0
+" let g:syntastic_auto_loc_list = 0
+" let g:syntastic_loc_list_height = 5
+" function! ToggleErrors()
+    " let old_last_winnr = winnr('$')
+    " lclose
+    " if old_last_winnr == winnr('$')
+        " " Nothing was closed, open syntastic_error location panel
+        " Errors
+    " endif
+" endfunction
+" nnoremap <Leader>s :call ToggleErrors()<cr>
+" highlight SyntasticErrorSign guifg=white guibg=black
+" let g:syntastic_mode_map = {'mode': 'active', 'passive_filetypes': ['java'] }
+" " python
+" let g:syntastic_python_checkers = ['pyflakes', 'pep8']
+" " error code: http://pep8.readthedocs.org/en/latest/intro.html#error-codes
+" " W601: use 'in' replace 'has_key', but I got a method named 'has_key' sometimes...
+" " E731: do not assign a lambda expression, use a def? fuck it...
+" let g:syntastic_python_pep8_args = '--ignore=E124,E225,E226,E227,E302,E501,E712,W601,E731'
+" " golang
+" let g:syntastic_go_checkers = ['golint', 'govet', 'gometalinter']
+" let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
 
 " ==> Check syntax on the fly asynchronously (vim8 required).
 Plug 'maralla/validator.vim'
@@ -276,6 +309,9 @@ let g:validator_python_flake8_args = '--ignore=E124,E225,E226,E227,E302,E501,E71
 
 
 " ==> Python
+Plug 'hdima/python-syntax', { 'for': 'python'  }
+let python_highlight_all = 1
+
 Plug 'hynek/vim-python-pep8-indent', { 'for': 'python' }
 
 " ==> Golang
@@ -300,9 +336,6 @@ Plug 'vim-erlang/vim-erlang-omnicomplete', { 'for': 'erlang' }
 " ==> Rust
 Plug 'racer-rust/vim-racer', { 'for': 'rust' }
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
-
-let g:racer_cmd = '~/.cargo/bin/racer'
-let g:racer_experimental_completer = 1
 
 let g:rustfmt_autosave = 1
 
@@ -551,3 +584,4 @@ highlight clear SpellRare
 highlight SpellRare term=underline cterm=underline
 highlight clear SpellLocal
 highlight SpellLocal term=underline cterm=underline
+

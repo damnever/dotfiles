@@ -45,7 +45,7 @@ install_prerequirements() {
         sudo chsh -s $(which zsh) ubuntu # vagrant
     fi
     sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
-    pip install flake8 pylint jedi -U
+    pip install flake8 pyflakes pep8 pylint jedi -U
     go get -u github.com/jstemmer/gotags
 }
 
