@@ -363,7 +363,6 @@ let g:vim_markdown_folding_disabled = 1
 
 
 " ==> misc
-Plug 'uarun/vim-protobuf', { 'for': 'proto' }
 Plug 'solarnz/thrift.vim', { 'for': 'thrift' }
 Plug 'elzr/vim-json', { 'for': 'json' }
 Plug 'ekalinin/Dockerfile.vim', {'for': 'Dockerfile'}
