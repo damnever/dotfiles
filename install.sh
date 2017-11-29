@@ -67,9 +67,9 @@ setup_config_files() {
     do
         ln -vsfn $cur_dir/$f $HOME/.$f
     done
-    source $cur_dir/third_configs/install.sh
     mkdir -vp $HOME/.gnupg
-    cp -rf ./gnupg/* ~/.gnupg
+    cp -rfv $cur_dir/gnupg/* $HOME/.gnupg
+    source $cur_dir/third_configs/install.sh
 
     echo "-> create dirs .."
     mkdir -vp $HOME/dev/ak/{C,Go,Python,Scheme,Erlang}
