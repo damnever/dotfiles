@@ -90,3 +90,6 @@ export SHTERM_AUTH_KEY
 
 # https://github.com/junegunn/fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# GPG
+export GPG_TTY=$(tty)
