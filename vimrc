@@ -306,6 +306,7 @@ let g:validator_auto_open_quickfix = 0
 let g:validator_permament_sign = 0
 let g:validator_ignore = ['java']
 let g:validator_python_flake8_args = '--ignore=E124,E225,E226,E227,E302,E501,E712,W601,E731'
+let g:completor_set_options = 1
 
 
 " ==> Python
