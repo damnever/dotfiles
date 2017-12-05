@@ -326,9 +326,13 @@ let g:go_highlight_fields = 1
 let g:go_highlight_types = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
+let g:go_highlight_generate_tags = 1
 let g:go_fmt_fail_silently = 0
 let g:go_play_open_browser = 0
 let g:go_fmt_command = 'goimports'
+let g:go_metalinter_autosave = 0
+" let g:go_metalinter_enabled = [] " ['vet', 'golint', 'errcheck']
+" let g:go_metalinter_deadline = '5s'
 
 
 " ==> Erlang
@@ -552,7 +556,9 @@ fun! <SID>StripTrailingWhitespaces()
     %s/\s\+$//e
     call cursor(l, c)
 endfun
-autocmd FileType c,cpp,go,javascript,python,rust,lua,scheme,xml,yml,perl autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
+" Remove go, Ref:
+" https://github.com/spf13/spf13-vim/issues/957#issuecomment-306510976
+autocmd FileType c,cpp,javascript,python,rust,lua,scheme,xml,yml,perl autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
 
 autocmd BufNewFile *.sh,*.py exec ":call AutoSetFileHead()"
 function! AutoSetFileHead()
