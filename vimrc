@@ -264,6 +264,8 @@ let g:completor_disable_filename = 0
 let g:completor_disable_buffer = 0
 let g:completor_set_options = 1
 
+noremap <leader>jd :call completor#do('definition')<CR>
+
 
 " ==> Syntax checking hacks for vim.
 " Plug 'scrooloose/syntastic'
