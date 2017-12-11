@@ -401,6 +401,10 @@ set smarttab
 set expandtab
 set shiftround
 
+set list
+set listchars=tab:\ \ ,trail:∙,extends:❯,precedes:❮,nbsp:•
+set fillchars+=vert:│
+
 set history=1000
 set autoread
 set nobackup
@@ -559,7 +563,7 @@ fun! <SID>StripTrailingWhitespaces()
 endfun
 " Remove go, Ref:
 " https://github.com/spf13/spf13-vim/issues/957#issuecomment-306510976
-autocmd FileType c,cpp,javascript,python,rust,lua,scheme,xml,yml,perl autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
+autocmd FileType c,cpp,javascript,python,rust,lua,vim,scheme,xml,yml,perl autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
 
 autocmd BufNewFile *.sh,*.py exec ":call AutoSetFileHead()"
 function! AutoSetFileHead()
