@@ -479,6 +479,7 @@ set formatoptions+=B
 
 autocmd! bufwritepost _vimrc source %
 autocmd! bufwritepost .vimrc source %
+autocmd! bufwritepost vimrc source %
 
 set completeopt=longest,menu
 autocmd InsertLeave * if pumvisible() == 0|pclose|endif
@@ -577,11 +578,9 @@ function! AutoSetFileHead()
     endif
 endfunc
 
-if has("autocmd")
-  if v:version > 701
+if v:version > 701
     autocmd Syntax * call matchadd('Todo',  '\W\zs\(TODO\|FIXME\|CHANGED\|DONE\|XXX\|BUG\|HACK\)')
     autocmd Syntax * call matchadd('Debug', '\W\zs\(NOTE\|INFO\|WARN\|WARNING\|ERROR\|IDEA\|NOTICE\)')
-  endif
 endif
 
 set background=dark " light
