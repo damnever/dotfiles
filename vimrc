@@ -255,6 +255,8 @@ nnoremap <Leader>es :UltiSnipsEdit<Cr>
 " ==> Async completion framework (vim8 required).
 Plug 'maralla/completor.vim'
 
+" TODO: make it portable
+let g:completor_python_binary = '/usr/local/var/pyenv/versions/3.6.0/Python.framework/Versions/3.6/bin/python'
 let g:completor_racer_binary = '~/.cargo/bin/racer'
 let g:completor_gocode_binary = '~/.go/bin/gocode'
 let g:completor_debug = 1
@@ -479,6 +481,7 @@ set formatoptions+=B
 
 autocmd! bufwritepost _vimrc source %
 autocmd! bufwritepost .vimrc source %
+autocmd! bufwritepost vimrc source %
 
 set completeopt=longest,menu
 autocmd InsertLeave * if pumvisible() == 0|pclose|endif
@@ -557,7 +560,8 @@ autocmd FileType html set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
 autocmd FileType css set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
 autocmd FileType javascript set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
 autocmd BufRead,BufNewFile *.md,*.mkd,*.markdown set filetype=markdown.mkd
-autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css
+" autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css
+autocmd BufRead,BufNewFile *.vue set filetype=html
 
 fun! <SID>StripTrailingWhitespaces()
     let l = line(".")
@@ -576,11 +580,9 @@ function! AutoSetFileHead()
     endif
 endfunc
 
-if has("autocmd")
-  if v:version > 701
+if v:version > 701
     autocmd Syntax * call matchadd('Todo',  '\W\zs\(TODO\|FIXME\|CHANGED\|DONE\|XXX\|BUG\|HACK\)')
     autocmd Syntax * call matchadd('Debug', '\W\zs\(NOTE\|INFO\|WARN\|WARNING\|ERROR\|IDEA\|NOTICE\)')
-  endif
 endif
 
 set background=dark " light

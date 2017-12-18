@@ -71,6 +71,8 @@ fi
 eval "$(pyenv init -)"
 export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV="true"
 pyenv virtualenvwrapper
+# Pipenv
+eval "$(pipenv --completion)"
 
 # Golang
 export GOPATH=$HOME/.go:$HOME/dev/ak/Go:$HOME/dev/eleme/go
