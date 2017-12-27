@@ -19,6 +19,7 @@ install_requirements_for_mac() {
     brew install tmux
     brew install coreutils findutils gnu-getopt
     brew ln gnu-getopt --force
+    brew install yarn
 }
 
 install_requirements_for_ubuntu() {
@@ -85,6 +86,7 @@ setup_vim() {
     export SHELL="/bin/sh"
     vim -u $HOME/.vimrc +PlugInstall! +PlugClean! +qall
     export SHELL=$system_shell
+    pushd vim/plugins/completor.vim/ && make js && popd
 }
 
 
