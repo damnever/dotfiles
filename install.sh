@@ -20,6 +20,7 @@ install_requirements_for_mac() {
     brew install coreutils findutils gnu-getopt
     brew ln gnu-getopt --force
     brew install yarn
+    brew install watch
 }
 
 install_requirements_for_ubuntu() {
