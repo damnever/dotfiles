@@ -550,6 +550,20 @@ inoremap <C-c> <ESC>
 nnoremap <leader>q :q<CR>
 nnoremap <leader>w :w<CR>
 
+" Better man page for C
+function! CDoc(num)
+    execute '! man ' . a:num . ' ' . expand('<cword>')
+    if v:shell_error == 0 || a:num == ''
+        return
+    endif
+    if a:num == '2'
+        call CDoc('3')
+    else
+        call CDoc('')
+    endif
+endfunction
+autocmd FileType c,cpp nnoremap <S-K> :call CDoc('2')<CR>
+
 " for python comment indent when enter new line
 autocmd BufNewFile,BufRead *.py inoremap # X<c-h>#
 
