@@ -255,8 +255,7 @@ nnoremap <Leader>es :UltiSnipsEdit<Cr>
 " ==> Async completion framework (vim8 required).
 Plug 'maralla/completor.vim'
 
-" TODO: make it portable
-let g:completor_python_binary = '/usr/local/var/pyenv/versions/3.6.0/Python.framework/Versions/3.6/bin/python'
+let g:completor_python_binary = substitute(resolve(system('pyenv which python')), '\n\+$', '', '')
 let g:completor_racer_binary = '~/.cargo/bin/racer'
 let g:completor_gocode_binary = '~/.go/bin/gocode'
 let g:completor_debug = 1
