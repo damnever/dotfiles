@@ -5,6 +5,9 @@ platform=$(uname)
 
 
 install_requirements_for_mac() {
+    # for vim
+    brew install --with-toolchain llvm
+    brew install shellcheck
     brew install readline xz
     brew install macvim --HEAD --with-cscope --with-lua --with-luajit --with-python3 --with-override-system-vim
     /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
@@ -25,6 +28,7 @@ install_requirements_for_mac() {
 
 install_requirements_for_ubuntu() {
     sudo apt-get update
+    sudo apt-get install -y shellcheck clang-tidy
     sudo apt-get install -y vim
     sudo apt-get install -y zsh
     sudo apt-get install -y tmux

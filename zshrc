@@ -39,8 +39,8 @@ export PATH="$PATH:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin"
 if [[ "$platform" == "Darwin" ]]; then  # Mac
     export PATH="$PATH:/usr/local/opt/coreutils/libexec/gnubin"
     export MANPATH="$MANPATH:/usr/local/opt/coreutils/libexec/gnuman"
-    export PATH="$PATH:/usr/local/opt/findutils/libexec/gnubin"
     export MANPATH="$MANPATH:/usr/local/opt/findutils/libexec/gnuman"
+    export PATH="$PATH:/usr/local/opt/findutils/libexec/gnubin:/usr/local/opt/llvm/bin"
 fi
 
 source $ZSH/oh-my-zsh.sh
