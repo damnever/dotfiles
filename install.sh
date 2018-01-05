@@ -51,8 +51,6 @@ install_prerequirements() {
         sudo chsh -s $(which zsh) ubuntu # vagrant
     fi
     sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
-    pip install flake8 pyflakes pep8 pylint jedi pipenv -U
-    go get -u github.com/jstemmer/gotags
 }
 
 
@@ -84,6 +82,11 @@ setup_config_files() {
 
 setup_vim() {
     echo "-> setup vim .."
+    pip install flake8 pyflakes pep8 pylint jedi pipenv -U
+    go get -u github.com/jstemmer/gotags
+    go get -u github.com/alecthomas/gometalinter
+    gometalinter --install
+
     curl -fLo $HOME/.vim/autoload/plug.vim --create-dirs \
         https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
