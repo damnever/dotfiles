@@ -573,10 +573,15 @@ autocmd FileType ruby set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
 autocmd FileType html set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
 autocmd FileType css set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
 autocmd FileType javascript set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
-autocmd BufRead,BufNewFile *.md,*.mkd,*.markdown set filetype=markdown.mkd
 " autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css
 autocmd BufRead,BufNewFile *.vue,*.wxml set filetype=html
 autocmd BufRead,BufNewFile *.wxss set filetype=css
+autocmd BufRead,BufNewFile *.md,*.mkd,*.markdown :call SetMkdOpts()
+function! SetMkdOpts()
+    set filetype=markdown.mkd
+    setlocal wrap
+    setlocal linebreak
+endfunction
 
 fun! <SID>StripTrailingWhitespaces()
     let l = line(".")
