@@ -42,7 +42,6 @@ let g:airline_theme ='laederon'
 
 " ==> Better Rainbow Parentheses
 Plug 'kien/rainbow_parentheses.vim'
-
 let g:rbpt_colorpairs = [
     \ ['brown',       'RoyalBlue3'],
     \ ['Darkblue',    'SeaGreen3'],
@@ -60,7 +59,7 @@ let g:rbpt_colorpairs = [
     \ ['darkred',     'DarkOrchid3'],
     \ ['red',         'firebrick3'],
     \]
-let g:rbpt_max = 16
+let g:rbpt_max = 64
 let g:rbpt_loadcmd_toggle = 0
 au VimEnter * RainbowParenthesesToggle
 au Syntax * RainbowParenthesesLoadRound
@@ -133,11 +132,10 @@ nmap <Leader>r <Plug>(quickrun)
 
 
 " ==> provides insert mode auto-completion for quotes, parens, brackets, etc.
-" Plug 'Raimondi/delimitMate'
-" au FileType python let b:delimitMate_nesting_quotes = ['"', "'"]
-Plug 'jiangmiao/auto-pairs'
-
-let g:AutoPairs = {'(':')', '[':']', '{':'}',"'":"'",'"':'"', '`':'`'}
+Plug 'Raimondi/delimitMate'
+au FileType python let b:delimitMate_nesting_quotes = ['"', "'"]
+" Plug 'jiangmiao/auto-pairs'
+" let g:AutoPairs = {'(':')', '[':']', '{':'}',"'":"'",'"':'"', '`':'`'}
 
 
 " ==> intensely orgasmic commenting
@@ -305,6 +303,8 @@ Plug 'maralla/validator.vim'
 let g:validator_debug = 1
 let g:validator_filetype_map = {'c': 'cpp'}
 let g:validator_go_checkers = ['gometalinter']
+let g:validator_go_gometalinter_args = '-j4 --deadline=5s --vendor --line-length=120 --disable-all --enable=vet --enable=errcheck --enable=golint --enable=lll --enable=unused'
+let g:validator_python_flake8_args = '--ignore=E124,E225,E226,E227,E302,E501,E712,W601,E731'
 let g:validator_error_msg_format = '[ ● %d/%d issues ]'
 let g:validator_error_symbol = '✗'
 let g:validator_style_error_symbol = '✗'
@@ -314,7 +314,6 @@ let g:validator_auto_open_quickfix = 0
 let g:validator_permament_sign = 0
 let g:validator_highlight_message = 1
 let g:validator_ignore = ['java']
-let g:validator_python_flake8_args = '--ignore=E124,E225,E226,E227,E302,E501,E712,W601,E731'
 
 
 " ==> Python
