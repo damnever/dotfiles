@@ -134,6 +134,7 @@ nmap <Leader>r <Plug>(quickrun)
 " ==> provides insert mode auto-completion for quotes, parens, brackets, etc.
 Plug 'Raimondi/delimitMate'
 au FileType python let b:delimitMate_nesting_quotes = ['"', "'"]
+au FileType rust let b:delimitMate_quotes = "\""
 " Plug 'jiangmiao/auto-pairs'
 " let g:AutoPairs = {'(':')', '[':']', '{':'}',"'":"'",'"':'"', '`':'`'}
 
