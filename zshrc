@@ -30,6 +30,11 @@ fpath+=~/.zfunc
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git brew pip vagrant pyenv python go golang zsh-autosuggestions colors kocmd gopath gobench)
 
+# Binding keys
+# As an addition to https://github.com/jlevy/the-art-of-command-line#everyday-use
+bindkey '^j' backward-word
+bindkey '^k' forward-word
+
 
 # User configuration
 platform=$(uname)
