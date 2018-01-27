@@ -338,7 +338,14 @@ let g:go_play_open_browser = 0
 let g:go_list_type = 'quickfix'  " auto close
 let g:go_fmt_command = 'goimports'
 let g:go_metalinter_autosave = 0
-" let g:go_metalinter_enabled = [] " ['vet', 'golint', 'errcheck']
+let g:go_gocode_autobuild=0
+let g:go_info_mode=''
+let g:go_jump_to_error=0
+let g:go_def_mapping_enabled=0
+let g:go_gocode_propose_builtins=0
+let g:go_echo_command_info=0
+let g:go_echo_go_info=0
+" let g:go_metalinter_enabled = [] " ['vet', 'errcheck', 'golint', 'lll', 'unused']
 " let g:go_metalinter_deadline = '5s'
 
 
