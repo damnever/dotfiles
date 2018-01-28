@@ -486,6 +486,12 @@ set ffs=unix,dos,mac
 set formatoptions+=m
 set formatoptions+=B
 
+" set nocursorline
+" set nocursorcolumn
+set synmaxcol=128
+syntax sync minlines=256
+set re=1
+
 autocmd! bufwritepost _vimrc source %
 autocmd! bufwritepost .vimrc source %
 autocmd! bufwritepost vimrc source %
@@ -630,4 +636,3 @@ highlight clear SpellRare
 highlight SpellRare term=underline cterm=underline
 highlight clear SpellLocal
 highlight SpellLocal term=underline cterm=underline
-
