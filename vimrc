@@ -8,71 +8,17 @@ set nocompatible
 
 call plug#begin('~/.vim/plugins')
 
-" ==> themes
-" solarized
-Plug 'altercation/vim-colors-solarized'
-let g:solarized_termtrans = 1
-let g:solarized_contrast = "normal"
-let g:solarized_visibility = "normal"
-let g:solarized_termcolors = 256
-" molokai
-Plug 'tomasr/molokai'
-let g:molokai_original = 1
-let g:rehash256 = 1
-Plug 'flazz/vim-colorschemes'
-
-
-" ==> airline
-Plug 'bling/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-
-if !exists('g:airline_symbols')
-    let g:airline_symbols = {}
-endif
-let g:airline_left_sep = '▶'
-let g:airline_left_alt_sep = '❯'
-let g:airline_right_sep = '◀'
-let g:airline_right_alt_sep = '❮'
-let g:airline_symbols.linenr = '¶'
-let g:airline_symbols.branch = '⎇'
-" https://github.com/bling/vim-airline/wiki/Screenshots
-" tomorrow, bubblegum ..
-let g:airline_theme ='laederon'
-
-
-" ==> Better Rainbow Parentheses
-Plug 'kien/rainbow_parentheses.vim'
-let g:rbpt_colorpairs = [
-    \ ['brown',       'RoyalBlue3'],
-    \ ['Darkblue',    'SeaGreen3'],
-    \ ['darkgray',    'DarkOrchid3'],
-    \ ['darkgreen',   'firebrick3'],
-    \ ['darkcyan',    'RoyalBlue3'],
-    \ ['darkred',     'SeaGreen3'],
-    \ ['darkmagenta', 'DarkOrchid3'],
-    \ ['brown',       'firebrick3'],
-    \ ['gray',        'RoyalBlue3'],
-    \ ['darkmagenta', 'DarkOrchid3'],
-    \ ['Darkblue',    'firebrick3'],
-    \ ['darkgreen',   'RoyalBlue3'],
-    \ ['darkcyan',    'SeaGreen3'],
-    \ ['darkred',     'DarkOrchid3'],
-    \ ['red',         'firebrick3'],
-    \]
-let g:rbpt_max = 64
-let g:rbpt_loadcmd_toggle = 0
-au VimEnter * RainbowParenthesesToggle
-au Syntax * RainbowParenthesesLoadRound
-au Syntax * RainbowParenthesesLoadSquare
-au Syntax * RainbowParenthesesLoadBraces
-
 
 " ==> file tree
 Plug 'scrooloose/nerdtree'
 
 nmap <leader>n :NERDTreeToggle<CR>
 let NERDTreeHighlightCursorline = 1
-let NERDTreeIgnore = [ '__pycache__', '\.pyc$', '\.pyo$', '\.obj$', '\.o$', '\.so$', '\.egg$', '\.beam$', '^\.git$', '^\.svn$', '^\.hg$' ]
+let NERDTreeIgnore = [
+            \ '__pycache__', '\.pyc$', '\.pyo$',
+            \ '\.obj$', '\.o$', '\.so$', '\.egg$', '\.beam$',
+            \ '^\.git$', '^\.svn$', '^\.hg$'
+            \ ]
 " automatically quit vim if NERDTree is last and only buffer
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 let g:NERDTreeMapOpenSplit = 's'
@@ -146,8 +92,14 @@ let g:NERDSpaceDelims = 1
 
 
 " ==> remove trailing whitespace [, + <Space>]
-Plug 'bronson/vim-trailing-whitespace'
-map <leader><space> :FixWhitespace<cr>
+Plug 'ntpeters/vim-better-whitespace'
+map <leader><space> :StripWhitespace<cr>
+autocmd BufEnter * EnableStripWhitespaceOnSave
+let g:better_whitespace_filetypes_blacklist = [
+            \ 'go',
+            \ 'diff', 'gitcommit', 'unite', 'qf', 'help', 'markdown'
+            \ ]
+let g:better_whitespace_enabled = 1
 
 
 " ==> quick movement [,, + w/fx/h/j/k/l]
@@ -265,6 +217,7 @@ let g:completor_disable_buffer = 0
 let g:completor_set_options = 1
 
 noremap <leader>jd :call completor#do('definition')<CR>
+noremap <s-k> :call completor#do('doc')<CR>
 
 
 " ==> Syntax checking hacks for vim.
@@ -353,6 +306,10 @@ let g:go_echo_go_info=0
 Plug 'vim-erlang/vim-erlang-runtime', { 'for': 'erlang' }
 Plug 'vim-erlang/vim-erlang-omnicomplete', { 'for': 'erlang' }
 
+" ==> Elixir
+Plug 'elixir-editors/vim-elixir', { 'for': 'elixir' }
+Plug 'damnever/completor-elixir', { 'for': 'elixir' }
+
 
 " ==> Rust
 Plug 'racer-rust/vim-racer', { 'for': 'rust' }
@@ -394,6 +351,66 @@ Plug 'fatih/vim-nginx' , {'for': 'nginx'}
 Plug 'junegunn/vim-emoji'
 
 set completefunc=emoji#complete
+
+
+" ==> themes
+" solarized
+Plug 'altercation/vim-colors-solarized'
+let g:solarized_termtrans = 1
+let g:solarized_contrast = "normal"
+let g:solarized_visibility = "normal"
+let g:solarized_termcolors = 256
+" molokai
+Plug 'tomasr/molokai'
+let g:molokai_original = 1
+let g:rehash256 = 1
+Plug 'flazz/vim-colorschemes'
+
+
+" ==> airline
+Plug 'bling/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+endif
+let g:airline_left_sep = '▶'
+let g:airline_left_alt_sep = '❯'
+let g:airline_right_sep = '◀'
+let g:airline_right_alt_sep = '❮'
+let g:airline_symbols.linenr = '¶'
+let g:airline_symbols.branch = '⎇'
+" https://github.com/bling/vim-airline/wiki/Screenshots
+" tomorrow, bubblegum ..
+let g:airline_theme ='laederon'
+
+
+" ==> Better Rainbow Parentheses
+Plug 'kien/rainbow_parentheses.vim'
+let g:rbpt_colorpairs = [
+    \ ['brown',       'RoyalBlue3'],
+    \ ['Darkblue',    'SeaGreen3'],
+    \ ['darkgray',    'DarkOrchid3'],
+    \ ['darkgreen',   'firebrick3'],
+    \ ['darkcyan',    'RoyalBlue3'],
+    \ ['darkred',     'SeaGreen3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['brown',       'firebrick3'],
+    \ ['gray',        'RoyalBlue3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['Darkblue',    'firebrick3'],
+    \ ['darkgreen',   'RoyalBlue3'],
+    \ ['darkcyan',    'SeaGreen3'],
+    \ ['darkred',     'DarkOrchid3'],
+    \ ['red',         'firebrick3'],
+    \]
+let g:rbpt_max = 64
+let g:rbpt_loadcmd_toggle = 0
+au VimEnter * RainbowParenthesesToggle
+au Syntax * RainbowParenthesesLoadRound
+au Syntax * RainbowParenthesesLoadSquare
+au Syntax * RainbowParenthesesLoadBraces
+
 
 call plug#end()
 
@@ -595,16 +612,6 @@ function! SetMkdOpts()
     setlocal wrap
     setlocal linebreak
 endfunction
-
-fun! <SID>StripTrailingWhitespaces()
-    let l = line(".")
-    let c = col(".")
-    %s/\s\+$//e
-    call cursor(l, c)
-endfun
-" Remove go, Ref:
-" https://github.com/spf13/spf13-vim/issues/957#issuecomment-306510976
-autocmd FileType c,cpp,javascript,python,rust,lua,vim,scheme,xml,yml,perl autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
 
 autocmd BufNewFile *.sh,*.py exec ":call AutoSetFileHead()"
 function! AutoSetFileHead()
