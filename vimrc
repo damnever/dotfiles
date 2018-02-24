@@ -304,7 +304,7 @@ let g:go_echo_go_info=0
 
 " ==> Erlang
 Plug 'vim-erlang/vim-erlang-runtime', { 'for': 'erlang' }
-Plug 'vim-erlang/vim-erlang-omnicomplete', { 'for': 'erlang' }
+" Plug 'vim-erlang/vim-erlang-omnicomplete', { 'for': 'erlang' }
 
 " ==> Elixir
 Plug 'elixir-editors/vim-elixir', { 'for': 'elixir' }
@@ -431,6 +431,8 @@ set smarttab
 set expandtab
 set shiftround
 
+set completeopt-=preview
+
 set list
 set listchars=tab:\ \ ,trail:∙,extends:❯,precedes:❮,nbsp:•
 set fillchars+=vert:│
@@ -513,7 +515,6 @@ autocmd! bufwritepost _vimrc source %
 autocmd! bufwritepost .vimrc source %
 autocmd! bufwritepost vimrc source %
 
-set completeopt=longest,menu
 autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 inoremap <expr> <CR>       pumvisible() ? "\<C-y>" : "\<CR>"
 inoremap <expr> <Down>     pumvisible() ? "\<C-n>" : "\<Down>"
