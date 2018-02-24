@@ -206,7 +206,8 @@ nnoremap <Leader>es :UltiSnipsEdit<Cr>
 " ==> Async completion framework (vim8 required).
 Plug 'maralla/completor.vim'
 
-let g:completor_python_binary = substitute(resolve(system('pyenv which python')), '\n\+$', '', '')
+let s:python_binary = substitute(resolve(system('pyenv which python')), '\n\+$', '', '')
+let g:completor_python_binary = s:python_binary
 let g:completor_racer_binary = '~/.cargo/bin/racer'
 let g:completor_gocode_binary = '~/.go/bin/gocode'
 let g:completor_debug = 1
@@ -222,25 +223,25 @@ noremap <s-k> :call completor#do('doc')<CR>
 
 " ==> Syntax checking hacks for vim.
 " Plug 'scrooloose/syntastic'
-" let g:syntastic_error_symbol = '>>'
-" let g:syntastic_warning_symbol = '>'
+
+" set statusline+=%#warningmsg#
+" set statusline+=%{SyntasticStatuslineFlag()}
+" set statusline+=%*
+" let g:syntastic_error_symbol = '✗'
+" let g:syntastic_warning_symbol = '●'
+" let g:syntastic_style_error_symbol = '✗'
+" let g:syntastic_style_warning_symbol = '●'
+" let g:syntastic_always_populate_loc_list = 0
+" let g:syntastic_auto_loc_list = 0
 " let g:syntastic_check_on_open = 1
 " let g:syntastic_check_on_wq = 0
 " let g:syntastic_enable_highlighting = 1
-" let g:syntastic_always_populate_loc_list = 0
-" let g:syntastic_auto_loc_list = 0
 " let g:syntastic_loc_list_height = 5
-" function! ToggleErrors()
-    " let old_last_winnr = winnr('$')
-    " lclose
-    " if old_last_winnr == winnr('$')
-        " " Nothing was closed, open syntastic_error location panel
-        " Errors
-    " endif
-" endfunction
-" nnoremap <Leader>s :call ToggleErrors()<cr>
-" highlight SyntasticErrorSign guifg=white guibg=black
-" let g:syntastic_mode_map = {'mode': 'active', 'passive_filetypes': ['java'] }
+" let g:syntastic_enable_signs = 1
+" " highlight SyntasticErrorSign ctermfg=196 ctermbg=16
+" " highlight SyntasticWarningSign ctermfg=184 ctermbg=16
+" " highlight SyntasticStyleErrorSign ctermfg=214 ctermbg=16
+" " highlight SyntasticStyleWarningSign ctermfg=28 ctermbg=16
 " " python
 " let g:syntastic_python_checkers = ['pyflakes', 'pep8']
 " " error code: http://pep8.readthedocs.org/en/latest/intro.html#error-codes
@@ -248,17 +249,22 @@ noremap <s-k> :call completor#do('doc')<CR>
 " " E731: do not assign a lambda expression, use a def? fuck it...
 " let g:syntastic_python_pep8_args = '--ignore=E124,E225,E226,E227,E302,E501,E712,W601,E731'
 " " golang
-" let g:syntastic_go_checkers = ['golint', 'govet', 'gometalinter']
-" let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
+" let g:syntastic_go_checkers = ['gometalinter']
+" let g:syntastic_go_gometalinter_args = '-j4 --deadline=5s --vendor --line-length=120 --disable-all --enable=vet --enable=errcheck --enable=golint --enable=lll --enable=unused'
+" let g:syntastic_mode_map = {'mode': 'active', 'passive_filetypes': ['java'] }
 
 " ==> Check syntax on the fly asynchronously (vim8 required).
 Plug 'maralla/validator.vim'
 
 let g:validator_debug = 1
 let g:validator_filetype_map = {'c': 'cpp'}
+let g:validator_cpp_checkers = ['clang-tidy']
 let g:validator_go_checkers = ['gometalinter']
 let g:validator_go_gometalinter_args = '-j4 --deadline=5s --vendor --line-length=120 --disable-all --enable=vet --enable=errcheck --enable=golint --enable=lll --enable=unused'
-let g:validator_python_flake8_args = '--ignore=E124,E225,E226,E227,E302,E501,E712,W601,E731'
+let g:validator_python_flake8_binary = fnamemodify(s:python_binary, ':h').'/flake8'
+let g:validator_python_checkers = ['flake8']
+" let g:validator_python_pep8_args = '--ignore=E124,E225,E226,E227,E302,E501,E712,W601,E731'
+let g:validator_rust_checkers = ['cargo check']
 let g:validator_error_msg_format = '[ ● %d/%d issues ]'
 let g:validator_error_symbol = '✗'
 let g:validator_style_error_symbol = '✗'
@@ -431,6 +437,7 @@ set smarttab
 set expandtab
 set shiftround
 
+set signcolumn=yes
 set completeopt-=preview
 
 set list
