@@ -94,7 +94,6 @@ setup_vim() {
     export SHELL="/bin/sh"
     vim -u $HOME/.vimrc +PlugInstall! +PlugClean! +qall
     export SHELL=$system_shell
-    pushd vim/plugins/completor.vim/ && make js && popd
 }
 
 

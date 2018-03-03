@@ -204,7 +204,7 @@ nnoremap <Leader>es :UltiSnipsEdit<Cr>
 
 
 " ==> Async completion framework (vim8 required).
-Plug 'maralla/completor.vim'
+Plug 'maralla/completor.vim', { 'do': 'make js' }
 
 let s:python_binary = substitute(resolve(system('pyenv which python')), '\n\+$', '', '')
 let g:completor_python_binary = s:python_binary
@@ -314,7 +314,7 @@ Plug 'vim-erlang/vim-erlang-runtime', { 'for': 'erlang' }
 
 " ==> Elixir
 Plug 'elixir-editors/vim-elixir', { 'for': 'elixir' }
-Plug 'damnever/completor-elixir', { 'for': 'elixir' }
+Plug 'damnever/completor-elixir', { 'do': 'make', 'for': 'elixir' }
 
 
 " ==> Rust
