@@ -6,6 +6,7 @@
 [core]
     editor = vim
     autocrlf = input
+    whitespace = indent-with-non-tab,trailing-space,cr-at-eol
 
 [diff "bin"]
     # Use `hexdump` to diff binary files
@@ -13,7 +14,7 @@
 
 [apply]
     # Detect whitespace errors when applying a patch
-    whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
+    whitespace = fix
 
 [url "git@github.com:"]
     insteadOf = https://github.com/
