@@ -336,7 +336,7 @@ let g:closetag_html_style = 1
 Plug 'pangloss/vim-javascript', {'for': 'javascript'}
 Plug 'mxw/vim-jsx', {'for': 'javascript'}
 " Vue.js
-Plug 'posva/vim-vue'
+Plug 'posva/vim-vue', {'for': 'vue'}
 autocmd FileType vue syntax sync fromstart
 
 
