@@ -265,6 +265,7 @@ let g:validator_python_flake8_binary = fnamemodify(s:python_binary, ':h').'/flak
 let g:validator_python_checkers = ['flake8']
 " let g:validator_python_pep8_args = '--ignore=E124,E225,E226,E227,E302,E501,E712,W601,E731'
 let g:validator_rust_checkers = ['cargo check']
+let g:validator_sh_checkers = ['shellcheck']
 let g:validator_error_msg_format = '[ ● %d/%d issues ]'
 let g:validator_error_symbol = '✗'
 let g:validator_style_error_symbol = '✗'
