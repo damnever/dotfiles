@@ -256,7 +256,7 @@ noremap <s-k> :call completor#do('doc')<CR>
 " ==> Check syntax on the fly asynchronously (vim8 required).
 Plug 'maralla/validator.vim'
 
-let g:validator_debug = 1
+let g:validator_debug = 0
 let g:validator_filetype_map = {'c': 'cpp'}
 let g:validator_cpp_checkers = ['clang-tidy']
 let g:validator_go_checkers = ['gometalinter']
