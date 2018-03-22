@@ -254,27 +254,59 @@ noremap <s-k> :call completor#do('doc')<CR>
 " let g:syntastic_mode_map = {'mode': 'active', 'passive_filetypes': ['java'] }
 
 " ==> Check syntax on the fly asynchronously (vim8 required).
-Plug 'maralla/validator.vim'
+" Plug 'maralla/validator.vim'
 
-let g:validator_debug = 0
-let g:validator_filetype_map = {'c': 'cpp'}
-let g:validator_cpp_checkers = ['clang-tidy']
-let g:validator_go_checkers = ['gometalinter']
-let g:validator_go_gometalinter_args = '-j4 --deadline=5s --vendor --line-length=120 --disable-all --enable=vet --enable=errcheck --enable=golint --enable=lll --enable=unused'
-let g:validator_python_flake8_binary = fnamemodify(s:python_binary, ':h').'/flake8'
-let g:validator_python_checkers = ['flake8']
-" let g:validator_python_pep8_args = '--ignore=E124,E225,E226,E227,E302,E501,E712,W601,E731'
-let g:validator_rust_checkers = ['cargo check']
-let g:validator_sh_checkers = ['shellcheck']
-let g:validator_error_msg_format = '[ ● %d/%d issues ]'
-let g:validator_error_symbol = '✗'
-let g:validator_style_error_symbol = '✗'
-let g:validator_warning_symbol = '∙'
-let g:validator_style_warning_symbol = '∙'
-let g:validator_auto_open_quickfix = 0
-let g:validator_permament_sign = 0
-let g:validator_highlight_message = 1
-let g:validator_ignore = ['java']
+" let g:validator_debug = 0
+" let g:validator_filetype_map = {'c': 'cpp'}
+" let g:validator_cpp_checkers = ['clang-tidy']
+" let g:validator_go_checkers = ['gometalinter']
+" let g:validator_go_gometalinter_args = '-j4 --deadline=5s --vendor --line-length=120 --disable-all --enable=vet --enable=errcheck --enable=golint --enable=lll --enable=unused'
+" let g:validator_python_flake8_binary = fnamemodify(s:python_binary, ':h').'/flake8'
+" let g:validator_python_checkers = ['flake8']
+" " let g:validator_python_pep8_args = '--ignore=E124,E225,E226,E227,E302,E501,E712,W601,E731'
+" let g:validator_rust_checkers = ['cargo check']
+" let g:validator_sh_checkers = ['shellcheck']
+" let g:validator_error_msg_format = '[ ● %d/%d issues ]'
+" let g:validator_error_symbol = '✗'
+" let g:validator_style_error_symbol = '✗'
+" let g:validator_warning_symbol = '∙'
+" let g:validator_style_warning_symbol = '∙'
+" let g:validator_auto_open_quickfix = 0
+" let g:validator_permament_sign = 0
+" let g:validator_highlight_message = 1
+" let g:validator_ignore = ['java']
+
+" Asynchronous Lint Engine (vim8 required).
+Plug 'w0rp/ale'
+
+hi default link ALEErrorSign Error
+hi default link ALEWarningSign Exception
+let g:ale_completion_enabled = 0
+let g:ale_history_log_output = 0  " Save memory.
+let g:ale_history_enabled = 0
+let g:ale_sign_error = '✗'
+let g:ale_sign_warning = '∙'
+let g:airline#extensions#ale#enabled = 1
+let g:ale_echo_msg_error_str = 'E'
+let g:ale_echo_msg_warning_str = 'W'
+let g:ale_echo_msg_format = '[%severity%] [%linter%] %(code): %%s'
+let g:ale_set_loclist = 0
+let g:ale_set_quickfix = 1
+let g:ale_list_window_size = 5
+let g:ale_lint_delay = 111
+let g:ale_linters = {
+    \'c': ['clangtidy'],
+    \'sh': ['shellcheck'],
+    \'vim': ['vint'],
+    \'python': ['flake8'],
+    \'go': ['gometalinter'],
+    \'elixir': ['credo'],
+    \}
+let g:ale_vim_vint_show_style_issues = 0
+let g:ale_sh_shellcheck_options = '-x -f gcc'
+let g:ale_python_flake8_executable = fnamemodify(s:python_binary, ':h').'/flake8'
+let g:ale_python_flake8_use_global = 1
+let g:ale_go_gometalinter_options = '--fast -j4 --deadline=5s --vendor --line-length=120 --disable-all --enable=vet --enable=errcheck --enable=golint --enable=lll --enable=unused'
 
 
 " ==> Python
