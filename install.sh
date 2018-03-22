@@ -26,6 +26,12 @@ install_requirements_for_mac() {
     brew install watch
 }
 
+change_settings_for_mac() {
+    # Ref: https://github.com/mathiasbynens/dotfiles/issues/687
+    defaults write NSGlobalDomain KeyRepeat -int 1
+    defaults write NSGlobalDomain InitialKeyRepeat -int 10
+}
+
 install_requirements_for_ubuntu() {
     sudo apt-get update
     sudo apt-get install -y shellcheck clang-tidy
@@ -44,11 +50,12 @@ install_requirements_for_ubuntu() {
 
 install_prerequirements() {
     if [[ "$platform" == "Darwin" ]]; then  # Mac
+        change_settings_for_mac
         install_requirements_for_mac
-        sudo chsh -s $(which zsh)
+        sudo chsh -s "$(which zsh)"
     elif [[ "$platform" == "Linux" ]]; then  # ubuntu for me
         install_requirements_for_ubuntu
-        sudo chsh -s $(which zsh) ubuntu # vagrant
+        sudo chsh -s "$(which zsh)" ubuntu # vagrant
     fi
     sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
 }
@@ -73,6 +80,7 @@ setup_config_files() {
     done
     mkdir -vp $HOME/.gnupg
     cp -rfv $cur_dir/gnupg/* $HOME/.gnupg
+    # shellcheck source=/dev/null
     source $cur_dir/third_configs/install.sh
 
     echo "-> create dirs .."
