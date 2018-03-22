@@ -41,10 +41,10 @@ install_requirements_for_ubuntu() {
     sudo apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev \
         libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev xz-utils
     sudo apt-get install -y build-essential cmake python-dev ctags silversearcher-ag
-    git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf
+    git clone --depth 1 https://github.com/junegunn/fzf.git "$HOME/.fzf"
     ~/.fzf/install
-    git clone https://github.com/yyuu/pyenv.git $HOME/.pyenv
-    git clone https://github.com/yyuu/pyenv-virtualenvwrapper.git $HOME/.pyenv/plugins/pyenv-virtualenvwrapper
+    git clone https://github.com/yyuu/pyenv.git "$HOME/.pyenv"
+    git clone https://github.com/yyuu/pyenv-virtualenvwrapper.git "$HOME/.pyenv/plugins/pyenv-virtualenvwrapper"
 }
 
 
@@ -76,15 +76,15 @@ setup_config_files() {
     )
     for f in "${files[@]}"
     do
-        ln -vsfn $cur_dir/$f $HOME/.$f
+        ln -vsfn "$cur_dir/$f" "$HOME/.$f"
     done
-    mkdir -vp $HOME/.gnupg
-    cp -rfv $cur_dir/gnupg/* $HOME/.gnupg
+    mkdir -vp "$HOME/.gnupg"
+    cp -rfv "$cur_dir/gnupg/*" "$HOME/.gnupg"
     # shellcheck source=/dev/null
     source $cur_dir/third_configs/install.sh
 
     echo "-> create dirs .."
-    mkdir -vp $HOME/dev/ak/{C,Go,Python,Scheme,Erlang}
+    mkdir -vp "$HOME/dev/ak/{C,Go,Python,Scheme,Erlang}"
 }
 
 
@@ -95,12 +95,12 @@ setup_vim() {
     go get -u github.com/alecthomas/gometalinter
     gometalinter --install
 
-    curl -fLo $HOME/.vim/autoload/plug.vim --create-dirs \
+    curl -fLo "$HOME/.vim/autoload/plug.vim" --create-dirs \
         https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
     system_shell=$SHELL
     export SHELL="/bin/sh"
-    vim -u $HOME/.vimrc +PlugInstall! +PlugClean! +qall
+    vim -u "$HOME/.vimrc" +PlugInstall! +PlugClean! +qall
     export SHELL=$system_shell
 }
 
@@ -138,5 +138,5 @@ done
 if [ -z "${noargs}" ]; then
     usage
 else
-    exec $SHELL
+    exec "$SHELL"
 fi
