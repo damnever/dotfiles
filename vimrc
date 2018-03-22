@@ -305,9 +305,10 @@ let g:go_gocode_propose_builtins = 0
 let g:go_echo_command_info = 0
 let g:go_echo_go_info = 0
 let g:go_def_mapping_enabled = 0
+let g:go_def_reuse_buffer = 1
 " let g:go_metalinter_enabled = [] " ['vet', 'errcheck', 'golint', 'lll', 'unused']
 " let g:go_metalinter_deadline = '5s'
-autocmd FileType go noremap <leader>jd :GoDef<CR>
+autocmd FileType go noremap <leader>jd :call go#def#Jump('split')<CR>
 
 
 " ==> Erlang
