@@ -303,7 +303,7 @@ let g:ale_linters = {
     \'elixir': ['credo'],
     \}
 let g:ale_vim_vint_show_style_issues = 0
-let g:ale_sh_shellcheck_options = '-x -f gcc'
+let g:ale_sh_shellcheck_options = '-x'
 let g:ale_python_flake8_executable = fnamemodify(s:python_binary, ':h').'/flake8'
 let g:ale_python_flake8_use_global = 1
 let g:ale_go_gometalinter_options = '--fast -j4 --deadline=5s --vendor --line-length=120 --disable-all --enable=vet --enable=errcheck --enable=golint --enable=lll --enable=unused'
