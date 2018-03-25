@@ -157,15 +157,15 @@ let g:ctrlsf_confirm_save = 0
 " Note: cannot use <CR> or <C-m> for open
 " Use : <sapce> or <tab>
 let g:ctrlsf_mapping = {
-    \ "open"  : "<Space>",
-    \ "openb" : "O",
-    \ "tab"   : "t",
-    \ "tabb"  : "T",
-    \ "prevw" : "p",
-    \ "quit"  : "q",
-    \ "next"  : "<C-J>",
-    \ "prev"  : "<C-K>",
-    \ "pquit" : "q",
+    \ 'open'  : '<Space>',
+    \ 'openb' : 'O',
+    \ 'tab'   : 't',
+    \ 'tabb'  : 'T',
+    \ 'prevw' : 'p',
+    \ 'quit'  : 'q',
+    \ 'next'  : '<C-J>',
+    \ 'prev'  : '<C-K>',
+    \ 'pquit' : 'q',
     \ }
 
 
@@ -306,7 +306,13 @@ let g:ale_vim_vint_show_style_issues = 0
 let g:ale_sh_shellcheck_options = '-x'
 let g:ale_python_flake8_executable = fnamemodify(s:python_binary, ':h').'/flake8'
 let g:ale_python_flake8_use_global = 1
-let g:ale_go_gometalinter_options = '--fast -j4 --deadline=5s --vendor --line-length=120 --disable-all --enable=vet --enable=errcheck --enable=golint --enable=lll --enable=unused'
+let g:ale_go_gometalinter_options = '--fast -j4 --deadline=5s --vendor --disable-all
+            \ --enable=vet
+            \ --enable=errcheck
+            \ --enable=golint
+            \ --enable=lll --line-length=120
+            \ --enable=unused
+            \ --enable=unparam'
 
 
 " ==> Python
