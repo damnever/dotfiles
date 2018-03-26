@@ -69,8 +69,8 @@ let g:tagbar_type_go = {
 Plug 'thinca/vim-quickrun'
 
 let g:quickrun_config = {
-\   "_" : {
-\       "outputter" : "message",
+\   '_' : {
+\       'outputter' : 'message',
 \   },
 \}
 let g:quickrun_no_default_key_mappings = 1
@@ -80,7 +80,7 @@ nmap <Leader>r <Plug>(quickrun)
 " ==> provides insert mode auto-completion for quotes, parens, brackets, etc.
 Plug 'Raimondi/delimitMate'
 au FileType python let b:delimitMate_nesting_quotes = ['"', "'"]
-au FileType rust let b:delimitMate_quotes = "\""
+au FileType rust let b:delimitMate_quotes = '"';
 " Plug 'jiangmiao/auto-pairs'
 " let g:AutoPairs = {'(':')', '[':']', '{':'}',"'":"'",'"':'"', '`':'`'}
 
@@ -290,8 +290,10 @@ let g:airline#extensions#ale#enabled = 1
 let g:ale_echo_msg_error_str = 'E'
 let g:ale_echo_msg_warning_str = 'W'
 let g:ale_echo_msg_format = '[%severity%] [%linter%] %(code): %%s'
-let g:ale_set_loclist = 0
-let g:ale_set_quickfix = 1
+augroup CloseLoclistWindowGroup
+    autocmd!
+    autocmd QuitPre * if empty(&buftype) | lclose | endif
+augroup END
 let g:ale_list_window_size = 5
 let g:ale_lint_delay = 111
 let g:ale_linters = {
