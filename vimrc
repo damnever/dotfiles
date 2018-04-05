@@ -348,6 +348,7 @@ let g:go_def_mapping_enabled = 0
 let g:go_def_reuse_buffer = 1
 " let g:go_metalinter_enabled = [] " ['vet', 'errcheck', 'golint', 'lll', 'unused']
 " let g:go_metalinter_deadline = '5s'
+autocmd Filetype godoc noremap <buffer> <silent> q :<C-U>close<CR>
 autocmd FileType go noremap <leader>jd :call go#def#Jump('split')<CR>
 
 
@@ -406,8 +407,8 @@ set completefunc=emoji#complete
 " solarized
 Plug 'altercation/vim-colors-solarized'
 let g:solarized_termtrans = 1
-let g:solarized_contrast = "normal"
-let g:solarized_visibility = "normal"
+let g:solarized_contrast = 'normal'
+let g:solarized_visibility = 'normal'
 let g:solarized_termcolors = 256
 " molokai
 Plug 'tomasr/molokai'
@@ -532,10 +533,10 @@ let g:FoldMethod = 0
 map <leader>zz :call ToggleFold()<cr>
 fun! ToggleFold()
     if g:FoldMethod == 0
-        exe "normal! zM"
+        exe 'normal! zM'
         let g:FoldMethod = 1
     else
-        exe "normal! zR"
+        exe 'normal! zR'
         let g:FoldMethod = 0
     endif
 endfunc
@@ -572,7 +573,7 @@ inoremap <expr> <Up>       pumvisible() ? "\<C-p>" : "\<Up>"
 inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<PageDown>"
 inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
 
-if has("autocmd")
+if has('autocmd')
     au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 endif
 
@@ -667,7 +668,7 @@ endfunction
 autocmd BufNewFile *.sh,*.py exec ":call AutoSetFileHead()"
 function! AutoSetFileHead()
     if &filetype == 'sh'
-        call setline(1, "\#!/bin/bash")
+        call setline(1, '\#!/bin/bash')
     endif
 endfunc
 
