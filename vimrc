@@ -431,8 +431,8 @@ let g:airline_right_alt_sep = '❮'
 let g:airline_symbols.linenr = '¶'
 let g:airline_symbols.branch = '⎇'
 " https://github.com/bling/vim-airline/wiki/Screenshots
-" tomorrow, bubblegum ..
-let g:airline_theme ='laederon'
+" laederon, tomorrow, bubblegum ..
+let g:airline_theme = 'wombat'
 
 
 " ==> Better Rainbow Parentheses
