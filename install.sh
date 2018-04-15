@@ -24,6 +24,7 @@ install_requirements_for_mac() {
     brew ln gnu-getopt --force
     brew install yarn
     brew install watch
+    brew install autojump
 }
 
 change_settings_for_mac() {

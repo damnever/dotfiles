@@ -28,7 +28,18 @@ fpath+=~/.zfunc
 # Zsh plugins can be found in ~/.oh-my-zsh/plugins/*
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git brew pip vagrant pyenv python go golang zsh-autosuggestions colors kocmd gopath gobench)
+plugins=(
+git
+brew
+pip
+vagrant
+pyenv python
+go golang
+zsh-autosuggestions
+colors
+kocmd
+gopath gobench
+autojump)
 
 # Binding keys
 # As an addition to https://github.com/jlevy/the-art-of-command-line#everyday-use
@@ -65,6 +76,13 @@ export LANG=en_US.UTF-8
 if [[ "$platform" == "Darwin" ]]; then  # Mac
     alias vim='mvim -v'
 fi
+
+
+# autojump
+if [[ "$platform" == "Darwin" ]]; then  # Mac
+    [ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
+fi
+
 
 # Pyenv
 if [[ "$platform" == "Darwin" ]]; then  # Mac
