@@ -74,6 +74,7 @@ setup_config_files() {
         vim \
         vimrc \
         pip \
+        config \
     )
     for f in "${files[@]}"
     do
@@ -85,7 +86,7 @@ setup_config_files() {
     source $cur_dir/third_configs/install.sh
 
     echo "-> create dirs .."
-    mkdir -vp "$HOME/dev/ak/{C,Go,Python,Scheme,Erlang}"
+    # mkdir -vp "$HOME/dev/ak/{C,Go,Python,Scheme,Erlang,Elixir,Rust}"
 }
 
 
