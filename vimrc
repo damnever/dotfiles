@@ -591,7 +591,7 @@ au InsertLeave * set nopaste
 function! XTermPasteBegin()
     set pastetoggle=<Esc>[201~
     set paste
-    return ""
+    return ''
 endfunction
 inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
 
@@ -672,10 +672,8 @@ function! AutoSetFileHead()
     endif
 endfunc
 
-if v:version > 701
-    autocmd Syntax * call matchadd('Todo',  '\W\zs\(TODO\|FIXME\|CHANGED\|DONE\|XXX\|BUG\|HACK\)')
-    autocmd Syntax * call matchadd('Debug', '\W\zs\(NOTE\|INFO\|WARN\|WARNING\|ERROR\|IDEA\|NOTICE\)')
-endif
+autocmd Syntax * call matchadd('Todo',  '\W\zs\(TODO\|FIXME\|CHANGED\|DONE\|XXX\|BUG\|HACK\)')
+autocmd Syntax * call matchadd('Debug', '\W\zs\(NOTE\|INFO\|WARN\|WARNING\|ERROR\|IDEA\|NOTICE\|MARK\)')
 
 set background=dark " light
 set t_Co=256
