@@ -668,7 +668,7 @@ endfunction
 autocmd BufNewFile *.sh,*.py exec ":call AutoSetFileHead()"
 function! AutoSetFileHead()
     if &filetype == 'sh'
-        call setline(1, '\#!/bin/bash')
+        call setline(1, '#!/bin/bash')
     endif
 endfunc
 
