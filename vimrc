@@ -216,6 +216,7 @@ let g:completor_completion_delay = 123  " ms
 let g:completor_disable_filename = 0
 let g:completor_disable_buffer = 0
 let g:completor_set_options = 1
+" let g:completor_def_split = 'split'
 
 noremap <leader>jd :call completor#do('definition')<CR>
 noremap <s-k> :call completor#do('doc')<CR>
@@ -295,6 +296,10 @@ augroup CloseLoclistWindowGroup
     autocmd QuitPre * if empty(&buftype) | lclose | endif
 augroup END
 let g:ale_list_window_size = 5
+let g:ale_fix_on_save = 1
+let g:ale_fixers = {
+    \'go': ['goimports'],
+    \}
 let g:ale_lint_delay = 111
 let g:ale_linters = {
     \'c': ['clangtidy'],
@@ -322,37 +327,6 @@ Plug 'hdima/python-syntax', { 'for': 'python'  }
 let python_highlight_all = 1
 
 Plug 'hynek/vim-python-pep8-indent', { 'for': 'python' }
-
-" ==> Golang
-Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries', 'for': 'go' }
-
-let g:go_highlight_functions = 1
-let g:go_highlight_methods = 1
-let g:go_highlight_fields = 1
-let g:go_highlight_types = 1
-let g:go_highlight_operators = 1
-let g:go_highlight_function_calls = 1
-let g:go_highlight_build_constraints = 1
-let g:go_highlight_generate_tags = 1
-let g:go_highlight_string_spellcheck = 0
-let g:go_fmt_fail_silently = 0
-let g:go_play_open_browser = 0
-let g:go_list_type = 'quickfix'  " auto close
-let g:go_fmt_command = 'goimports'
-let g:go_metalinter_autosave = 0
-let g:go_gocode_autobuild = 0
-let g:go_info_mode = ''
-let g:go_jump_to_error = 0
-let g:go_gocode_propose_builtins = 0
-let g:go_echo_command_info = 0
-let g:go_echo_go_info = 0
-let g:go_def_mapping_enabled = 0
-let g:go_def_reuse_buffer = 1
-" let g:go_metalinter_enabled = [] " ['vet', 'errcheck', 'golint', 'lll', 'unused']
-" let g:go_metalinter_deadline = '5s'
-autocmd Filetype godoc noremap <buffer> <silent> q :<C-U>close<CR>
-autocmd FileType go noremap <leader>jd :call go#def#Jump('split')<CR>
-
 
 " ==> Erlang
 Plug 'vim-erlang/vim-erlang-runtime', { 'for': 'erlang' }
@@ -653,6 +627,7 @@ autocmd FileType c,cpp nnoremap <S-K> :call CDoc('2')<CR>
 autocmd BufNewFile,BufRead *.py inoremap # X<c-h>#
 
 autocmd FileType python set tabstop=4 shiftwidth=4 expandtab ai
+autocmd FileType vim set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
 autocmd FileType ruby set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
 autocmd FileType html set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
 autocmd FileType css set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
