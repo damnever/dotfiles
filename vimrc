@@ -217,7 +217,7 @@ let g:completor_disable_filename = 0
 let g:completor_disable_buffer = 0
 let g:completor_set_options = 1
 let g:completor_def_split = 'split'
-let g:completor_complete_options = 'menuone,noselect'  "preview
+let g:completor_complete_options = 'menuone,noselect'
 
 noremap <leader>jd :call completor#do('definition')<CR>
 noremap <s-k> :call completor#do('doc')<CR>
@@ -404,7 +404,7 @@ set expandtab
 set shiftround
 
 set signcolumn=yes
-" set completeopt-=preview
+set completeopt-=preview
 
 set list
 set listchars=tab:\ \ ,trail:∙,extends:❯,precedes:❮,nbsp:•
