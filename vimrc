@@ -216,7 +216,7 @@ let g:completor_completion_delay = 123  " ms
 let g:completor_disable_filename = 0
 let g:completor_disable_buffer = 0
 let g:completor_set_options = 1
-" let g:completor_def_split = 'split'
+let g:completor_def_split = 'split'
 
 noremap <leader>jd :call completor#do('definition')<CR>
 noremap <s-k> :call completor#do('doc')<CR>
