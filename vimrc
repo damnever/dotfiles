@@ -15,10 +15,10 @@ Plug 'scrooloose/nerdtree'
 nmap <leader>n :NERDTreeToggle<CR>
 let NERDTreeHighlightCursorline = 1
 let NERDTreeIgnore = [
-            \ '__pycache__', '\.pyc$', '\.pyo$',
-            \ '\.obj$', '\.o$', '\.so$', '\.egg$', '\.beam$',
-            \ '^\.git$', '^\.svn$', '^\.hg$'
-            \ ]
+      \ '__pycache__', '\.pyc$', '\.pyo$',
+      \ '\.obj$', '\.o$', '\.so$', '\.egg$', '\.beam$',
+      \ '^\.git$', '^\.svn$', '^\.hg$'
+      \ ]
 " automatically quit vim if NERDTree is last and only buffer
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 let g:NERDTreeMapOpenSplit = 's'
@@ -37,42 +37,42 @@ let g:tagbar_autofocus = 1
 " 1. install gotags 'go get -u github.com/jstemmer/gotags'
 " for gotags. work with tagbar
 let g:tagbar_type_go = {
-    \ 'ctagstype' : 'go',
-    \ 'kinds'     : [
-        \ 'p:package',
-        \ 'i:imports:1',
-        \ 'c:constants',
-        \ 'v:variables',
-        \ 't:types',
-        \ 'n:interfaces',
-        \ 'w:fields',
-        \ 'e:embedded',
-        \ 'm:methods',
-        \ 'r:constructor',
-        \ 'f:functions'
-    \ ],
-    \ 'sro' : '.',
-    \ 'kind2scope' : {
-        \ 't' : 'ctype',
-        \ 'n' : 'ntype'
-    \ },
-    \ 'scope2kind' : {
-        \ 'ctype' : 't',
-        \ 'ntype' : 'n'
-    \ },
-    \ 'ctagsbin'  : 'gotags',
-    \ 'ctagsargs' : '-sort -silent'
-\ }
+      \ 'ctagstype' : 'go',
+      \ 'kinds'     : [
+      \ 'p:package',
+      \ 'i:imports:1',
+      \ 'c:constants',
+      \ 'v:variables',
+      \ 't:types',
+      \ 'n:interfaces',
+      \ 'w:fields',
+      \ 'e:embedded',
+      \ 'm:methods',
+      \ 'r:constructor',
+      \ 'f:functions'
+      \ ],
+      \ 'sro' : '.',
+      \ 'kind2scope' : {
+      \ 't' : 'ctype',
+      \ 'n' : 'ntype'
+      \ },
+      \ 'scope2kind' : {
+      \ 'ctype' : 't',
+      \ 'ntype' : 'n'
+      \ },
+      \ 'ctagsbin'  : 'gotags',
+      \ 'ctagsargs' : '-sort -silent'
+      \ }
 
 
 " ==> quick run, [, + r]
 Plug 'thinca/vim-quickrun'
 
 let g:quickrun_config = {
-\   '_' : {
-\       'outputter' : 'message',
-\   },
-\}
+      \   '_' : {
+      \       'outputter' : 'message',
+      \   },
+      \}
 let g:quickrun_no_default_key_mappings = 1
 nmap <Leader>r <Plug>(quickrun)
 
@@ -96,9 +96,9 @@ Plug 'ntpeters/vim-better-whitespace'
 map <leader><space> :StripWhitespace<cr>
 autocmd BufEnter * EnableStripWhitespaceOnSave
 let g:better_whitespace_filetypes_blacklist = [
-            \ 'go',
-            \ 'diff', 'gitcommit', 'unite', 'qf', 'help', 'markdown'
-            \ ]
+      \ 'go',
+      \ 'diff', 'gitcommit', 'unite', 'qf', 'help', 'markdown'
+      \ ]
 let g:better_whitespace_enabled = 1
 
 
@@ -126,9 +126,9 @@ let g:ctrlp_map = '<leader>p'
 let g:ctrlp_cmd = 'CtrlP'
 map <leader>f :CtrlPMRU<CR>
 let g:ctrlp_custom_ignore = {
-    \ 'dir':  '\v[\/]\.(git|hg|svn|rvm)$',
-    \ 'file': '\v\.(o|so|zip|tar|tar.gz|pyc|pyo)$',
-    \ }
+      \ 'dir':  '\v[\/]\.(git|hg|svn|rvm)$',
+      \ 'file': '\v\.(o|so|zip|tar|tar.gz|pyc|pyo)$',
+      \ }
 let g:ctrlp_working_path_mode = 0
 let g:ctrlp_match_window_bottom = 1
 let g:ctrlp_max_height = 15
@@ -137,8 +137,8 @@ let g:ctrlp_mruf_max = 500
 let g:ctrlp_follow_symlinks = 1
 let g:ctrlp_show_hidden = 1
 if executable('ag')
-    let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-    let g:ctrlp_use_caching = 0
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+  let g:ctrlp_use_caching = 0
 endif
 nnoremap <Leader>fu :CtrlPFunky<Cr>
 nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
@@ -157,16 +157,16 @@ let g:ctrlsf_confirm_save = 0
 " Note: cannot use <CR> or <C-m> for open
 " Use : <sapce> or <tab>
 let g:ctrlsf_mapping = {
-    \ 'open'  : '<Space>',
-    \ 'openb' : 'O',
-    \ 'tab'   : 't',
-    \ 'tabb'  : 'T',
-    \ 'prevw' : 'p',
-    \ 'quit'  : 'q',
-    \ 'next'  : '<C-J>',
-    \ 'prev'  : '<C-K>',
-    \ 'pquit' : 'q',
-    \ }
+      \ 'open'  : '<Space>',
+      \ 'openb' : 'O',
+      \ 'tab'   : 't',
+      \ 'tabb'  : 'T',
+      \ 'prevw' : 'p',
+      \ 'quit'  : 'q',
+      \ 'next'  : '<C-J>',
+      \ 'prev'  : '<C-K>',
+      \ 'pquit' : 'q',
+      \ }
 
 
 " ==> for repeat -> enhance surround.vim, . to repeat command
@@ -212,70 +212,16 @@ let g:completor_racer_binary = '~/.cargo/bin/racer'
 let g:completor_gocode_binary = '~/.go/bin/gocode'
 let g:completor_debug = 1
 let g:completor_auto_close_doc = 1
-let g:completor_completion_delay = 123  " ms
+let g:completor_completion_delay = 111  " ms
 let g:completor_disable_filename = 0
 let g:completor_disable_buffer = 0
 let g:completor_set_options = 1
 let g:completor_def_split = 'split'
+let g:completor_complete_options = 'menuone,noselect'  "preview
 
 noremap <leader>jd :call completor#do('definition')<CR>
 noremap <s-k> :call completor#do('doc')<CR>
 
-
-" ==> Syntax checking hacks for vim.
-" Plug 'scrooloose/syntastic'
-
-" set statusline+=%#warningmsg#
-" set statusline+=%{SyntasticStatuslineFlag()}
-" set statusline+=%*
-" let g:syntastic_error_symbol = '✗'
-" let g:syntastic_warning_symbol = '●'
-" let g:syntastic_style_error_symbol = '✗'
-" let g:syntastic_style_warning_symbol = '●'
-" let g:syntastic_always_populate_loc_list = 0
-" let g:syntastic_auto_loc_list = 0
-" let g:syntastic_check_on_open = 1
-" let g:syntastic_check_on_wq = 0
-" let g:syntastic_enable_highlighting = 1
-" let g:syntastic_loc_list_height = 5
-" let g:syntastic_enable_signs = 1
-" " highlight SyntasticErrorSign ctermfg=196 ctermbg=16
-" " highlight SyntasticWarningSign ctermfg=184 ctermbg=16
-" " highlight SyntasticStyleErrorSign ctermfg=214 ctermbg=16
-" " highlight SyntasticStyleWarningSign ctermfg=28 ctermbg=16
-" " python
-" let g:syntastic_python_checkers = ['pyflakes', 'pep8']
-" " error code: http://pep8.readthedocs.org/en/latest/intro.html#error-codes
-" " W601: use 'in' replace 'has_key', but I got a method named 'has_key' sometimes...
-" " E731: do not assign a lambda expression, use a def? fuck it...
-" let g:syntastic_python_pep8_args = '--ignore=E124,E225,E226,E227,E302,E501,E712,W601,E731'
-" " golang
-" let g:syntastic_go_checkers = ['gometalinter']
-" let g:syntastic_go_gometalinter_args = '-j4 --deadline=5s --vendor --line-length=120 --disable-all --enable=vet --enable=errcheck --enable=golint --enable=lll --enable=unused'
-" let g:syntastic_mode_map = {'mode': 'active', 'passive_filetypes': ['java'] }
-
-" ==> Check syntax on the fly asynchronously (vim8 required).
-" Plug 'maralla/validator.vim'
-
-" let g:validator_debug = 0
-" let g:validator_filetype_map = {'c': 'cpp'}
-" let g:validator_cpp_checkers = ['clang-tidy']
-" let g:validator_go_checkers = ['gometalinter']
-" let g:validator_go_gometalinter_args = '-j4 --deadline=5s --vendor --line-length=120 --disable-all --enable=vet --enable=errcheck --enable=golint --enable=lll --enable=unused'
-" let g:validator_python_flake8_binary = fnamemodify(s:python_binary, ':h').'/flake8'
-" let g:validator_python_checkers = ['flake8']
-" " let g:validator_python_pep8_args = '--ignore=E124,E225,E226,E227,E302,E501,E712,W601,E731'
-" let g:validator_rust_checkers = ['cargo check']
-" let g:validator_sh_checkers = ['shellcheck']
-" let g:validator_error_msg_format = '[ ● %d/%d issues ]'
-" let g:validator_error_symbol = '✗'
-" let g:validator_style_error_symbol = '✗'
-" let g:validator_warning_symbol = '∙'
-" let g:validator_style_warning_symbol = '∙'
-" let g:validator_auto_open_quickfix = 0
-" let g:validator_permament_sign = 0
-" let g:validator_highlight_message = 1
-" let g:validator_ignore = ['java']
 
 " Asynchronous Lint Engine (vim8 required).
 Plug 'w0rp/ale'
@@ -292,34 +238,34 @@ let g:ale_echo_msg_error_str = 'E'
 let g:ale_echo_msg_warning_str = 'W'
 let g:ale_echo_msg_format = '[%severity%] [%linter%] %(code): %%s'
 augroup CloseLoclistWindowGroup
-    autocmd!
-    autocmd QuitPre * if empty(&buftype) | lclose | endif
+  autocmd!
+  autocmd QuitPre * if empty(&buftype) | lclose | endif
 augroup END
 let g:ale_list_window_size = 5
 let g:ale_fix_on_save = 1
 let g:ale_fixers = {
-    \'go': ['goimports'],
-    \}
+      \'go': ['goimports'],
+      \}
 let g:ale_lint_delay = 111
 let g:ale_linters = {
-    \'c': ['clangtidy'],
-    \'sh': ['shellcheck'],
-    \'vim': ['vint'],
-    \'python': ['flake8'],
-    \'go': ['gometalinter'],
-    \'elixir': ['credo'],
-    \}
+      \'c': ['clangtidy'],
+      \'sh': ['shellcheck'],
+      \'vim': ['vint'],
+      \'python': ['flake8'],
+      \'go': ['gometalinter'],
+      \'elixir': ['credo'],
+      \}
 let g:ale_vim_vint_show_style_issues = 0
 let g:ale_sh_shellcheck_options = '-x'
 let g:ale_python_flake8_executable = fnamemodify(s:python_binary, ':h').'/flake8'
 let g:ale_python_flake8_use_global = 1
 let g:ale_go_gometalinter_options = '--fast -j4 --deadline=5s --vendor --disable-all
-            \ --enable=vet
-            \ --enable=errcheck
-            \ --enable=golint
-            \ --enable=lll --line-length=120
-            \ --enable=unused
-            \ --enable=unparam'
+      \ --enable=vet
+      \ --enable=errcheck
+      \ --enable=golint
+      \ --enable=lll --line-length=120
+      \ --enable=unused
+      \ --enable=unparam'
 
 
 " ==> Python
@@ -398,7 +344,7 @@ Plug 'bling/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
 if !exists('g:airline_symbols')
-    let g:airline_symbols = {}
+  let g:airline_symbols = {}
 endif
 let g:airline_left_sep = '▶'
 let g:airline_left_alt_sep = '❯'
@@ -414,22 +360,22 @@ let g:airline_theme = 'wombat'
 " ==> Better Rainbow Parentheses
 Plug 'kien/rainbow_parentheses.vim'
 let g:rbpt_colorpairs = [
-    \ ['brown',       'RoyalBlue3'],
-    \ ['Darkblue',    'SeaGreen3'],
-    \ ['darkgray',    'DarkOrchid3'],
-    \ ['darkgreen',   'firebrick3'],
-    \ ['darkcyan',    'RoyalBlue3'],
-    \ ['darkred',     'SeaGreen3'],
-    \ ['darkmagenta', 'DarkOrchid3'],
-    \ ['brown',       'firebrick3'],
-    \ ['gray',        'RoyalBlue3'],
-    \ ['darkmagenta', 'DarkOrchid3'],
-    \ ['Darkblue',    'firebrick3'],
-    \ ['darkgreen',   'RoyalBlue3'],
-    \ ['darkcyan',    'SeaGreen3'],
-    \ ['darkred',     'DarkOrchid3'],
-    \ ['red',         'firebrick3'],
-    \]
+      \ ['brown',       'RoyalBlue3'],
+      \ ['Darkblue',    'SeaGreen3'],
+      \ ['darkgray',    'DarkOrchid3'],
+      \ ['darkgreen',   'firebrick3'],
+      \ ['darkcyan',    'RoyalBlue3'],
+      \ ['darkred',     'SeaGreen3'],
+      \ ['darkmagenta', 'DarkOrchid3'],
+      \ ['brown',       'firebrick3'],
+      \ ['gray',        'RoyalBlue3'],
+      \ ['darkmagenta', 'DarkOrchid3'],
+      \ ['Darkblue',    'firebrick3'],
+      \ ['darkgreen',   'RoyalBlue3'],
+      \ ['darkcyan',    'SeaGreen3'],
+      \ ['darkred',     'DarkOrchid3'],
+      \ ['red',         'firebrick3'],
+      \]
 let g:rbpt_max = 64
 let g:rbpt_loadcmd_toggle = 0
 au VimEnter * RainbowParenthesesToggle
@@ -458,7 +404,7 @@ set expandtab
 set shiftround
 
 set signcolumn=yes
-set completeopt-=preview
+" set completeopt-=preview
 
 set list
 set listchars=tab:\ \ ,trail:∙,extends:❯,precedes:❮,nbsp:•
@@ -508,13 +454,13 @@ set foldlevel=50
 let g:FoldMethod = 0
 map <leader>zz :call ToggleFold()<cr>
 fun! ToggleFold()
-    if g:FoldMethod == 0
-        exe 'normal! zM'
-        let g:FoldMethod = 1
-    else
-        exe 'normal! zR'
-        let g:FoldMethod = 0
-    endif
+  if g:FoldMethod == 0
+    exe 'normal! zM'
+    let g:FoldMethod = 1
+  else
+    exe 'normal! zR'
+    let g:FoldMethod = 0
+  endif
 endfunc
 
 set wildmode=list:longest
@@ -550,7 +496,7 @@ inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<PageDow
 inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
 
 if has('autocmd')
-    au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+  au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 endif
 
 map <Left> <Nop>
@@ -559,15 +505,15 @@ map <Up> <Nop>
 map <Down> <Nop>
 
 function! HideNumber()
-    set number!
+  set number!
 endfunc
 nnoremap <leader>hn :call HideNumber()<CR>
 
 au InsertLeave * set nopaste
 function! XTermPasteBegin()
-    set pastetoggle=<Esc>[201~
-    set paste
-    return ''
+  set pastetoggle=<Esc>[201~
+  set paste
+  return ''
 endfunction
 inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
 
@@ -611,15 +557,15 @@ nnoremap <leader>w :w<CR>
 
 " Better man page for C
 function! CDoc(num)
-    execute '! man ' . a:num . ' ' . expand('<cword>')
-    if v:shell_error == 0 || a:num == ''
-        return
-    endif
-    if a:num == '2'
-        call CDoc('3')
-    else
-        call CDoc('')
-    endif
+  execute '! man ' . a:num . ' ' . expand('<cword>')
+  if v:shell_error == 0 || a:num == ''
+    return
+  endif
+  if a:num == '2'
+    call CDoc('3')
+  else
+    call CDoc('')
+  endif
 endfunction
 autocmd FileType c,cpp nnoremap <S-K> :call CDoc('2')<CR>
 
@@ -637,16 +583,16 @@ autocmd BufRead,BufNewFile *.vue,*.wxml set filetype=html
 autocmd BufRead,BufNewFile *.wxss set filetype=css
 autocmd BufRead,BufNewFile *.md,*.mkd,*.markdown :call SetMkdOpts()
 function! SetMkdOpts()
-    set filetype=markdown.mkd
-    setlocal wrap
-    setlocal linebreak
+  set filetype=markdown.mkd
+  setlocal wrap
+  setlocal linebreak
 endfunction
 
 autocmd BufNewFile *.sh,*.py exec ":call AutoSetFileHead()"
 function! AutoSetFileHead()
-    if &filetype == 'sh'
-        call setline(1, '#!/bin/bash')
-    endif
+  if &filetype == 'sh'
+    call setline(1, '#!/bin/bash')
+  endif
 endfunc
 
 autocmd Syntax * call matchadd('Todo',  '\W\zs\(TODO\|FIXME\|CHANGED\|DONE\|XXX\|BUG\|HACK\)')

@@ -94,6 +94,8 @@ setup_vim() {
     echo "-> setup vim .."
     pip install flake8 pyflakes pep8 pylint jedi pipenv -U
     go get -u github.com/jstemmer/gotags
+    go get -u github.com/nsf/gocode
+    go get -u github.com/zmb3/gogetdoc
     go get -u github.com/alecthomas/gometalinter
     gometalinter --install
 
