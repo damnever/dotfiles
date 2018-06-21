@@ -96,6 +96,7 @@ setup_vim() {
     go get -u github.com/jstemmer/gotags
     go get -u github.com/nsf/gocode
     go get -u github.com/zmb3/gogetdoc
+    go get -u golang.org/x/tools/cmd/guru
     go get -u github.com/alecthomas/gometalinter
     gometalinter --install
 

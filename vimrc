@@ -210,6 +210,7 @@ let s:python_binary = substitute(resolve(system('pyenv which python')), '\n\+$',
 let g:completor_python_binary = s:python_binary
 let g:completor_racer_binary = '~/.cargo/bin/racer'
 let g:completor_gocode_binary = '~/.go/bin/gocode'
+let g:completor_go_guru_binary = '~/.go/bin/guru'
 let g:completor_debug = 1
 let g:completor_auto_close_doc = 1
 let g:completor_completion_delay = 111  " ms
