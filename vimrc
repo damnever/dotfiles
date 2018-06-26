@@ -276,9 +276,9 @@ let python_highlight_all = 1
 Plug 'hynek/vim-python-pep8-indent', { 'for': 'python' }
 
 " ==> Erlang
-Plug 'vim-erlang/vim-erlang-runtime', { 'for': 'erlang' }
+" Plug 'vim-erlang/vim-erlang-runtime', { 'for': 'erlang' }
+" Plug 'vim-erlang/vim-erlang-compiler', { 'for': 'erlang' }
 " Plug 'vim-erlang/vim-erlang-omnicomplete', { 'for': 'erlang' }
-
 " ==> Elixir
 Plug 'elixir-editors/vim-elixir', { 'for': 'elixir' }
 Plug 'damnever/completor-elixir', { 'do': 'make', 'for': 'elixir' }
