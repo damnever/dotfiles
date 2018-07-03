@@ -9,7 +9,7 @@ install_requirements_for_mac() {
     brew install --with-toolchain llvm
     brew install shellcheck
     brew install readline xz
-    brew install macvim --HEAD --with-cscope --with-lua --with-luajit --with-python3 --with-override-system-vim
+    brew install macvim --HEAD --with-cscope --with-lua --with-luajit --with-python --with-override-system-vim
     /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
     brew install gnupg pnupg2 gpg-agent pinentry-mac # for gpg
     brew install zsh
