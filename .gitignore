@@ -38,3 +38,5 @@ eless_ci.20s.py
 config/configstore
 config/neofetch
 config/wireshark
+config/.isolated-storage
+pip/zsh-cache

@@ -5,8 +5,10 @@ platform=$(uname)
 
 
 install_requirements_for_mac() {
+    set -e
+    # NOTE: XCode is required.
     # for vim
-    brew install --with-toolchain llvm
+    brew install llvm --with-toolchain
     brew install shellcheck
     brew install readline xz
     brew install macvim --HEAD --with-cscope --with-lua --with-luajit --with-python --with-override-system-vim
@@ -19,7 +21,7 @@ install_requirements_for_mac() {
     /usr/local/opt/fzf/install
     brew install pyenv
     brew install pyenv-virtualenvwrapper
-    brew install tmux
+    brew install tmux reattach-to-user-namespace
     brew install coreutils findutils gnu-getopt
     brew ln gnu-getopt --force
     brew install yarn
@@ -34,6 +36,7 @@ change_settings_for_mac() {
 }
 
 install_requirements_for_ubuntu() {
+    set -e
     sudo apt-get update
     sudo apt-get install -y shellcheck clang-tidy
     sudo apt-get install -y vim
@@ -58,6 +61,12 @@ install_prerequirements() {
         install_requirements_for_ubuntu
         sudo chsh -s "$(which zsh)" ubuntu # vagrant
     fi
+
+    GLOBAL_PYTHON=3.7.0
+    pyenv install $GLOBAL_PYTHON
+    pyenv global $GLOBAL_PYTHON
+    pip install virtualenv-wrapper ipython
+
     sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
 }
 
