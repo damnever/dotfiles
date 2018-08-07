@@ -7,12 +7,12 @@ platform=$(uname)
 install_requirements_for_mac() {
     set -e
     # NOTE: XCode is required.
+    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
     # for vim
     brew install llvm --with-toolchain
     brew install shellcheck
     brew install readline xz
     brew install macvim --HEAD --with-cscope --with-lua --with-luajit --with-python --with-override-system-vim
-    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
     brew install gnupg pnupg2 gpg-agent pinentry-mac # for gpg
     brew install zsh
     brew install ctags
