@@ -27,6 +27,7 @@ install_requirements_for_mac() {
     brew install yarn
     brew install watch
     brew install autojump
+    brew install go
 }
 
 change_settings_for_mac() {
