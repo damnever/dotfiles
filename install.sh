@@ -67,6 +67,11 @@ install_prerequirements() {
     pyenv install $GLOBAL_PYTHON
     pyenv global $GLOBAL_PYTHON
     pip install virtualenv-wrapper ipython
+    
+    mkdir $HOME/.bin
+    pushd $HOME/.bin
+    git clone https://github.com/brendangregg/FlameGraph.git
+    popd
 
     sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
 }
