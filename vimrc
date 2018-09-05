@@ -92,14 +92,14 @@ let g:NERDSpaceDelims = 1
 
 
 " ==> remove trailing whitespace [, + <Space>]
-Plug 'ntpeters/vim-better-whitespace'
-map <leader><space> :StripWhitespace<cr>
-autocmd BufEnter * EnableStripWhitespaceOnSave
-let g:better_whitespace_filetypes_blacklist = [
-      \ 'go',
-      \ 'diff', 'gitcommit', 'unite', 'qf', 'help', 'markdown'
-      \ ]
-let g:better_whitespace_enabled = 1
+" Plug 'ntpeters/vim-better-whitespace'
+" map <leader><space> :StripWhitespace<cr>
+" autocmd BufEnter * EnableStripWhitespaceOnSave
+" let g:better_whitespace_filetypes_blacklist = [
+"       \ 'go',
+"       \ 'diff', 'gitcommit', 'unite', 'qf', 'help', 'markdown'
+"       \ ]
+" let g:better_whitespace_enabled = 1
 
 
 " ==> quick movement [,, + w/fx/h/j/k/l]
@@ -245,6 +245,7 @@ augroup END
 let g:ale_list_window_size = 5
 let g:ale_fix_on_save = 1
 let g:ale_fixers = {
+      \'*': ['remove_trailing_lines', 'trim_whitespace'],
       \'go': ['goimports'],
       \}
 let g:ale_lint_delay = 111
@@ -260,7 +261,7 @@ let g:ale_vim_vint_show_style_issues = 0
 let g:ale_sh_shellcheck_options = '-x'
 let g:ale_python_flake8_executable = fnamemodify(s:python_binary, ':h').'/flake8'
 let g:ale_python_flake8_use_global = 1
-let g:ale_go_gometalinter_options = '--fast -j4 --deadline=5s --vendor --disable-all
+let g:ale_go_gometalinter_options = '--fast -j4 --deadline=5s --vendor --disable-all --enable-gc
       \ --enable=vet
       \ --enable=errcheck
       \ --enable=golint
