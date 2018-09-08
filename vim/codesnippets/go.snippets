@@ -36,3 +36,8 @@ defer func() {
     }
 }()
 endsnippet
+
+snippet caller
+_, fname, line, _ := runtime.Caller($1)
+fmt.Printf("CALLER    %s:%d\n", fname, line)
+endsnippet
