@@ -417,8 +417,7 @@ set autoread
 set nobackup
 set noswapfile
 set wildignore=*.o,*.swp,*.bak,*.pyc,*.pyo,*.class,*.beam,.svn,.git,__pycache__
-set cursorcolumn " highlight the current column
-set cursorline " highlight current line
+
 set t_ti= t_te= " show screen shot after quit
 set mouse-=a " disable use of the mouse for all modes
 set visualbell
@@ -605,6 +604,11 @@ set t_Co=256
 " hi Normal ctermfg=256 ctermbg=none
 " solarized, desert ..
 colorscheme molokai
+
+set cursorcolumn " highlight the current column
+set cursorline " highlight current line
+hi CursorLine term=underline cterm=underline ctermbg=none ctermfg=none
+hi CursorColumn term=none cterm=none ctermbg=239 ctermfg=none
 
 hi! link SignColumn   LineNr
 hi! link ShowMarksHLl DiffAdd
