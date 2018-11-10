@@ -356,7 +356,7 @@ let g:airline_symbols.linenr = '¶'
 let g:airline_symbols.branch = '⎇'
 " https://github.com/bling/vim-airline/wiki/Screenshots
 " laederon, tomorrow, bubblegum, wombat ..
-let g:airline_theme = 'gruvbox'
+let g:airline_theme = 'dark'
 
 
 " ==> Better Rainbow Parentheses
@@ -603,7 +603,7 @@ set background=dark " light
 set t_Co=256
 " hi Normal ctermfg=256 ctermbg=none
 " molokai, solarized, desert, gruvbox, onedark ..
-colorscheme gruvbox
+colorscheme molokai
 
 set cursorcolumn " highlight the current column
 set cursorline " highlight current line
