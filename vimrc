@@ -39,29 +39,29 @@ let g:tagbar_autofocus = 1
 let g:tagbar_type_go = {
       \ 'ctagstype' : 'go',
       \ 'kinds'     : [
-      \ 'p:package',
-      \ 'i:imports:1',
-      \ 'c:constants',
-      \ 'v:variables',
-      \ 't:types',
-      \ 'n:interfaces',
-      \ 'w:fields',
-      \ 'e:embedded',
-      \ 'm:methods',
-      \ 'r:constructor',
-      \ 'f:functions'
+      \   'p:package',
+      \   'i:imports:1',
+      \   'c:constants',
+      \   'v:variables',
+      \   't:types',
+      \   'n:interfaces',
+      \   'w:fields',
+      \   'e:embedded',
+      \   'm:methods',
+      \   'r:constructor',
+      \   'f:functions'
       \ ],
       \ 'sro' : '.',
       \ 'kind2scope' : {
-      \ 't' : 'ctype',
-      \ 'n' : 'ntype'
+      \   't' : 'ctype',
+      \   'n' : 'ntype'
       \ },
       \ 'scope2kind' : {
-      \ 'ctype' : 't',
-      \ 'ntype' : 'n'
+      \   'ctype' : 't',
+      \   'ntype' : 'n'
       \ },
-      \ 'ctagsbin'  : 'gotags',
-      \ 'ctagsargs' : '-sort -silent'
+      \   'ctagsbin'  : 'gotags',
+      \   'ctagsargs' : '-sort -silent'
       \ }
 
 
@@ -102,8 +102,8 @@ let g:NERDSpaceDelims = 1
 " let g:better_whitespace_enabled = 1
 
 
-" ==> quick movement [,, + w/fx/h/j/k/l]
-Plug 'Lokaltog/vim-easymotion'
+" ==> quick movement :help easymotion.txt
+Plug 'easymotion/vim-easymotion'
 
 let g:EasyMotion_smartcase = 1
 map <Leader><leader>h <Plug>(easymotion-linebackward)
@@ -116,7 +116,12 @@ map <Leader><leader>. <Plug>(easymotion-repeat)
 " ==> quickscope movement [f/F/t/T]
 Plug 'unblevable/quick-scope'
 
-let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
+let g:qs_highlight_on_keys = ['f', 'F']
+
+
+" ==> multiple selections
+" https://github.com/terryma/vim-multiple-cursors/issues/27
+Plug 'terryma/vim-multiple-cursors'
 
 
 " ==> Full path fuzzy file, buffer, mru, tag, ... finder for Vim, and a function navigator for ctrlp.vim
@@ -321,12 +326,6 @@ Plug 'ekalinin/Dockerfile.vim', {'for': 'Dockerfile'}
 Plug 'fatih/vim-nginx' , {'for': 'nginx'}
 
 
-" smoji
-Plug 'junegunn/vim-emoji'
-
-set completefunc=emoji#complete
-
-
 " ==> themes
 " solarized
 Plug 'altercation/vim-colors-solarized'
@@ -490,11 +489,7 @@ autocmd! bufwritepost .vimrc source %
 autocmd! bufwritepost vimrc source %
 
 autocmd InsertLeave * if pumvisible() == 0|pclose|endif
-inoremap <expr> <CR>       pumvisible() ? "\<C-y>" : "\<CR>"
-inoremap <expr> <Down>     pumvisible() ? "\<C-n>" : "\<Down>"
-inoremap <expr> <Up>       pumvisible() ? "\<C-p>" : "\<Up>"
-inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<PageDown>"
-inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
+
 
 if has('autocmd')
   au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
@@ -622,3 +617,7 @@ highlight clear SpellRare
 highlight SpellRare term=underline cterm=underline
 highlight clear SpellLocal
 highlight SpellLocal term=underline cterm=underline
+
+" For 'terryma/vim-multiple-cursors'
+highlight multiple_cursors_cursor term=reverse cterm=reverse gui=reverse
+highlight link multiple_cursors_visual Visual
