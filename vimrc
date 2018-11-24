@@ -113,10 +113,10 @@ map <Leader><leader>l <Plug>(easymotion-lineforward)
 map <Leader><leader>. <Plug>(easymotion-repeat)
 
 
-" ==> quickscope movement [f/F/t/T]
-Plug 'unblevable/quick-scope'
+" ==> quickscope movement [f/F]
+" Plug 'unblevable/quick-scope'
 
-let g:qs_highlight_on_keys = ['f', 'F']
+" let g:qs_highlight_on_keys = ['f', 'F']
 
 
 " ==> multiple selections
