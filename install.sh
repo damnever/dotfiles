@@ -28,6 +28,18 @@ install_requirements_for_mac() {
     brew install watch
     brew install autojump
     brew install go
+
+    fonts=(\
+        Blex%20Mono%20Text%20Nerd%20Font%20Complete%20Mono.ttf \
+        Blex%20Mono%20Text%20Italic%20Nerd%20Font%20Complete%20Mono.ttf \
+        Blex%20Mono%20Text%20Italic%20Nerd%20Font%20Complete.ttf \
+        Blex%20Mono%20Text%20Nerd%20Font%20Complete.ttf \
+    )
+    for font in "${fonts[@]}"
+    do
+        wget -P ${HOME}/Library/Fonts/ \
+            https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/Blex/Mono/complete/${font}
+    done
 }
 
 change_settings_for_mac() {
