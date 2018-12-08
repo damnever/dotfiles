@@ -6,13 +6,14 @@ platform=$(uname)
 
 install_requirements_for_mac() {
     set -e
-    # NOTE: XCode is required.
+    # NOTE: XCode is required. `xcode-select --install`
     /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
     # for vim
     brew install llvm --with-toolchain
     brew install shellcheck
     brew install readline xz
-    brew install macvim --HEAD --with-cscope --with-lua --with-luajit --with-python --with-override-system-vim
+    brew tap macvim-dev/macvim
+    brew install --HEAD macvim-dev/macvim/macvim
     brew install gnupg pnupg2 gpg-agent pinentry-mac # for gpg
     brew install zsh
     brew install ctags
@@ -76,6 +77,7 @@ install_prerequirements() {
     fi
 
     GLOBAL_PYTHON=3.7.0
+    # https://github.com/pyenv/pyenv/issues/1219
     pyenv install $GLOBAL_PYTHON
     pyenv global $GLOBAL_PYTHON
     pip install virtualenv-wrapper ipython
