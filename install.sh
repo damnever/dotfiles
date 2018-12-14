@@ -29,6 +29,7 @@ install_requirements_for_mac() {
     brew install watch
     brew install autojump
     brew install go
+    brew install cloc
 
     fonts=(\
         Blex%20Mono%20Text%20Nerd%20Font%20Complete%20Mono.ttf \
@@ -126,7 +127,7 @@ setup_vim() {
     echo "-> setup vim .."
     pip install flake8 pyflakes pep8 pylint jedi pipenv -U
     go get -u github.com/jstemmer/gotags
-    go get -u github.com/nsf/gocode
+    go get -u github.com/stamblerre/gocode
     go get -u github.com/zmb3/gogetdoc
     go get -u golang.org/x/tools/cmd/guru
     go get -u github.com/alecthomas/gometalinter
