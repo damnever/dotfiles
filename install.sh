@@ -30,18 +30,6 @@ install_requirements_for_mac() {
     brew install autojump
     brew install go
     brew install cloc
-
-    fonts=(\
-        Blex%20Mono%20Text%20Nerd%20Font%20Complete%20Mono.ttf \
-        Blex%20Mono%20Text%20Italic%20Nerd%20Font%20Complete%20Mono.ttf \
-        Blex%20Mono%20Text%20Italic%20Nerd%20Font%20Complete.ttf \
-        Blex%20Mono%20Text%20Nerd%20Font%20Complete.ttf \
-    )
-    for font in "${fonts[@]}"
-    do
-        wget -P ${HOME}/Library/Fonts/ \
-            https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/Blex/Mono/complete/${font}
-    done
 }
 
 change_settings_for_mac() {
@@ -82,6 +70,11 @@ install_prerequirements() {
     pyenv install $GLOBAL_PYTHON
     pyenv global $GLOBAL_PYTHON
     pip install virtualenv-wrapper ipython
+
+    curl https://sh.rustup.rs -sSf | sh
+    rustup toolchain add nightly
+    rustup component add rust-src
+    cargo +nightly install racer
 
     mkdir $HOME/.bin
     pushd $HOME/.bin
@@ -127,7 +120,7 @@ setup_vim() {
     echo "-> setup vim .."
     pip install flake8 pyflakes pep8 pylint jedi pipenv -U
     go get -u github.com/jstemmer/gotags
-    go get -u github.com/stamblerre/gocode
+    go get -u github.com/nsf/gocode  # Too slow for go modules: github.com/stamblerre/gocode
     go get -u github.com/zmb3/gogetdoc
     go get -u golang.org/x/tools/cmd/guru
     go get -u github.com/alecthomas/gometalinter

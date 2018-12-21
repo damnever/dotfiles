@@ -107,7 +107,7 @@ export PATH=$PATH:$HOME/.bin/FlameGraph
 # rustup/racer
 source $HOME/.cargo/env
 export PATH=$PATH:$HOME/.cargo/bin
-export RUST_SRC_PATH="${HOME}/.multirust/toolchains/stable-x86_64-apple-darwin/lib/rustlib/src/rust/src/"
+export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
 
 # scp
 SHTERM_AUTH_KEY=`cat ~/.ssh/id_rsa`
