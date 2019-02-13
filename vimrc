@@ -229,6 +229,8 @@ let g:completor_complete_options = 'menuone,noselect'
 
 noremap <leader>jd :call completor#do('definition')<CR>
 noremap <s-k> :call completor#do('doc')<CR>
+map <tab> <Plug>CompletorCppJumpToPlaceholder
+imap <tab> <Plug>CompletorCppJumpToPlaceholder
 
 
 " Asynchronous Lint Engine (vim8 required).
@@ -254,6 +256,8 @@ let g:ale_fix_on_save = 1
 let g:ale_fixers = {
       \'*': ['remove_trailing_lines', 'trim_whitespace'],
       \'go': ['goimports'],
+      \'rust': ['rustfmt'],
+      \'c': ['clang-format'],
       \}
 let g:ale_lint_delay = 111
 let g:ale_linters = {
@@ -262,9 +266,11 @@ let g:ale_linters = {
       \'vim': ['vint'],
       \'python': ['flake8'],
       \'go': ['gometalinter'],
+      \'rust': ['rustc'],
       \'elixir': ['credo'],
       \}
 let g:ale_vim_vint_show_style_issues = 0
+let g:ale_c_clangformat_options='-style="{BasedOnStyle: Google, IndentWidth: 4}"'
 let g:ale_sh_shellcheck_options = '-x'
 let g:ale_python_flake8_executable = fnamemodify(s:python_binary, ':h').'/flake8'
 let g:ale_python_flake8_use_global = 1
