@@ -265,7 +265,7 @@ let g:ale_linters = {
       \'sh': ['shellcheck'],
       \'vim': ['vint'],
       \'python': ['flake8'],
-      \'go': ['gometalinter'],
+      \'go': ['golangci-lint'],
       \'rust': ['rustc'],
       \'elixir': ['credo'],
       \}
@@ -274,11 +274,13 @@ let g:ale_c_clangformat_options='-style="{BasedOnStyle: Google, IndentWidth: 4}"
 let g:ale_sh_shellcheck_options = '-x'
 let g:ale_python_flake8_executable = fnamemodify(s:python_binary, ':h').'/flake8'
 let g:ale_python_flake8_use_global = 1
-let g:ale_go_gometalinter_options = '--fast -j4 --deadline=5s --vendor --disable-all --enable-gc
+let g:ale_go_golangci_lint_options = '--no-config --issues-exit-code=0
+      \ --fast --concurrency=4 --deadline=8s --vendor --disable-all
       \ --enable=vet
       \ --enable=errcheck
       \ --enable=golint
       \ --enable=lll --line-length=120
+      \ --enable=structcheck
       \ --enable=unused
       \ --enable=unparam'
 
