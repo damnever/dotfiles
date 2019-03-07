@@ -274,12 +274,12 @@ let g:ale_c_clangformat_options='-style="{BasedOnStyle: Google, IndentWidth: 4}"
 let g:ale_sh_shellcheck_options = '-x'
 let g:ale_python_flake8_executable = fnamemodify(s:python_binary, ':h').'/flake8'
 let g:ale_python_flake8_use_global = 1
-let g:ale_go_golangci_lint_options = '--no-config --issues-exit-code=0
-      \ --fast --concurrency=4 --deadline=8s --vendor --disable-all
+let g:ale_go_golangci_lint_options = '--concurrency=4
+      \ --no-config --fast --deadline=8s --disable-all
       \ --enable=vet
       \ --enable=errcheck
       \ --enable=golint
-      \ --enable=lll --line-length=120
+      \ --enable=lll
       \ --enable=structcheck
       \ --enable=unused
       \ --enable=unparam'
