@@ -585,11 +585,11 @@ autocmd FileType javascript set tabstop=2 shiftwidth=2 softtabstop=2 expandtab a
 " autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css
 autocmd BufRead,BufNewFile *.vue,*.wxml set filetype=html
 autocmd BufRead,BufNewFile *.wxss set filetype=css
-autocmd BufRead,BufNewFile *.md,*.mkd,*.markdown :call SetMkdOpts()
-function! SetMkdOpts()
-  set filetype=markdown.mkd
+autocmd FileType txt,markdown,rst,asciidoc :call WrapingText()
+function! WrapingText()
   setlocal wrap
   setlocal linebreak
+  " setlocal nolist
 endfunction
 
 autocmd BufNewFile *.sh,*.py exec ":call AutoSetFileHead()"
