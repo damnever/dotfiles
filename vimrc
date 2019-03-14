@@ -181,6 +181,7 @@ Plug 'tpope/vim-repeat' | Plug 'tpope/vim-surround'
 
 " ==> git
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-git'
 
 " ==> shows a git diff in the gutter
 Plug 'airblade/vim-gitgutter'
