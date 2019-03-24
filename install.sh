@@ -13,7 +13,8 @@ install_requirements_for_mac() {
     brew install shellcheck
     brew install readline xz
     brew tap macvim-dev/macvim
-    brew install --HEAD macvim-dev/macvim/macvim
+    # brew install --HEAD macvim-dev/macvim/macvim
+    brew install neovim
     brew install gnupg pnupg2 gpg-agent pinentry-mac # for gpg
     brew install zsh
     brew install ctags
