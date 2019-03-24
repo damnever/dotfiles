@@ -211,27 +211,92 @@ let g:UltiSnipsEditSplit = 'context'
 nnoremap <Leader>es :UltiSnipsEdit<Cr>
 
 
-" ==> Async completion framework (vim8 required).
-Plug 'maralla/completor.vim', { 'do': 'make js' }
-
 let s:python_binary = substitute(resolve(system('pyenv which python')), '\n\+$', '', '')
-let g:completor_python_binary = s:python_binary
-let g:completor_racer_binary = '~/.cargo/bin/racer'
-let g:completor_gocode_binary = '~/.go/bin/gocode'
-let g:completor_go_guru_binary = '~/.go/bin/guru'
-let g:completor_debug = 1
-let g:completor_auto_close_doc = 1
-let g:completor_completion_delay = 111  " ms
-let g:completor_disable_filename = 0
-let g:completor_disable_buffer = 0
-let g:completor_set_options = 1
-let g:completor_def_split = 'split'
-let g:completor_complete_options = 'menuone,noselect'
 
-noremap <leader>jd :call completor#do('definition')<CR>
-noremap <s-k> :call completor#do('doc')<CR>
-map <tab> <Plug>CompletorCppJumpToPlaceholder
-imap <tab> <Plug>CompletorCppJumpToPlaceholder
+" ==> Async completion framework (vim8 required).
+" Plug 'maralla/completor.vim', { 'do': 'make js' }
+
+" let g:completor_python_binary = s:python_binary
+" let g:completor_racer_binary = '~/.cargo/bin/racer'
+" let g:completor_gocode_binary = '~/.go/bin/gocode'
+" let g:completor_go_guru_binary = '~/.go/bin/guru'
+" let g:completor_debug = 1
+" let g:completor_auto_close_doc = 1
+" let g:completor_completion_delay = 111  " ms
+" let g:completor_disable_filename = 0
+" let g:completor_disable_buffer = 0
+" let g:completor_set_options = 1
+" let g:completor_def_split = 'split'
+" let g:completor_complete_options = 'menuone,noselect'
+
+" noremap <leader>jd :call completor#do('definition')<CR>
+" noremap <s-k> :call completor#do('doc')<CR>
+" map <tab> <Plug>CompletorCppJumpToPlaceholder
+" imap <tab> <Plug>CompletorCppJumpToPlaceholder
+
+" Full language server protocol support.
+Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
+
+" Use <c-n> for trigger completion.
+inoremap <silent><expr> <c-n> coc#refresh()
+" Use <cr> for confirm completion, `<C-g>u` means break undo chain at current position.
+" Coc only does snippet and additional edit on confirm.
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+" Use `[c` and `]c` for navigate diagnostics
+nmap <silent> [c <Plug>(coc-diagnostic-prev)
+nmap <silent> ]c <Plug>(coc-diagnostic-next)
+" Remap keys for gotos
+nmap <silent> <leader>jd <Plug>(coc-definition)
+nmap <silent> <leader>jt <Plug>(coc-type-definition)
+nmap <silent> <leader>ji <Plug>(coc-implementation)
+nmap <silent> <leader>jr <Plug>(coc-references)
+" Use K for show documentation in preview window
+nnoremap <silent> <s-k> :call <SID>show_documentation()<CR>
+function! s:show_documentation()
+  if &filetype == 'vim'
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+let languageservers = {}
+let languageservers['clangd'] = {
+    \ 'command': 'clangd',
+    \ 'filetypes': ['c', 'cpp', 'objc', 'objcpp'],
+    \ 'rootPatterns': ['compile_flags.txt', 'compile_commands.json', '.vim/', '.git/', '.hg/'],
+    \ }
+let languageservers['golang'] = {
+    \ 'command': 'bingo',
+    \ 'args': ['--diagnostics-style=instant'],
+    \ 'rootPatterns': ['go.mod', '.vim/', '.git/', '.hg/', 'vendor/'],
+    \ 'filetypes': ['go']
+    \ }
+let languageservers['bash'] = {
+    \ 'command': 'bash-language-server',
+    \ 'args': ['start'],
+    \ 'filetypes': ['sh'],
+    \ 'ignoredRootPaths': ['~']
+    \ }
+let g:coc_user_config = {
+    \ 'suggest.detailMaxLength': 111,
+    \ 'coc.preferences.jumpCommand': 'split',
+    \ 'coc.preferences.formatOnSaveFiletypes': [],
+    \ 'coc.source.file.ignoreHidden': v:false,
+    \ 'diagnostic.displayByAle': v:true,
+    \ 'languageserver': languageservers,
+    \ }
+" https://github.com/neoclide/coc.nvim#extensions
+let g:coc_global_extensions = [
+    \ 'coc-html',
+    \ 'coc-css',
+    \ 'coc-tsserver',
+    \ 'coc-json',
+    \ 'coc-yaml',
+    \ 'coc-snippets',
+    \ 'coc-pyls',
+    \ 'coc-rls',
+    \]
 
 
 " Asynchronous Lint Engine (vim8 required).
@@ -296,7 +361,7 @@ Plug 'hynek/vim-python-pep8-indent', { 'for': 'python' }
 " Plug 'vim-erlang/vim-erlang-omnicomplete', { 'for': 'erlang' }
 " ==> Elixir
 Plug 'elixir-editors/vim-elixir', { 'for': 'elixir' }
-Plug 'damnever/completor-elixir', { 'do': 'make', 'for': 'elixir' }
+" Plug 'damnever/completor-elixir', { 'do': 'make', 'for': 'elixir' }
 
 
 " ==> Rust
@@ -398,6 +463,10 @@ call plug#end()
 
 
 
+if has('nvim')
+  tnoremap <Esc> <C-\><C-n>
+endif
+
 syntax on " enable vim syntax colors
 filetype plugin indent on " FIXME: dumplicated with the follows?
 filetype on " enable filetype detection
@@ -413,6 +482,10 @@ set smarttab
 set expandtab
 set shiftround
 
+" Smaller updatetime for CursorHold & CursorHoldI
+set updatetime=300
+" don't give |ins-completion-menu| messages.
+set shortmess+=c
 set signcolumn=yes
 set completeopt-=preview
 
@@ -442,7 +515,7 @@ set hidden " http://vim.wikia.com/wiki/Example_vimrc
 set ruler " display the cursor position on the last line of the screen or in the status line of a window
 set wildmenu " better command-line completion
 set showcmd " show partial commands in the last line of the screen
-" set cmdheight=3 " to avoid many cases of having to "press <Enter> to continue"
+set cmdheight=2 " to avoid many cases of having to "press <Enter> to continue"
 set showmode
 set scrolloff=7 " min top/down padding which cursor cannot reach
 set statusline=%<%f\ %h%m%r%=%k[%{(&fenc==\"\")?&enc:&fenc}%{(&bomb?\",BOM\":\"\")}]\ %-14.(%l,%c%V%)\ %P
@@ -576,7 +649,6 @@ autocmd FileType c,cpp nnoremap <S-K> :call CDoc('2')<CR>
 
 " for python comment indent when enter new line
 autocmd BufNewFile,BufRead *.py inoremap # X<c-h>#
-
 autocmd FileType python set tabstop=4 shiftwidth=4 expandtab ai
 autocmd FileType vim set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
 autocmd FileType ruby set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
@@ -609,6 +681,10 @@ set t_Co=256
 " molokai, solarized, desert, gruvbox, onedark ..
 colorscheme molokai
 
+if has('nvim')
+    " FUck? https://github.com/neovim/neovim/wiki/FAQ#how-to-change-cursor-shape-in-the-terminal
+    set guicursor=
+endif
 set cursorcolumn " highlight the current column
 set cursorline " highlight current line
 hi CursorLine term=underline cterm=underline ctermbg=none ctermfg=none
