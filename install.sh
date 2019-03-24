@@ -119,12 +119,15 @@ setup_config_files() {
 setup_vim() {
     echo "-> setup vim .."
     pip install flake8 pyflakes pep8 pylint jedi pipenv -U
+    pip install pynvim -U
+    pip install python-language-server -U
+    go get -u github.com/saibing/bingo
     go get -u github.com/jstemmer/gotags
-    go get -u github.com/nsf/gocode  # Too slow for go modules: github.com/stamblerre/gocode
     go get -u github.com/zmb3/gogetdoc
     go get -u golang.org/x/tools/cmd/guru
     go get -u github.com/alecthomas/gometalinter
     gometalinter --install
+    yarn global add bash-language-server
 
     curl -fLo "$HOME/.vim/autoload/plug.vim" --create-dirs \
         https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim

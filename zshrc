@@ -74,7 +74,7 @@ export LANG=en_US.UTF-8
 
 # Personal aliases
 if [[ "$platform" == "Darwin" ]]; then  # Mac
-    alias vim='mvim -v'
+    alias vim='nvim'  # 'mvim -v'
 fi
 
 
