@@ -280,6 +280,7 @@ let languageservers['bash'] = {
     \ }
 let g:coc_user_config = {
     \ 'suggest.detailMaxLength': 111,
+    \ 'suggest.maxCompleteItemCount': 48,
     \ 'coc.preferences.jumpCommand': 'split',
     \ 'coc.preferences.formatOnSaveFiletypes': [],
     \ 'coc.source.file.ignoreHidden': v:false,
@@ -288,6 +289,8 @@ let g:coc_user_config = {
     \ }
 " https://github.com/neoclide/coc.nvim#extensions
 let g:coc_global_extensions = [
+    \ 'coc-dictionary',
+    \ 'coc-word',
     \ 'coc-html',
     \ 'coc-css',
     \ 'coc-tsserver',
@@ -385,6 +388,7 @@ Plug 'mxw/vim-jsx', {'for': 'javascript'}
 " Vue.js
 Plug 'posva/vim-vue', {'for': 'vue'}
 autocmd FileType vue syntax sync fromstart
+Plug 'leafgarland/typescript-vim', {'for': 'typescript'}
 
 
 " ==> markdown
@@ -655,6 +659,7 @@ autocmd FileType ruby set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
 autocmd FileType html set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
 autocmd FileType css set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
 autocmd FileType javascript set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
+autocmd FileType typescript set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
 " autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css
 autocmd BufRead,BufNewFile *.vue,*.wxml set filetype=html
 autocmd BufRead,BufNewFile *.wxss set filetype=css

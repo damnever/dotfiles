@@ -34,10 +34,12 @@ vim/autoload/
 *.tar.xz
 eless_ci.20s.py
 pip/zsh-cache
-config/configstore
 config/neofetch
-config/wireshark
 config/.isolated-storage
+config/.mono
 config/coc
+config/configstore
+config/wireshark
+config/gocode
 config/yarn
 vim/view

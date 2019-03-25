@@ -95,7 +95,6 @@ setup_config_files() {
         zsh_damnever \
         gitconfig \
         pypirc \
-        pylintrc \
         tmux.conf \
         zshrc \
         vim \

@@ -1,5 +1,5 @@
 [distutils]
-index-servers=pypi
+index-servers = pypi
 
 [pypi]
 username = Damnever
