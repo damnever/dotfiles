@@ -284,6 +284,7 @@ let g:coc_user_config = {
     \ 'coc.preferences.jumpCommand': 'split',
     \ 'coc.preferences.formatOnSaveFiletypes': [],
     \ 'coc.source.file.ignoreHidden': v:false,
+    \ 'coc.source.file.triggerCharacters': ['/', '.'],
     \ 'diagnostic.displayByAle': v:true,
     \ 'languageserver': languageservers,
     \ }
@@ -300,7 +301,6 @@ let g:coc_global_extensions = [
     \ 'coc-pyls',
     \ 'coc-rls',
     \]
-
 
 " Asynchronous Lint Engine (vim8 required).
 Plug 'w0rp/ale'
