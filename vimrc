@@ -10,6 +10,8 @@ set nocompatible
 
 call plug#begin('~/.vim/plugins')
 
+let s:python_binary = substitute(resolve(system('pyenv which python')), '\n\+$', '', '')
+
 
 " ==> file tree
 Plug 'scrooloose/nerdtree'
@@ -80,9 +82,9 @@ nmap <Leader>r <Plug>(quickrun)
 
 
 " ==> provides insert mode auto-completion for quotes, parens, brackets, etc.
-Plug 'Raimondi/delimitMate'
-au FileType python let b:delimitMate_nesting_quotes = ['"', "'"]
-au FileType rust let b:delimitMate_quotes = '"'
+" Plug 'Raimondi/delimitMate'
+" au FileType python let b:delimitMate_nesting_quotes = ['"', "'"]
+" au FileType rust let b:delimitMate_quotes = '"'
 " Plug 'jiangmiao/auto-pairs'
 " let g:AutoPairs = {'(':')', '[':']', '{':'}',"'":"'",'"':'"', '`':'`'}
 
@@ -113,8 +115,6 @@ map <Leader><Leader>j <Plug>(easymotion-j)
 map <Leader><Leader>k <Plug>(easymotion-k)
 map <Leader><leader>l <Plug>(easymotion-lineforward)
 map <Leader><leader>. <Plug>(easymotion-repeat)
-
-
 " ==> quickscope movement [f/F]
 " Plug 'unblevable/quick-scope'
 
@@ -127,53 +127,52 @@ Plug 'terryma/vim-multiple-cursors'
 
 
 " ==> Full path fuzzy file, buffer, mru, tag, ... finder for Vim, and a function navigator for ctrlp.vim
-Plug 'ctrlpvim/ctrlp.vim' | Plug 'tacahiroy/ctrlp-funky'
+" Plug 'ctrlpvim/ctrlp.vim' | Plug 'tacahiroy/ctrlp-funky'
 
-let g:ctrlp_map = '<leader>p'
-let g:ctrlp_cmd = 'CtrlP'
-map <leader>f :CtrlPMRU<CR>
-let g:ctrlp_custom_ignore = {
-      \ 'dir':  '\v[\/]\.(git|hg|svn|rvm)$',
-      \ 'file': '\v\.(o|so|zip|tar|tar.gz|pyc|pyo)$',
-      \ }
-let g:ctrlp_working_path_mode = 0
-let g:ctrlp_match_window_bottom = 1
-let g:ctrlp_max_height = 15
-let g:ctrlp_match_window_reversed = 0
-let g:ctrlp_mruf_max = 500
-let g:ctrlp_follow_symlinks = 1
-let g:ctrlp_show_hidden = 1
-if executable('ag')
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-  let g:ctrlp_use_caching = 0
-endif
-nnoremap <Leader>fu :CtrlPFunky<Cr>
-nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
-let g:ctrlp_funky_syntax_highlight = 1
-let g:ctrlp_extensions = ['funky']
-
+" let g:ctrlp_map = '<leader>p'
+" let g:ctrlp_cmd = 'CtrlP'
+" map <leader>f :CtrlPMRU<CR>
+" let g:ctrlp_custom_ignore = {
+      " \ 'dir':  '\v[\/]\.(git|hg|svn|rvm)$',
+      " \ 'file': '\v\.(o|so|zip|tar|tar.gz|pyc|pyo)$',
+      " \ }
+" let g:ctrlp_working_path_mode = 0
+" let g:ctrlp_match_window_bottom = 1
+" let g:ctrlp_max_height = 15
+" let g:ctrlp_match_window_reversed = 0
+" let g:ctrlp_mruf_max = 500
+" let g:ctrlp_follow_symlinks = 1
+" let g:ctrlp_show_hidden = 1
+" if executable('ag')
+  " let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+  " let g:ctrlp_use_caching = 0
+" endif
+" nnoremap <Leader>fu :CtrlPFunky<Cr>
+" nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
+" let g:ctrlp_funky_syntax_highlight = 1
+" let g:ctrlp_extensions = ['funky']
 
 " ==> An ack/ag/pt/rg powered code search and view tool, [\]
-Plug 'dyng/ctrlsf.vim'
+" Plug 'dyng/ctrlsf.vim'
 
-nmap \ <Plug>CtrlSFCwordPath<CR>
-" let g:ctrlsf_position = 'below'
-let g:ctrlsf_winsize = '40%'
-let g:ctrlsf_auto_close = 0
-let g:ctrlsf_confirm_save = 0
-" Note: cannot use <CR> or <C-m> for open
-" Use : <sapce> or <tab>
-let g:ctrlsf_mapping = {
-      \ 'open'  : '<Space>',
-      \ 'openb' : 'O',
-      \ 'tab'   : 't',
-      \ 'tabb'  : 'T',
-      \ 'prevw' : 'p',
-      \ 'quit'  : 'q',
-      \ 'next'  : '<C-J>',
-      \ 'prev'  : '<C-K>',
-      \ 'pquit' : 'q',
-      \ }
+" nmap \ <Plug>CtrlSFCwordPath<CR>
+" " let g:ctrlsf_position = 'below'
+" let g:ctrlsf_winsize = '40%'
+" let g:ctrlsf_auto_close = 0
+" let g:ctrlsf_confirm_save = 0
+" " Note: cannot use <CR> or <C-m> for open
+" " Use : <sapce> or <tab>
+" let g:ctrlsf_mapping = {
+      " \ 'open'  : '<Space>',
+      " \ 'openb' : 'O',
+      " \ 'tab'   : 't',
+      " \ 'tabb'  : 'T',
+      " \ 'prevw' : 'p',
+      " \ 'quit'  : 'q',
+      " \ 'next'  : '<C-J>',
+      " \ 'prev'  : '<C-K>',
+      " \ 'pquit' : 'q',
+      " \ }
 
 
 " ==> for repeat -> enhance surround.vim, . to repeat command
@@ -211,30 +210,7 @@ let g:UltiSnipsEditSplit = 'context'
 nnoremap <Leader>es :UltiSnipsEdit<Cr>
 
 
-let s:python_binary = substitute(resolve(system('pyenv which python')), '\n\+$', '', '')
-
-" ==> Async completion framework (vim8 required).
-" Plug 'maralla/completor.vim', { 'do': 'make js' }
-
-" let g:completor_python_binary = s:python_binary
-" let g:completor_racer_binary = '~/.cargo/bin/racer'
-" let g:completor_gocode_binary = '~/.go/bin/gocode'
-" let g:completor_go_guru_binary = '~/.go/bin/guru'
-" let g:completor_debug = 1
-" let g:completor_auto_close_doc = 1
-" let g:completor_completion_delay = 111  " ms
-" let g:completor_disable_filename = 0
-" let g:completor_disable_buffer = 0
-" let g:completor_set_options = 1
-" let g:completor_def_split = 'split'
-" let g:completor_complete_options = 'menuone,noselect'
-
-" noremap <leader>jd :call completor#do('definition')<CR>
-" noremap <s-k> :call completor#do('doc')<CR>
-" map <tab> <Plug>CompletorCppJumpToPlaceholder
-" imap <tab> <Plug>CompletorCppJumpToPlaceholder
-
-" Full language server protocol support.
+" Full language server protocol support, and more than that!!!
 Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
 
 " Use <c-n> for trigger completion.
@@ -278,18 +254,10 @@ let languageservers['bash'] = {
     \ 'filetypes': ['sh'],
     \ 'ignoredRootPaths': ['~']
     \ }
-let g:coc_user_config = {
-    \ 'suggest.detailMaxLength': 111,
-    \ 'suggest.maxCompleteItemCount': 48,
-    \ 'coc.preferences.jumpCommand': 'split',
-    \ 'coc.preferences.formatOnSaveFiletypes': [],
-    \ 'coc.source.file.ignoreHidden': v:false,
-    \ 'coc.source.file.triggerCharacters': ['/', '.'],
-    \ 'diagnostic.displayByAle': v:true,
-    \ 'languageserver': languageservers,
-    \ }
 " https://github.com/neoclide/coc.nvim#extensions
 let g:coc_global_extensions = [
+    \ 'coc-pairs',
+    \ 'coc-lists',
     \ 'coc-dictionary',
     \ 'coc-word',
     \ 'coc-html',
@@ -301,6 +269,54 @@ let g:coc_global_extensions = [
     \ 'coc-pyls',
     \ 'coc-rls',
     \]
+let g:coc_user_config = {
+    \ 'suggest.detailMaxLength': 111,
+    \ 'suggest.maxCompleteItemCount': 48,
+    \ 'coc.preferences.jumpCommand': 'split',
+    \ 'coc.preferences.formatOnSaveFiletypes': [],
+    \ 'coc.source.file.ignoreHidden': v:false,
+    \ 'coc.source.file.triggerCharacters': ['/', '.'],
+    \ 'diagnostic.displayByAle': v:true,
+    \ 'list.indicator': '>',
+    \ 'list.selectedSignText': '*',
+    \ 'list.normalMappings': {'v': 'action:vsplit', 's': 'action:split'},
+    \ 'list.insertMappings': {'<C-n>': 'normal:j', '<C-p>': 'normal:k'},
+    \ 'languageserver': languageservers,
+    \ }
+
+" coc-pairs
+autocmd FileType rust let b:coc_pairs_disabled = ['`']
+autocmd FileType vim let b:coc_pairs_disabled = ['"']
+
+" coc-lists
+nnoremap <silent> <leader>p :exe 'CocList files -I --normal'<CR>
+
+command! -nargs=+ -complete=custom,s:GrepArgs GA exe 'CocList -A grep '.<q-args>
+function! s:GrepArgs(...)
+  let list = ['-S', '-smartcase', '-i', '-ignorecase', '-w', '-word',
+      \ '-e', '-regex', '-u', '-skip-vcs-ignores', '-t', '-extension']
+  return join(list, '\n')
+endfunction
+
+vnoremap <leader>g :<C-u>call <SID>GrepFromSelected(visualmode())<CR>
+nnoremap <leader>g :<C-u>set operatorfunc=<SID>GrepFromSelected<CR>g@
+function! s:GrepFromSelected(type)
+  let saved_unnamed_register = @@
+  if a:type ==# 'v'
+    normal! `<v`>y
+  elseif a:type ==# 'char'
+    normal! `[v`]y
+  else
+    return
+  endif
+  let word = substitute(@@, '\n$', '', 'g')
+  let word = escape(word, '| ')
+  let @@ = saved_unnamed_register
+  execute 'CocList -A grep '.word
+endfunction
+
+nnoremap <silent> \  :exe 'CocList -I -A --normal --input='.expand('<cword>').' words'<CR>
+
 
 " Asynchronous Lint Engine (vim8 required).
 Plug 'w0rp/ale'
@@ -352,52 +368,43 @@ let g:ale_go_gometalinter_options = '--fast -j4 --deadline=5s --vendor --disable
       \ --enable=unparam'
 
 
-" ==> Python
+" ==> Syntax related plugins
+
+" Python
 Plug 'hdima/python-syntax', { 'for': 'python'  }
 let python_highlight_all = 1
-
 Plug 'hynek/vim-python-pep8-indent', { 'for': 'python' }
 
-" ==> Erlang
-" Plug 'vim-erlang/vim-erlang-runtime', { 'for': 'erlang' }
-" Plug 'vim-erlang/vim-erlang-compiler', { 'for': 'erlang' }
-" Plug 'vim-erlang/vim-erlang-omnicomplete', { 'for': 'erlang' }
-" ==> Elixir
-Plug 'elixir-editors/vim-elixir', { 'for': 'elixir' }
-" Plug 'damnever/completor-elixir', { 'do': 'make', 'for': 'elixir' }
-
-
-" ==> Rust
+" Rust
 Plug 'racer-rust/vim-racer', { 'for': 'rust' }
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 
-let g:rustfmt_autosave = 1
+" Erlang
+" Plug 'vim-erlang/vim-erlang-runtime', { 'for': 'erlang' }
+" Plug 'vim-erlang/vim-erlang-compiler', { 'for': 'erlang' }
+" Plug 'vim-erlang/vim-erlang-omnicomplete', { 'for': 'erlang' }
+" Elixir
+Plug 'elixir-editors/vim-elixir', { 'for': 'elixir' }
 
+" HTML/CSS/Javascript
+Plug 'docunext/closetag.vim', { 'for': ['html', 'xml'] }
+let g:closetag_html_style = 1
+Plug 'pangloss/vim-javascript', {'for': 'javascript'}
+Plug 'mxw/vim-jsx', {'for': 'javascript'}
+Plug 'leafgarland/typescript-vim', {'for': 'typescript'}
 
-" ==> tmux [Ctrl + h,i,j,k]
+Plug 'posva/vim-vue', {'for': 'vue'}
+autocmd FileType vue syntax sync fromstart
+
+" markdown
+Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
+let g:vim_markdown_folding_disabled = 1
+
+" tmux [Ctrl + h,i,j,k]
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'tmux-plugins/vim-tmux', {'for': 'tmux'}
 
-
-" ==> HTML/CSS/Javascript
-Plug 'docunext/closetag.vim', { 'for': ['html', 'xml'] }
-let g:closetag_html_style = 1
-
-Plug 'pangloss/vim-javascript', {'for': 'javascript'}
-Plug 'mxw/vim-jsx', {'for': 'javascript'}
-" Vue.js
-Plug 'posva/vim-vue', {'for': 'vue'}
-autocmd FileType vue syntax sync fromstart
-Plug 'leafgarland/typescript-vim', {'for': 'typescript'}
-
-
-" ==> markdown
-Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
-
-let g:vim_markdown_folding_disabled = 1
-
-
-" ==> misc
+" others
 Plug 'solarnz/thrift.vim', { 'for': 'thrift' }
 Plug 'elzr/vim-json', { 'for': 'json' }
 Plug 'ekalinin/Dockerfile.vim', {'for': 'Dockerfile'}
