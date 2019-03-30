@@ -18,7 +18,6 @@ install_requirements_for_mac() {
     brew install gnupg pnupg2 gpg-agent pinentry-mac # for gpg
     brew install zsh
     brew install ctags
-    brew install the_silver_searcher
     brew install fzf
     /usr/local/opt/fzf/install
     brew install pyenv
@@ -31,6 +30,8 @@ install_requirements_for_mac() {
     brew install autojump
     brew install go
     brew install cloc
+    # brew install the_silver_searcher
+    brew install ripgrep
 }
 
 change_settings_for_mac() {
