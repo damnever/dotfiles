@@ -376,7 +376,6 @@ let python_highlight_all = 1
 Plug 'hynek/vim-python-pep8-indent', { 'for': 'python' }
 
 " Rust
-Plug 'racer-rust/vim-racer', { 'for': 'rust' }
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 
 " Erlang
