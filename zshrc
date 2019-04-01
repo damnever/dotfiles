@@ -35,6 +35,7 @@ pip
 vagrant
 pyenv python
 go golang
+cargo
 zsh-autosuggestions
 colors
 kocmd
