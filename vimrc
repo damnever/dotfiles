@@ -126,61 +126,14 @@ map <Leader><leader>. <Plug>(easymotion-repeat)
 Plug 'terryma/vim-multiple-cursors'
 
 
-" ==> Full path fuzzy file, buffer, mru, tag, ... finder for Vim, and a function navigator for ctrlp.vim
-" Plug 'ctrlpvim/ctrlp.vim' | Plug 'tacahiroy/ctrlp-funky'
-
-" let g:ctrlp_map = '<leader>p'
-" let g:ctrlp_cmd = 'CtrlP'
-" map <leader>f :CtrlPMRU<CR>
-" let g:ctrlp_custom_ignore = {
-      " \ 'dir':  '\v[\/]\.(git|hg|svn|rvm)$',
-      " \ 'file': '\v\.(o|so|zip|tar|tar.gz|pyc|pyo)$',
-      " \ }
-" let g:ctrlp_working_path_mode = 0
-" let g:ctrlp_match_window_bottom = 1
-" let g:ctrlp_max_height = 15
-" let g:ctrlp_match_window_reversed = 0
-" let g:ctrlp_mruf_max = 500
-" let g:ctrlp_follow_symlinks = 1
-" let g:ctrlp_show_hidden = 1
-" if executable('ag')
-  " let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-  " let g:ctrlp_use_caching = 0
-" endif
-" nnoremap <Leader>fu :CtrlPFunky<Cr>
-" nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
-" let g:ctrlp_funky_syntax_highlight = 1
-" let g:ctrlp_extensions = ['funky']
-
-" ==> An ack/ag/pt/rg powered code search and view tool, [\]
-" Plug 'dyng/ctrlsf.vim'
-
-" nmap \ <Plug>CtrlSFCwordPath<CR>
-" " let g:ctrlsf_position = 'below'
-" let g:ctrlsf_winsize = '40%'
-" let g:ctrlsf_auto_close = 0
-" let g:ctrlsf_confirm_save = 0
-" " Note: cannot use <CR> or <C-m> for open
-" " Use : <sapce> or <tab>
-" let g:ctrlsf_mapping = {
-      " \ 'open'  : '<Space>',
-      " \ 'openb' : 'O',
-      " \ 'tab'   : 't',
-      " \ 'tabb'  : 'T',
-      " \ 'prevw' : 'p',
-      " \ 'quit'  : 'q',
-      " \ 'next'  : '<C-J>',
-      " \ 'prev'  : '<C-K>',
-      " \ 'pquit' : 'q',
-      " \ }
-
-
 " ==> for repeat -> enhance surround.vim, . to repeat command
 Plug 'tpope/vim-repeat' | Plug 'tpope/vim-surround'
+
 
 " ==> git
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-git'
+
 
 " ==> shows a git diff in the gutter
 Plug 'airblade/vim-gitgutter'
@@ -210,7 +163,7 @@ let g:UltiSnipsEditSplit = 'context'
 nnoremap <Leader>es :UltiSnipsEdit<Cr>
 
 
-" Full language server protocol support, and more than that!!!
+" ==> Full language server protocol support, and more than that!!!
 Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
 
 " Use <c-n> for trigger completion.
@@ -268,22 +221,30 @@ let g:coc_global_extensions = [
     \ 'coc-json',
     \ 'coc-yaml',
     \ 'coc-snippets',
-    \ 'coc-pyls',
+    \ 'coc-python',
     \ 'coc-rls',
     \]
 let g:coc_user_config = {
     \ 'suggest.detailMaxLength': 111,
     \ 'suggest.maxCompleteItemCount': 48,
-    \ 'coc.preferences.jumpCommand': 'split',
+    \ 'coc.preferences.jumpCommand': 'drop',
     \ 'coc.preferences.formatOnSaveFiletypes': [],
     \ 'coc.source.file.ignoreHidden': v:false,
     \ 'coc.source.file.triggerCharacters': ['/', '.'],
-    \ 'diagnostic.displayByAle': v:true,
+    \ 'diagnostic.enable': v:true,
+    \ 'diagnostic.enableMessage': 'always',
+    \ 'diagnostic.displayByAle': v:false,
+    \ 'diagnostic.errorSign': '✗',
+    \ 'diagnostic.warningSign': '∙',
+    \ 'diagnostic.infoSign': '∙',
+    \ 'diagnostic.hintSign': '∙',
     \ 'list.indicator': '>',
     \ 'list.selectedSignText': '*',
     \ 'list.normalMappings': {'v': 'action:vsplit', 's': 'action:split'},
     \ 'list.insertMappings': {'<C-n>': 'normal:j', '<C-p>': 'normal:k'},
     \ 'languageserver': languageservers,
+    \ 'python.linting.flake8Enabled': v:true,
+    \ 'python.linting.flake8Path': fnamemodify(s:python_binary, ':h').'/flake8',
     \ }
 
 " coc-pairs
@@ -320,7 +281,7 @@ endfunction
 nnoremap <silent> \  :exe 'CocList -I -A --normal --input='.expand('<cword>').' words'<CR>
 
 
-" Asynchronous Lint Engine (vim8 required).
+" ==> Asynchronous Lint Engine (vim8 required).
 Plug 'w0rp/ale'
 
 hi default link ALEErrorSign Error
@@ -347,27 +308,26 @@ let g:ale_fixers = {
       \'c': ['clang-format'],
       \}
 let g:ale_lint_delay = 111
-let g:ale_linters = {
-      \'c': ['clangtidy'],
-      \'sh': ['shellcheck'],
-      \'vim': ['vint'],
-      \'python': ['flake8'],
-      \'go': ['gometalinter'],
-      \'rust': ['rustc'],
-      \'elixir': ['credo'],
-      \}
+let g:ale_linters = {'vim': ['vint'], 'sh': ['shellcheck'],}
+      " \'c': ['clangtidy'],
+      " \'python': ['flake8'],
+      " \'go': ['gometalinter'],
+      " \'rust': ['rustc'],
+      " \'elixir': ['credo'],
+      " \}
+let g:ale_linters_explicit = 1
 let g:ale_vim_vint_show_style_issues = 0
-let g:ale_c_clangformat_options='-style="{BasedOnStyle: Google, IndentWidth: 4}"'
 let g:ale_sh_shellcheck_options = '-x'
-let g:ale_python_flake8_executable = fnamemodify(s:python_binary, ':h').'/flake8'
-let g:ale_python_flake8_use_global = 1
-let g:ale_go_gometalinter_options = '--fast -j4 --deadline=5s --vendor --disable-all --enable-gc
-      \ --enable=vet
-      \ --enable=errcheck
-      \ --enable=golint
-      \ --enable=lll --line-length=120
-      \ --enable=unused
-      \ --enable=unparam'
+" let g:ale_c_clangformat_options='-style="{BasedOnStyle: Google, IndentWidth: 4}"'
+" let g:ale_python_flake8_executable = fnamemodify(s:python_binary, ':h').'/flake8'
+" let g:ale_python_flake8_use_global = 1
+" let g:ale_go_gometalinter_options = '--fast -j4 --deadline=5s --vendor --disable-all --enable-gc
+      " \ --enable=vet
+      " \ --enable=errcheck
+      " \ --enable=golint
+      " \ --enable=lll --line-length=120
+      " \ --enable=unused
+      " \ --enable=unparam'
 
 
 " ==> Syntax related plugins
@@ -688,6 +648,7 @@ endfunc
 autocmd Syntax * call matchadd('Todo',  '\W\zs\(TODO\|FIXME\|CHANGED\|DONE\|XXX\|BUG\|HACK\)')
 autocmd Syntax * call matchadd('Debug', '\W\zs\(NOTE\|INFO\|WARN\|WARNING\|ERROR\|IDEA\|NOTICE\|MARK\|N.B.\)')
 
+" set termguicolors
 set background=dark " light
 set t_Co=256
 " hi Normal ctermfg=256 ctermbg=none

@@ -120,6 +120,7 @@ setup_config_files() {
 setup_vim() {
     echo "-> setup vim .."
     pip install flake8 pyflakes pep8 pylint jedi pipenv -U
+    pip install vim-vint -U
     pip install pynvim -U
     pip install python-language-server -U
     go get -u github.com/saibing/bingo
