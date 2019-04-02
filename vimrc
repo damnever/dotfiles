@@ -287,7 +287,7 @@ let g:coc_user_config = {
     \ }
 
 " coc-pairs
-autocmd FileType rust let b:coc_pairs_disabled = ['`']
+autocmd FileType rust let b:coc_pairs_disabled = ["'"]
 autocmd FileType vim let b:coc_pairs_disabled = ['"']
 
 " coc-lists
