@@ -166,6 +166,10 @@ nnoremap <Leader>es :UltiSnipsEdit<Cr>
 " ==> Full language server protocol support, and more than that!!!
 Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
 
+hi default link CocErrorSign Error
+hi default link CocWarningSign Error
+hi default link CocInfoSign Exception
+hi default link CocHintSign Exception
 " Use <c-n> for trigger completion.
 inoremap <silent><expr> <c-n> coc#refresh()
 " Use <cr> for confirm completion, `<C-g>u` means break undo chain at current position.
