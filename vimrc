@@ -249,6 +249,7 @@ let g:coc_user_config = {
     \ 'languageserver': languageservers,
     \ 'python.linting.flake8Enabled': v:true,
     \ 'python.linting.flake8Path': fnamemodify(s:python_binary, ':h').'/flake8',
+    \ 'rust-client.channel': 'nightly',
     \ }
 
 " coc-pairs
