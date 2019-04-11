@@ -11,6 +11,12 @@ set nocompatible
 call plug#begin('~/.vim/plugins')
 
 let s:python_binary = substitute(resolve(system('pyenv which python')), '\n\+$', '', '')
+" https://github.com/neovim/neovim/blob/11bf89e3b58be1dd534b4ea49b1988150cf7d4b8/runtime/doc/provider.txt#L59
+if system(s:python_binary . ' -V') =~ '2\.'
+    let g:python_host_prog = s:python_binary
+else
+    let g:python3_host_prog = s:python_binary
+endif
 
 
 " ==> file tree
