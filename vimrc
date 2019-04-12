@@ -237,7 +237,7 @@ let g:coc_global_extensions = [
 let g:coc_user_config = {
     \ 'suggest.detailMaxLength': 111,
     \ 'suggest.maxCompleteItemCount': 48,
-    \ 'coc.preferences.jumpCommand': 'drop',
+    \ 'coc.preferences.jumpCommand': 'split',
     \ 'coc.preferences.formatOnSaveFiletypes': [],
     \ 'coc.source.file.ignoreHidden': v:false,
     \ 'coc.source.file.triggerCharacters': ['/', '.'],
