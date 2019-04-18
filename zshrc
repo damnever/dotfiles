@@ -77,6 +77,8 @@ export LANG=en_US.UTF-8
 if [[ "$platform" == "Darwin" ]]; then  # Mac
     alias vim='nvim'  # 'mvim -v'
 fi
+alias proxy-set='export all_proxy=socks5://127.0.0.1:1080'
+alias proxy-unset='unset all_proxy'
 
 
 # autojump
@@ -119,3 +121,4 @@ export SHTERM_AUTH_KEY
 
 # GPG
 export GPG_TTY=$(tty)
+ssh-add
