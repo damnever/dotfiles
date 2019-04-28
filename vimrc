@@ -372,6 +372,7 @@ autocmd FileType vue syntax sync fromstart
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 let g:vim_markdown_folding_disabled = 1
 
+Plug 'junegunn/limelight.vim', { 'for': 'markdown' }
 Plug 'junegunn/goyo.vim', { 'for': 'markdown' }
 let g:goyo_width = 100
 let g:goyo_height = '100%'
