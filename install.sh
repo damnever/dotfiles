@@ -32,6 +32,7 @@ install_requirements_for_mac() {
     brew install cloc
     # brew install the_silver_searcher
     brew install ripgrep
+    brew install fortune
 }
 
 change_settings_for_mac() {
