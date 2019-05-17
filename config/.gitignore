@@ -1,0 +1,9 @@
+neofetch/
+.isolated-storage
+.mono
+coc/
+configstore/
+wireshark/
+gocode/
+yarn/
+alfred/
