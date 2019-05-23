@@ -208,8 +208,7 @@ let languageservers['clangd'] = {
     \ 'rootPatterns': ['compile_flags.txt', 'compile_commands.json', '.vim/', '.git/', '.hg/'],
     \ }
 let languageservers['golang'] = {
-    \ 'command': 'bingo',
-    \ 'args': ['--diagnostics-style=instant'],
+    \ 'command': 'gopls',
     \ 'rootPatterns': ['go.mod', '.vim/', '.git/', '.hg/', 'vendor/'],
     \ 'filetypes': ['go']
     \ }

@@ -124,10 +124,10 @@ setup_vim() {
     pip install vim-vint -U
     pip install pynvim -U
     pip install python-language-server -U
-    go get -u github.com/saibing/bingo
+    # go get -u github.com/saibing/bingo
+    go get -u golang.org/x/tools/cmd/...
     go get -u github.com/jstemmer/gotags
     go get -u github.com/zmb3/gogetdoc
-    go get -u golang.org/x/tools/cmd/guru
     go get -u github.com/alecthomas/gometalinter
     gometalinter --install
     yarn global add bash-language-server
