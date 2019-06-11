@@ -121,7 +121,7 @@ export SHTERM_AUTH_KEY
 
 # GPG
 export GPG_TTY=$(tty)
-ssh-add
+ssh-add &> /dev/null
 
 # Print something after each load..
 fortune
