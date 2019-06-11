@@ -141,15 +141,6 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-git'
 
 
-" ==> shows a git diff in the gutter
-Plug 'airblade/vim-gitgutter'
-
-let g:gitgutter_enabled = 0
-let g:gitgutter_map_keys = 0
-let g:gitgutter_highlight_lines = 0
-let g:gitgutter_max_signs = 666
-
-
 " ==> insert LICENSE
 Plug 'antoyo/vim-licenses'
 
@@ -232,6 +223,7 @@ let g:coc_global_extensions = [
     \ 'coc-snippets',
     \ 'coc-python',
     \ 'coc-rls',
+    \ 'coc-git',
     \]
 let g:coc_user_config = {
     \ 'suggest.detailMaxLength': 111,
@@ -255,6 +247,11 @@ let g:coc_user_config = {
     \ 'python.linting.flake8Enabled': v:true,
     \ 'python.linting.flake8Path': fnamemodify(s:python_binary, ':h').'/flake8',
     \ 'rust-client.channel': 'nightly',
+    \ 'git.branchCharacter': '⎇',
+    \ 'git.realtimeGutters': v:false,
+    \ 'git.addedSign.text': '+',
+    \ 'git.removedSign.text': '_',
+    \ 'git.addGlameToVirtualText': v:false,
     \ }
 
 " coc-pairs
@@ -289,6 +286,10 @@ function! s:GrepFromSelected(type)
 endfunction
 
 nnoremap <silent> \  :exe 'CocList -I -A --normal --input='.expand('<cword>').' words'<CR>
+
+" coc-git
+nmap [g <Plug>(coc-git-prevchunk)
+nmap ]g <Plug>(coc-git-nextchunk)
 
 
 " ==> Asynchronous Lint Engine (vim8 required).
