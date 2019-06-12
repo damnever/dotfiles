@@ -223,9 +223,9 @@ let g:coc_global_extensions = [
     \ 'coc-snippets',
     \ 'coc-python',
     \ 'coc-rls',
-    \ 'coc-java',
     \ 'coc-git',
     \]
+    " \ 'coc-java',
 let g:coc_user_config = {
     \ 'suggest.detailMaxLength': 111,
     \ 'suggest.maxCompleteItemCount': 48,
