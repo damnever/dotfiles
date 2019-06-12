@@ -112,6 +112,11 @@ source $HOME/.cargo/env
 export PATH=$PATH:$HOME/.cargo/bin
 export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
 
+# Java
+if [[ "$platform" == "Darwin" ]]; then  # Mac
+    export JAVA_HOME=$(/usr/libexec/java_home)
+fi
+
 # scp
 SHTERM_AUTH_KEY=`cat ~/.ssh/id_rsa`
 export SHTERM_AUTH_KEY

@@ -223,6 +223,7 @@ let g:coc_global_extensions = [
     \ 'coc-snippets',
     \ 'coc-python',
     \ 'coc-rls',
+    \ 'coc-java',
     \ 'coc-git',
     \]
 let g:coc_user_config = {
