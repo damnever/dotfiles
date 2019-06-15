@@ -324,10 +324,11 @@ let g:ale_linters = {'vim': ['vint'], 'sh': ['shellcheck'],}
       " \'c': ['clangtidy'],
       " \'python': ['flake8'],
       " \'go': ['gometalinter'],
-      " \'rust': ['rustc'],
+      " \'rust': ['cargo'],
       " \'elixir': ['credo'],
       " \}
 let g:ale_linters_explicit = 1
+let g:ale_rust_cargo_use_clippy = 1
 let g:ale_vim_vint_show_style_issues = 0
 let g:ale_sh_shellcheck_options = '-x'
 let g:ale_c_clangformat_options='-style="{BasedOnStyle: Google, IndentWidth: 4}"'
