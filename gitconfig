@@ -1,7 +1,7 @@
 [user]
     name = XiaoChao Dong (@damnever)
     email = dxc.wolf@gmail.com
-    signingkey = 54C374B5A76DC1A4
+    signingkey = 9BDD9F4DF3F09A02
 
 [core]
     editor = vim
