@@ -38,10 +38,12 @@ pyenv python
 go golang
 cargo
 zsh-autosuggestions
-colors
+autojump
+# Custom plugins
 kocmd
-gopath gobench
-autojump)
+gotools
+proxy
+colors)
 
 # Binding keys
 # As an addition to https://github.com/jlevy/the-art-of-command-line#everyday-use
@@ -78,8 +80,6 @@ export LANG=en_US.UTF-8
 if [[ "$platform" == "Darwin" ]]; then  # Mac
     alias vim='nvim'  # 'mvim -v'
 fi
-alias proxy-set='export all_proxy=socks5://127.0.0.1:1080'
-alias proxy-unset='unset all_proxy'
 
 
 # autojump
