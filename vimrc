@@ -646,6 +646,7 @@ autocmd FileType html set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
 autocmd FileType css set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
 autocmd FileType javascript set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
 autocmd FileType typescript set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
+autocmd FileType yaml set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
 " autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css
 autocmd BufRead,BufNewFile *.vue,*.wxml set filetype=html
 autocmd BufRead,BufNewFile *.wxss set filetype=css
