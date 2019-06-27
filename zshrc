@@ -33,7 +33,7 @@ git
 brew
 pip
 vagrant
-kubectl
+docker kubectl
 pyenv python
 go golang
 cargo
