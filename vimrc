@@ -227,6 +227,7 @@ let g:coc_global_extensions = [
     \]
     " \ 'coc-java',
 let g:coc_user_config = {
+    \ 'suggest.enablePreselect': v:false,
     \ 'suggest.detailMaxLength': 111,
     \ 'suggest.maxCompleteItemCount': 48,
     \ 'coc.preferences.jumpCommand': 'split',
