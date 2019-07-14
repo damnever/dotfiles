@@ -666,7 +666,12 @@ function! AutoSetFileHead()
 endfunc
 
 autocmd Syntax * call matchadd('Todo',  '\W\zs\(TODO\|FIXME\|CHANGED\|DONE\|XXX\|BUG\|HACK\)')
-autocmd Syntax * call matchadd('Debug', '\W\zs\(NOTE\|INFO\|WARN\|WARNING\|ERROR\|IDEA\|NOTICE\|MARK\|N.B.\)')
+autocmd Syntax * call matchadd('Todo',  '\W\zs\(todo\|fixme\|changed\|done\|xxx\|bug\|hack\)')
+autocmd Syntax * call matchadd('Debug', '\W\zs\(NOTE\|INFO\|WARNING\|WARN\|ERROR\|IDEA\|NOTICE\|MARK\|N.B.\)')
+autocmd Syntax * call matchadd('Debug', '\W\zs\(note\|info\|warning\|warn\|error\|idea\|notice\|mark\|n.b.\)')
+
+" Ref: https://github.com/neovim/neovim/issues/7994
+autocmd InsertLeave * set nopaste
 
 " set termguicolors
 set background=dark " light
