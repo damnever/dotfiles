@@ -118,6 +118,9 @@ if [[ "$platform" == "Darwin" ]]; then  # Mac
     export JAVA_HOME=$(/usr/libexec/java_home)
 fi
 
+# Swift
+export TOOLCHAINS=swift
+
 # scp
 SHTERM_AUTH_KEY=`cat ~/.ssh/id_rsa`
 export SHTERM_AUTH_KEY
