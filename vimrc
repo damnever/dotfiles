@@ -264,7 +264,7 @@ autocmd FileType rust let b:coc_pairs_disabled = ["'"]
 autocmd FileType vim let b:coc_pairs_disabled = ['"']
 
 " coc-lists
-nnoremap <silent> <leader>p :exe 'CocList files -I --normal'<CR>
+nnoremap <silent> <leader>p :exe 'CocList files'<CR>
 
 command! -nargs=+ -complete=custom,s:GrepArgs GA exe 'CocList -A grep '.<q-args>
 function! s:GrepArgs(...)
