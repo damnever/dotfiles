@@ -9,19 +9,19 @@ install_requirements_for_mac() {
     # NOTE: XCode is required. `xcode-select --install`
     /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
     # for vim
-    brew install llvm --with-toolchain
+    brew install wget
+    brew install llvm # --with-toolchain
     brew install shellcheck
     brew install readline xz
     brew tap macvim-dev/macvim
     # brew install --HEAD macvim-dev/macvim/macvim
     brew install neovim
-    brew install gnupg pnupg2 gpg-agent pinentry-mac # for gpg
+    brew install gnupg
     brew install zsh
     brew install ctags
     brew install fzf
     /usr/local/opt/fzf/install
-    brew install pyenv
-    brew install pyenv-virtualenvwrapper
+    brew install pyenv pyenv-virtualenv # pyenv-virtualenvwrapper
     brew install tmux reattach-to-user-namespace
     brew install coreutils findutils gnu-getopt
     brew ln gnu-getopt --force
@@ -73,12 +73,12 @@ install_prerequirements() {
     # https://github.com/pyenv/pyenv/issues/1219
     pyenv install $GLOBAL_PYTHON
     pyenv global $GLOBAL_PYTHON
-    pip install virtualenv-wrapper ipython
+    pip install ipython
 
-    curl https://sh.rustup.rs -sSf | sh
-    rustup toolchain add nightly
-    rustup component add rust-src
-    cargo +nightly install racer
+    # curl https://sh.rustup.rs -sSf | sh
+    # rustup toolchain add nightly
+    # rustup component add rust-src
+    # cargo +nightly install racer
 
     mkdir $HOME/.bin
     pushd $HOME/.bin
@@ -88,7 +88,7 @@ install_prerequirements() {
     # Tmux
     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
-    sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
+    sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 }
 
 
