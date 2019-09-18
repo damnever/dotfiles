@@ -15,6 +15,9 @@
 [apply]
     # Detect whitespace errors when applying a patch
     whitespace = fix
+    
+[pull]
+    rebase = true
 
 [url "git@github.com:"]
     insteadOf = https://github.com/
