@@ -556,8 +556,8 @@ set formatoptions+=B
 
 " set nocursorline
 " set nocursorcolumn
-set synmaxcol=160
-syntax sync minlines=333
+" set synmaxcol=160
+syntax sync minlines=666
 set re=1
 
 autocmd! bufwritepost _vimrc source %
