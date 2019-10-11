@@ -1,7 +1,7 @@
 # Copyright (c) 2017 XiaoChao Dong (@damnever) <dxc.wolf@gmail.com>
 
 export VIRTUAL_ENV_DISABLE_PROMPT=1
-local _ret_status="%(?:%{$fg_bold[green]%}➜ :%{$fg_bold[red]%}➜ )"
+local _ret_status="%(?:%{$fg_bold[green]%}➜ :%{$fg_bold[red]%}➜ )"  # ● • ⦿ ➢  ➤  ➜
 
 virtualenv_info() {
     [ $VIRTUAL_ENV ] && echo '('`basename $VIRTUAL_ENV`') '
@@ -28,5 +28,5 @@ ${_ret_status}%{$reset_color%} '
 
 ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg_bold[cyan]%}git:(%{$fg[red]%}"
 ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%} "
-ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg[cyan]%}) %{$fg[yellow]%}✗"
-ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg[cyan]%}) %{$fg[green]%}✓"
+ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg[cyan]%}) %{$fg[yellow]%}✗"  # ✘
+ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg[cyan]%}) %{$fg[green]%}✓"  # ✔︎

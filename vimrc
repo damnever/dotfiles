@@ -161,7 +161,7 @@ nnoremap <Leader>es :UltiSnipsEdit<Cr>
 
 
 " ==> Full language server protocol support, and more than that!!!
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc.nvim', {'tag': '*', 'branch': 'release'}
 
 hi default link CocErrorSign Error
 hi default link CocWarningSign Error
@@ -557,7 +557,7 @@ set formatoptions+=B
 " set nocursorline
 " set nocursorcolumn
 " set synmaxcol=160
-syntax sync minlines=666
+syntax sync minlines=888
 set re=1
 
 autocmd! bufwritepost _vimrc source %
@@ -675,7 +675,7 @@ autocmd Syntax * call matchadd('Debug', '\W\zs\(todo\|fixme\|bug\|hack\|note\|no
 " Ref: https://github.com/neovim/neovim/issues/7994
 autocmd InsertLeave * set nopaste
 
-" set termguicolors
+set termguicolors
 set background=dark " light
 set t_Co=256
 " hi Normal ctermfg=256 ctermbg=none
@@ -688,8 +688,8 @@ if has('nvim')
 endif
 set cursorcolumn " highlight the current column
 set cursorline " highlight current line
-hi CursorLine term=underline cterm=underline ctermbg=none ctermfg=none
-hi CursorColumn term=none cterm=none ctermbg=239 ctermfg=none
+hi CursorLine term=underline cterm=underline ctermfg=none ctermbg=none gui=underline guifg=none guibg=none
+hi CursorColumn term=none cterm=none ctermfg=none ctermbg=239 gui=none guifg=none guibg=#4e4e4e
 
 hi! link SignColumn   LineNr
 hi! link ShowMarksHLl DiffAdd
