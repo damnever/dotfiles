@@ -688,8 +688,8 @@ if has('nvim')
 endif
 set cursorcolumn " highlight the current column
 set cursorline " highlight current line
-hi CursorLine term=underline cterm=underline ctermfg=none ctermbg=none gui=underline guifg=none guibg=none
-hi CursorColumn term=none cterm=none ctermfg=none ctermbg=239 gui=none guifg=none guibg=#4e4e4e
+hi CursorLine term=underline cterm=underline ctermfg=NONE ctermbg=NONE gui=underline guifg=NONE guibg=NONE
+hi CursorColumn term=NONE cterm=NONE ctermfg=NONE ctermbg=239 gui=NONE guifg=NONE guibg=#4e4e4e
 
 hi! link SignColumn   LineNr
 hi! link ShowMarksHLl DiffAdd
