@@ -256,7 +256,7 @@ let g:coc_user_config = {
     \ 'git.realtimeGutters': v:false,
     \ 'git.addedSign.text': '+',
     \ 'git.removedSign.text': '_',
-    \ 'git.addGlameToVirtualText': v:false,
+    \ 'git.addGBlameToVirtualText': v:false,
     \ }
 
 " coc-pairs
