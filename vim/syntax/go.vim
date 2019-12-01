@@ -53,7 +53,7 @@ syn keyword     goBuiltins                 make new panic print println real rec
 syn keyword     goBoolean                  true false
 syn keyword     goPredefinedIdentifiers    nil iota
 
-hi def link     goBuiltins                 Identifier
+hi def link     goBuiltins                 Keyword
 hi def link     goBoolean                  Boolean
 hi def link     goPredefinedIdentifiers    goBoolean
 
