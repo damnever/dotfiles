@@ -4,7 +4,7 @@
     signingkey = 9BDD9F4DF3F09A02
 
 [core]
-    editor = vim
+    editor = nvim
     autocrlf = input
     whitespace = indent-with-non-tab,trailing-space,cr-at-eol
 
@@ -15,7 +15,7 @@
 [apply]
     # Detect whitespace errors when applying a patch
     whitespace = fix
-    
+
 [pull]
     rebase = true
 
