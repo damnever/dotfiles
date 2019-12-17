@@ -323,6 +323,7 @@ let g:ale_fixers = {
       \'python': ['yapf'],
       \'rust': ['rustfmt'],
       \'c': ['clang-format'],
+      \'javascript': ['prettier'],
       \}
 let g:ale_lint_delay = 111
 let g:ale_linters = {'vim': ['vint'], 'sh': ['shellcheck'],}
@@ -653,6 +654,7 @@ autocmd FileType css set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
 autocmd FileType javascript set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
 autocmd FileType typescript set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
 autocmd FileType yaml set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
+autocmd FileType json set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
 " autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css
 autocmd BufRead,BufNewFile *.vue,*.wxml set filetype=html
 autocmd BufRead,BufNewFile *.wxss set filetype=css
