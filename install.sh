@@ -25,7 +25,8 @@ install_requirements_for_mac() {
     brew install tmux reattach-to-user-namespace
     brew install coreutils findutils gnu-getopt
     brew ln gnu-getopt --force
-    brew install yarn
+    # brew install yarn
+    brew install node
     brew install watch
     brew install autojump
     brew install go
@@ -125,13 +126,13 @@ setup_vim() {
     pip install vim-vint -U
     pip install pynvim -U
     pip install python-language-server -U
-    # go get -u github.com/saibing/bingo
     go get -u golang.org/x/tools/cmd/...
     go get -u github.com/jstemmer/gotags
     go get -u github.com/zmb3/gogetdoc
-    go get -u github.com/alecthomas/gometalinter
-    gometalinter --install
-    yarn global add bash-language-server
+    # go get -u github.com/alecthomas/gometalinter
+    # gometalinter --install
+    # yarn global add bash-language-server
+    npm install -g prettier bash-language-server
 
     curl -fLo "$HOME/.vim/autoload/plug.vim" --create-dirs \
         https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
