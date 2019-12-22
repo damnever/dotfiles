@@ -657,7 +657,7 @@ autocmd FileType typescript set tabstop=2 shiftwidth=2 softtabstop=2 expandtab a
 autocmd FileType yaml set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
 autocmd FileType json set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
 " autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css
-autocmd BufRead,BufNewFile *.vue,*.wxml set filetype=html
+autocmd BufRead,BufNewFile *.wxml set filetype=html
 autocmd BufRead,BufNewFile *.wxss set filetype=css
 autocmd FileType txt,markdown,rst,asciidoc :call WrapingText()
 function! WrapingText()
