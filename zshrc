@@ -43,7 +43,8 @@ autojump
 kocmd
 gotools
 proxy
-colors)
+colors
+cleaner)
 
 # Binding keys
 # As an addition to https://github.com/jlevy/the-art-of-command-line#everyday-use
