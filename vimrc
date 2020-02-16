@@ -456,6 +456,11 @@ au Syntax * RainbowParenthesesLoadRound
 au Syntax * RainbowParenthesesLoadSquare
 au Syntax * RainbowParenthesesLoadBraces
 
+" Plug 'Yggdroot/indentLine'
+" let g:indentLine_setColors = 0
+" let g:indentLine_char = '¦'  " | ¦ ┆ ┊
+" let g:indentLine_concealcursor = 'inc'
+" let g:indentLine_conceallevel = 1
 
 call plug#end()
 

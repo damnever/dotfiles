@@ -103,8 +103,8 @@ export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV="true"
 eval "$(pipenv --completion)"
 
 # Golang
-export GOPATH=$HOME/.go:$HOME/dev/ak/Go:$HOME/dev/eleme/go
-export PATH=$PATH:/usr/local/go/bin:$HOME/.go/bin:$HOME/dev/ak/Go/bin:$HOME/dev/eleme/go/bin
+export GOPATH=$HOME/.go:$HOME/dev/ak/Go
+export PATH=$PATH:/usr/local/go/bin:$HOME/.go/bin:$HOME/dev/ak/Go/bin
 # for go-torch
 export PATH=$PATH:$HOME/.bin/FlameGraph
 
