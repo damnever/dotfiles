@@ -325,6 +325,11 @@ let g:ale_fixers = {
       \'c': ['clang-format'],
       \'javascript': ['prettier'],
       \}
+let g:ale_pattern_options = {
+  \   '\.h$': {
+  \       'ale_fixers': ['clang-format'],
+  \   },
+  \}
 let g:ale_lint_delay = 111
 let g:ale_linters = {'vim': ['vint'], 'sh': ['shellcheck'],}
       " \'c': ['clangtidy'],
