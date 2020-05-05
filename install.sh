@@ -6,14 +6,15 @@ platform=$(uname)
 
 install_requirements_for_mac() {
     set -e
-    # NOTE: XCode is required. `xcode-select --install`
+    # NOTE: XCode is required.
+    xcode-select --install
     /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
     # for vim
     brew install wget
     brew install llvm # --with-toolchain
     brew install shellcheck
     brew install readline xz
-    brew tap macvim-dev/macvim
+    # brew tap macvim-dev/macvim
     # brew install --HEAD macvim-dev/macvim/macvim
     brew install neovim
     brew install gnupg
@@ -33,6 +34,7 @@ install_requirements_for_mac() {
     brew install cloc
     # brew install the_silver_searcher
     brew install ripgrep
+    brew install htop iftop
     brew install polipo
     brew install fortune
 }
@@ -127,8 +129,8 @@ setup_vim() {
     pip install pynvim -U
     pip install python-language-server -U
     go get -u golang.org/x/tools/cmd/...
-    go get -u github.com/jstemmer/gotags
-    go get -u github.com/zmb3/gogetdoc
+    # go get -u github.com/jstemmer/gotags
+    # go get -u github.com/zmb3/gogetdoc
     # go get -u github.com/alecthomas/gometalinter
     # gometalinter --install
     # yarn global add bash-language-server
