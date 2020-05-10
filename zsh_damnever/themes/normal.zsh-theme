@@ -8,7 +8,7 @@ virtualenv_info() {
 }
 
 _format_with_time() { # deprecated
-    local STR="$(virtualenv_info)%{$FG[081]%}${PWD/$HOME/~}%{$reset_color%} $(git_prompt_info)"
+    local STR="$(virtualenv_info)%{$fg[081]%}${PWD/$HOME/~}%{$reset_color%} $(git_prompt_info)"
     local origin_lang=${LANG} origin_lcall=${LC_ALL} # Get bytes other than chars
     LANG=C LC_ALL=C
     local zero='%([BSUbfksu]|([FK]|){*})'
@@ -34,7 +34,7 @@ _format() {
 PROMPT='$(_format)%{$reset_color%}
 ${_ret_status}%{$reset_color%} '
 
-ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg_bold[cyan]%}git:(%{$fg[red]%}"
+ZSH_THEME_GIT_PROMPT_PREFIX="%{$FG[123]%}git:(%{$FG[174]%}"
 ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%} "
-ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg[cyan]%}) %{$fg[yellow]%}✗"  # ✘
-ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg[cyan]%}) %{$fg[green]%}✓"  # ✔︎
+ZSH_THEME_GIT_PROMPT_DIRTY="%{$FG[123]%}) %{$fg_bold[yellow]%}✗"  # ✘
+ZSH_THEME_GIT_PROMPT_CLEAN="%{$FG[123]%}) %{$fg_bold[green]%}✓"  # ✔︎
