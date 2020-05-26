@@ -38,6 +38,7 @@ install_requirements_for_mac() {
     brew install polipo
     brew install fortune
     # fonts
+    brew tap homebrew/cask-fonts
     brew cask install font-ibm-plex
     # thems
 }
