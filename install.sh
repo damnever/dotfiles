@@ -34,6 +34,7 @@ install_requirements_for_mac() {
     brew install cloc
     # brew install the_silver_searcher
     brew install ripgrep
+    brew install tree
     brew install htop iftop
     brew install polipo
     brew install fortune
@@ -133,6 +134,7 @@ setup_vim() {
     pip install pynvim -U
     pip install python-language-server -U
     go get -u golang.org/x/tools/cmd/...
+    go get -u golang.org/x/tools/gopls@latest
     # go get -u github.com/jstemmer/gotags
     # go get -u github.com/zmb3/gogetdoc
     # go get -u github.com/alecthomas/gometalinter
