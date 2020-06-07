@@ -397,6 +397,7 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'tmux-plugins/vim-tmux', {'for': 'tmux'}
 
 " others
+Plug 'cespare/vim-toml'
 Plug 'solarnz/thrift.vim', { 'for': 'thrift' }
 Plug 'elzr/vim-json', { 'for': 'json' }
 Plug 'ekalinin/Dockerfile.vim', {'for': 'Dockerfile'}
@@ -666,6 +667,7 @@ autocmd FileType javascript set tabstop=2 shiftwidth=2 softtabstop=2 expandtab a
 autocmd FileType typescript set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
 autocmd FileType yaml set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
 autocmd FileType json set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
+autocmd FileType toml set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
 " autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css
 autocmd BufRead,BufNewFile *.wxml set filetype=html
 autocmd BufRead,BufNewFile *.wxss set filetype=css
