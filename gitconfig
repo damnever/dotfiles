@@ -6,7 +6,7 @@
 [core]
     editor = nvim
     autocrlf = input
-    whitespace = indent-with-non-tab,trailing-space,cr-at-eol
+    whitespace = trailing-space,cr-at-eol  # indent-with-non-tab
 
 [diff "bin"]
     # Use `hexdump` to diff binary files
