@@ -35,7 +35,7 @@ pip
 vagrant
 docker kubectl
 pyenv python
-go golang
+golang
 cargo
 zsh-autosuggestions
 autojump

@@ -226,11 +226,18 @@ let g:coc_global_extensions = [
     \ 'coc-git',
     \]
     " \ 'coc-java',
+function! CocSplitIfNotOpen(gotoLoc, fname)
+    if a:fname != fnamemodify(expand('%'), ':p:~:.')
+        exec 'split '.a:fname
+    endif
+    exec a:gotoLoc
+endfunction
+command! -nargs=+ CocJumpCmd :call CocSplitIfNotOpen(<f-args>)
 let g:coc_user_config = {
     \ 'suggest.enablePreselect': v:false,
     \ 'suggest.detailMaxLength': 111,
     \ 'suggest.maxCompleteItemCount': 48,
-    \ 'coc.preferences.jumpCommand': 'split',
+    \ 'coc.preferences.jumpCommand': 'CocJumpCmd',
     \ 'coc.preferences.formatOnSaveFiletypes': [],
     \ 'coc.source.file.ignoreHidden': v:false,
     \ 'coc.source.file.triggerCharacters': ['/', '.'],
