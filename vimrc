@@ -228,11 +228,20 @@ let g:coc_global_extensions = [
     \ 'coc-git',
     \]
     " \ 'coc-java',
-function! CocSplitIfNotOpen(gotoLoc, fname)
-    if a:fname != fnamemodify(expand('%'), ':p:~:.')
-        exec 'split '.a:fname
+function! CocSplitIfNotOpen(...)
+    " Ref: https://github.com/neoclide/coc.nvim/blob/7e9e0e91e24fc447e96079ae59e9f6caffe604a4/autoload/coc/util.vim#L380-L383
+    let cursorCmd = ''
+    let fname = a:1
+    if a:0 == 2  " Two arguments.
+        let cursorCmd = a:1
+        let fname = a:2
     endif
-    exec a:gotoLoc
+    if fname != fnamemodify(expand('%'), ':p:~:.')
+        exec 'split '.fname
+    endif
+    if len(cursorCmd)
+        exec cursorCmd
+    endif
 endfunction
 command! -nargs=+ CocJumpCmd :call CocSplitIfNotOpen(<f-args>)
 let g:coc_user_config = {
