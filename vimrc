@@ -20,6 +20,8 @@ else
     set pyxversion=3
 endif
 
+" https://stackoverflow.com/a/24931292/2996656
+let g:omni_sql_no_default_maps = 1
 
 " ==> file tree
 Plug 'scrooloose/nerdtree'
