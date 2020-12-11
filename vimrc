@@ -165,7 +165,7 @@ nnoremap <Leader>es :UltiSnipsEdit<Cr>
 
 
 " ==> Full language server protocol support, and more than that!!!
-Plug 'neoclide/coc.nvim', {'tag': '*', 'branch': 'release'}
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 hi default link CocErrorSign Error
 hi default link CocWarningSign Error
