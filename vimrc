@@ -184,8 +184,10 @@ nmap <silent> <leader>jd <Plug>(coc-definition)
 nmap <silent> <leader>jt <Plug>(coc-type-definition)
 nmap <silent> <leader>ji <Plug>(coc-implementation)
 nmap <silent> <leader>jr <Plug>(coc-references)
-nnoremap <expr><C-[> coc#util#has_float() ? coc#util#float_scroll(1) : "\<C-[>"
-nnoremap <expr><C-]> coc#util#has_float() ? coc#util#float_scroll(0) : "\<C-]>"
+if has('nvim-0.4.0') || has('patch-8.2.0750')
+  nnoremap <silent><nowait><expr> <C-[> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-[>"
+  nnoremap <silent><nowait><expr> <C-]> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-]>"
+endif
 " Use K for show documentation in preview window
 nnoremap <silent> <s-k> :call <SID>show_documentation()<CR>
 function! s:show_documentation()
