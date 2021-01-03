@@ -291,7 +291,7 @@ Plug 'w0rp/ale'
 hi default link ALEErrorSign Error
 hi default link ALEWarningSign Exception
 let g:ale_disable_lsp = 1
-let g:ale_sign_priority = 99
+let g:ale_sign_priority = 30
 let g:ale_completion_enabled = 0
 let g:ale_history_log_output = 0  " Save memory.
 let g:ale_history_enabled = 0

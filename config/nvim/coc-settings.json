@@ -31,7 +31,7 @@
   "diagnostic.hintSign": "∙",
   "diagnostic.refreshOnInsertMode": true,
   "signature.enable": true,
-  "signature.hideOnTextChange": true,
+  "signature.hideOnTextChange": false,
   "codeLens.enable": false,
   "coc.preferences.jumpCommand": "CocJumpCmd",
   "coc.preferences.formatOnType": true,
@@ -56,7 +56,8 @@
   "git.addGBlameToVirtualText": false,
   "languageserver": {
     "golang": {  // https://github.com/golang/tools/blob/master/gopls/doc/settings.md
-      "command": "gopls", // "args": ["-remote=auto"],
+      "command": "gopls",
+      "args": ["-remote=auto"],
       "filetypes": ["go"],
       "rootPatterns": ["go.mod", ".git/", ".hg/", "vendor/"],
       "requireRootPattern": false,
@@ -71,11 +72,11 @@
           "unusedparams": true
         },
         "codelenses": {
-          "generate": false,
+          "generate": true,
           "regenerate_cgo": false,
           "test": false,
           "tidy": true,
-          "upgrade_dependency": false,
+          "upgrade_dependency": true,
           "vendor": false,
           "gc_details": true
         }
