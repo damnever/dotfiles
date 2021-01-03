@@ -129,10 +129,7 @@ setup_config_files() {
 
 setup_vim() {
     echo "-> setup vim .."
-    pip install flake8 pyflakes pep8 pylint jedi pipenv yapf -U
-    pip install vim-vint -U
-    pip install pynvim -U
-    pip install python-language-server -U
+    pip install pynvim vim-vint 'python-language-server[all]' flake8 pyflakes pep8 pylint jedi pipenv yapf -U
     go get -u golang.org/x/tools/cmd/...
     go get -u golang.org/x/tools/gopls@latest
     # go get -u github.com/jstemmer/gotags
@@ -159,7 +156,6 @@ usage() {
     echo "       -v setup vim" >&2
     exit 1
 }
-
 
 while getopts ":rcv" opt; do
     case "${opt}" in

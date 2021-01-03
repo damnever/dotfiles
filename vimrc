@@ -24,20 +24,23 @@ endif
 let g:omni_sql_no_default_maps = 1
 
 " ==> file tree
-Plug 'scrooloose/nerdtree'
+Plug 'preservim/nerdtree'
 
 nmap <leader>n :NERDTreeToggle<CR>
-let NERDTreeHighlightCursorline = 1
-let NERDTreeIgnore = [
+let g:NERDTreeHighlightCursorline = 1
+let g:NERDTreeIgnore = [
       \ '__pycache__', '\.pyc$', '\.pyo$',
       \ '\.obj$', '\.o$', '\.so$', '\.egg$', '\.beam$',
       \ '^\.git$', '^\.svn$', '^\.hg$'
       \ ]
-" automatically quit vim if NERDTree is last and only buffer
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 let g:NERDTreeMapOpenSplit = 's'
 let g:NERDTreeMapOpenVSplit = 'v'
-let NERDTreeShowHidden = 1
+let g:NERDTreeShowHidden = 1
+" Start NERDTree when Vim is started without file arguments.
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists('s:std_in') | NERDTree | endif
+" Exit Vim if NERDTree is the only window left.
+autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
 
 
 " ==> tagbar
@@ -100,7 +103,7 @@ nmap <Leader>r <Plug>(quickrun)
 
 
 " ==> intensely orgasmic commenting
-Plug 'scrooloose/nerdcommenter'
+Plug 'preservim/nerdcommenter'
 
 let g:NERDSpaceDelims = 1
 
@@ -165,17 +168,37 @@ nnoremap <Leader>es :UltiSnipsEdit<Cr>
 
 
 " ==> Full language server protocol support, and more than that!!!
+" Configuration file is located at ./config/nvim/coc-settings.json
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+" https://github.com/neoclide/coc.nvim#extensions
+" \ 'coc-java',
+" \ 'coc-tabnine',
+let g:coc_global_extensions = [
+    \ 'coc-pairs',
+    \ 'coc-lists',
+    \ 'coc-dictionary',
+    \ 'coc-word',
+    \ 'coc-html',
+    \ 'coc-css',
+    \ 'coc-tsserver',
+    \ 'coc-json',
+    \ 'coc-yaml',
+    \ 'coc-snippets',
+    \ 'coc-rls',
+    \ 'coc-git',
+    \]
 
 hi default link CocErrorSign Error
 hi default link CocWarningSign Error
 hi default link CocInfoSign Exception
 hi default link CocHintSign Exception
 " Use <c-n> for trigger completion.
-inoremap <silent><expr> <c-n> coc#refresh()
-" Use <cr> for confirm completion, `<C-g>u` means break undo chain at current position.
-" Coc only does snippet and additional edit on confirm.
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+" inoremap <silent><expr> <c-n> coc#refresh()
+" Make <CR> auto-select the first completion item and notify coc.nvim to
+" format on enter, <cr> could be remapped by other vim plugin
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 " Use `[c` and `]c` for navigate diagnostics
 nmap <silent> [c <Plug>(coc-diagnostic-prev)
 nmap <silent> ]c <Plug>(coc-diagnostic-next)
@@ -196,44 +219,10 @@ function! s:show_documentation()
   elseif (coc#rpc#ready())
     call CocActionAsync('doHover')
   else
-    execute '!' . &keywordprg . " " . expand('<cword>')
+    execute '!' . &keywordprg . ' ' . expand('<cword>')
   endif
 endfunction
 
-let languageservers = {}
-let languageservers['clangd'] = {
-    \ 'command': 'clangd',
-    \ 'filetypes': ['c', 'cpp', 'objc', 'objcpp'],
-    \ 'rootPatterns': ['compile_flags.txt', 'compile_commands.json', '.vim/', '.git/', '.hg/'],
-    \ }
-let languageservers['golang'] = {
-    \ 'command': 'gopls',
-    \ 'rootPatterns': ['go.mod', '.vim/', '.git/', '.hg/', 'vendor/'],
-    \ 'filetypes': ['go']
-    \ }
-let languageservers['bash'] = {
-    \ 'command': 'bash-language-server',
-    \ 'args': ['start'],
-    \ 'filetypes': ['sh'],
-    \ 'ignoredRootPaths': ['~']
-    \ }
-" https://github.com/neoclide/coc.nvim#extensions
-let g:coc_global_extensions = [
-    \ 'coc-pairs',
-    \ 'coc-lists',
-    \ 'coc-dictionary',
-    \ 'coc-word',
-    \ 'coc-html',
-    \ 'coc-css',
-    \ 'coc-tsserver',
-    \ 'coc-json',
-    \ 'coc-yaml',
-    \ 'coc-snippets',
-    \ 'coc-python',
-    \ 'coc-rls',
-    \ 'coc-git',
-    \]
-    " \ 'coc-java',
 function! CocSplitIfNotOpen(...)
     " Ref: https://github.com/neoclide/coc.nvim/blob/7e9e0e91e24fc447e96079ae59e9f6caffe604a4/autoload/coc/util.vim#L380-L383
     let cursorCmd = ''
@@ -250,50 +239,12 @@ function! CocSplitIfNotOpen(...)
     endif
 endfunction
 command! -nargs=+ CocJumpCmd :call CocSplitIfNotOpen(<f-args>)
-let g:coc_user_config = {
-    \ 'suggest.enablePreselect': v:false,
-    \ 'suggest.noselect': v:true,
-    \ 'suggest.detailMaxLength': 111,
-    \ 'suggest.maxCompleteItemCount': 48,
-    \ 'suggest.removeDuplicateItems': v:false,
-    \ 'suggest.triggerAfterInsertEnter': v:false,
-    \ 'coc.preferences.jumpCommand': 'CocJumpCmd',
-    \ 'coc.preferences.formatOnType': v:false,
-    \ 'coc.preferences.formatOnSaveFiletypes': [],
-    \ 'coc.preferences.formatOnInsertLeave': v:false,
-    \ 'coc.preferences.extensionUpdateCheck': 'weekly',
-    \ 'coc.source.file.ignoreHidden': v:false,
-    \ 'coc.source.file.triggerCharacters': ['/', '.'],
-    \ 'diagnostic.enable': v:true,
-    \ 'diagnostic.enableMessage': 'always',
-    \ 'diagnostic.displayByAle': v:false,
-    \ 'diagnostic.errorSign': '✗',
-    \ 'diagnostic.warningSign': '∙',
-    \ 'diagnostic.infoSign': '∙',
-    \ 'diagnostic.hintSign': '∙',
-    \ 'diagnostic.refreshAfterSave': v:false,
-    \ 'diagnostic.refreshOnInsertMode': v:true,
-    \ 'list.indicator': '>',
-    \ 'list.selectedSignText': '*',
-    \ 'list.normalMappings': {'v': 'action:vsplit', 'x': 'action:split'},
-    \ 'list.insertMappings': {'<C-n>': 'normal:j', '<C-p>': 'normal:k', '<C-x>': 'action:split', '<C-v>': 'action:vsplit'},
-    \ 'languageserver': languageservers,
-    \ 'python.linting.flake8Enabled': v:true,
-    \ 'python.linting.flake8Path': fnamemodify(s:python_binary, ':h').'/flake8',
-    \ 'python.linting.pylintEnabled': v:false,
-    \ 'python.jediPath': fnamemodify(s:python_binary, ':h').'/jedi',
-    \ 'python.pythonPath': s:python_binary,
-    \ 'rust-client.channel': 'nightly',
-    \ 'git.branchCharacter': '⎇',
-    \ 'git.realtimeGutters': v:false,
-    \ 'git.addedSign.text': '+',
-    \ 'git.removedSign.text': '_',
-    \ 'git.addGBlameToVirtualText': v:false,
-    \ }
 
 " coc-pairs
-autocmd FileType rust let b:coc_pairs_disabled = ["'"]
-autocmd FileType vim let b:coc_pairs_disabled = ['"']
+augroup CocPairsFileTypes
+    autocmd FileType rust let b:coc_pairs_disabled = ["'"]
+    autocmd FileType vim let b:coc_pairs_disabled = ['"']
+augroup END
 
 " coc-lists
 nnoremap <silent> <leader>p :exe 'CocList files'<CR>
@@ -328,12 +279,19 @@ nnoremap <silent> \  :exe 'CocList -I -A --normal --input='.expand('<cword>').' 
 nmap [g <Plug>(coc-git-prevchunk)
 nmap ]g <Plug>(coc-git-nextchunk)
 
+" unbelievable!!!
+augroup CocActionEditorOrganizeImports
+    autocmd BufWritePre *.go :silent call CocAction('runCommand', 'editor.action.organizeImport')
+augroup END
+
 
 " ==> Asynchronous Lint Engine (vim8 required).
 Plug 'w0rp/ale'
 
 hi default link ALEErrorSign Error
 hi default link ALEWarningSign Exception
+let g:ale_disable_lsp = 1
+let g:ale_sign_priority = 99
 let g:ale_completion_enabled = 0
 let g:ale_history_log_output = 0  " Save memory.
 let g:ale_history_enabled = 0
@@ -343,33 +301,36 @@ let g:airline#extensions#ale#enabled = 1
 let g:ale_echo_msg_error_str = 'E'
 let g:ale_echo_msg_warning_str = 'W'
 let g:ale_echo_msg_format = '[%severity%] [%linter%] %(code): %%s'
+let g:ale_lint_on_text_changed = 'never'
+let g:ale_lint_on_insert_leave = 1
+let g:ale_lint_on_enter = 1
+let g:ale_lint_on_save = 1
 augroup CloseLoclistWindowGroup
   autocmd!
   autocmd QuitPre * if empty(&buftype) | lclose | endif
 augroup END
 let g:ale_list_window_size = 5
 let g:ale_fix_on_save = 1
+" \'go': ['goimports'],
 let g:ale_fixers = {
-      \'*': ['remove_trailing_lines', 'trim_whitespace'],
-      \'go': ['goimports'],
-      \'python': ['yapf'],
-      \'rust': ['rustfmt'],
-      \'c': ['clang-format'],
-      \'javascript': ['prettier'],
-      \}
+    \'*': ['remove_trailing_lines', 'trim_whitespace'],
+    \'rust': ['rustfmt'],
+    \'c': ['clang-format'],
+    \'javascript': ['prettier'],
+    \}
 let g:ale_pattern_options = {
-  \   '\.h$': {
-  \       'ale_fixers': ['clang-format'],
-  \   },
-  \}
+    \   '\.h$': {
+    \       'ale_fixers': ['clang-format'],
+    \   },
+    \}
 let g:ale_lint_delay = 111
 let g:ale_linters = {'vim': ['vint'], 'sh': ['shellcheck'],}
-      " \'c': ['clangtidy'],
-      " \'python': ['flake8'],
-      " \'go': ['gometalinter'],
-      " \'rust': ['cargo'],
-      " \'elixir': ['credo'],
-      " \}
+    " \'c': ['clangtidy'],
+    " \'python': ['flake8'],
+    " \'go': ['gometalinter'],
+    " \'rust': ['cargo'],
+    " \'elixir': ['credo'],
+    " \}
 let g:ale_linters_explicit = 1
 let g:ale_rust_cargo_use_clippy = 1
 let g:ale_vim_vint_show_style_issues = 0
@@ -419,11 +380,6 @@ autocmd FileType vue syntax sync fromstart
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 let g:vim_markdown_folding_disabled = 1
 
-Plug 'junegunn/limelight.vim'
-Plug 'junegunn/goyo.vim'
-let g:goyo_width = 100
-let g:goyo_height = '100%'
-
 " tmux [Ctrl + h,i,j,k]
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'tmux-plugins/vim-tmux', {'for': 'tmux'}
@@ -431,7 +387,7 @@ Plug 'tmux-plugins/vim-tmux', {'for': 'tmux'}
 " others
 Plug 'cespare/vim-toml'
 Plug 'solarnz/thrift.vim', { 'for': 'thrift' }
-Plug 'elzr/vim-json', { 'for': 'json' }
+Plug 'kevinoid/vim-jsonc', { 'for': 'json' }
 Plug 'ekalinin/Dockerfile.vim', {'for': 'Dockerfile'}
 Plug 'fatih/vim-nginx' , {'for': 'nginx'}
 
@@ -499,9 +455,21 @@ au Syntax * RainbowParenthesesLoadBraces
 " let g:indentLine_char = '¦'  " | ¦ ┆ ┊
 " let g:indentLine_concealcursor = 'inc'
 " let g:indentLine_conceallevel = 1
-
 call plug#end()
 
+" FIXME: separate into multiple files???
+if filereadable(expand('go.mod'))  " not working..
+    let s:goimportslocal = ''
+    for s:line in readfile('go.mod')
+        if stridx(s:line, 'module ') == 0
+            let s:goimportslocal = split(s:line, 'module ')[0]
+            break
+        endif
+    endfor
+    call coc#config('languageserver.golang.initializationOptions', {
+        \ 'local': s:goimportslocal,
+        \ })
+endif
 
 
 if has('nvim')
@@ -556,7 +524,7 @@ set hidden " http://vim.wikia.com/wiki/Example_vimrc
 set ruler " display the cursor position on the last line of the screen or in the status line of a window
 set wildmenu " better command-line completion
 set showcmd " show partial commands in the last line of the screen
-set cmdheight=2 " to avoid many cases of having to "press <Enter> to continue"
+set cmdheight=3 " to avoid many cases of having to "press <Enter> to continue"
 set showmode
 set scrolloff=7 " min top/down padding which cursor cannot reach
 set statusline=%<%f\ %h%m%r%=%k[%{(&fenc==\"\")?&enc:&fenc}%{(&bomb?\",BOM\":\"\")}]\ %-14.(%l,%c%V%)\ %P
