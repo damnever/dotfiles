@@ -1,3 +1,6 @@
+[init]
+	defaultBranch = development
+
 [user]
     name = Xiaochao Dong (@damnever)
     email = dxc.wolf@gmail.com
