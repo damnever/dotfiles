@@ -3,8 +3,8 @@
 
 [user]
     name = Xiaochao Dong (@damnever)
-    email = dxc.wolf@gmail.com
-    signingkey = 9BDD9F4DF3F09A02
+    email = the.xcdong@gmail.com
+    signingkey = 5E83FCFBD42A0CA7
 
 [core]
     editor = nvim
