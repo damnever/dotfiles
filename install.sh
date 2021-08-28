@@ -132,7 +132,7 @@ setup_vim() {
     pip install pynvim vim-vint 'python-language-server[all]' flake8 pyflakes pep8 pylint jedi pipenv yapf -U
     go get -u golang.org/x/tools/cmd/...
     go get -u golang.org/x/tools/gopls@latest
-    # go get -u github.com/jstemmer/gotags
+    go get -u github.com/jstemmer/gotags
     # go get -u github.com/zmb3/gogetdoc
     # go get -u github.com/alecthomas/gometalinter
     # gometalinter --install
