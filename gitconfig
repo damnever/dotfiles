@@ -1,5 +1,5 @@
 [init]
-	defaultBranch = development
+	defaultBranch = main
 
 [user]
     name = Xiaochao Dong (@damnever)
