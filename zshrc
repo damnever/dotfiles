@@ -38,6 +38,7 @@ pyenv python
 golang
 cargo
 zsh-autosuggestions
+zsh-syntax-highlighting
 autojump
 # Custom plugins
 kocmd

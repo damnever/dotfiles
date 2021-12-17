@@ -18,7 +18,7 @@ install_requirements_for_mac() {
     # brew install --HEAD macvim-dev/macvim/macvim
     brew install neovim
     brew install gnupg
-    brew install zsh
+    brew install zsh  # antigen?
     brew install ctags
     brew install fzf
     /usr/local/opt/fzf/install

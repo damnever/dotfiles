@@ -421,32 +421,11 @@ let g:airline_symbols.branch = '⎇'
 " laederon, tomorrow, bubblegum, wombat ..
 let g:airline_theme = 'dark'
 
+" ==> Rainbow Parentheses
+" Plug 'junegunn/rainbow_parentheses.vim'
+Plug 'luochen1990/rainbow'
+let g:rainbow_active = 1
 
-" ==> Better Rainbow Parentheses
-Plug 'kien/rainbow_parentheses.vim'
-let g:rbpt_colorpairs = [
-      \ ['brown',       'RoyalBlue3'],
-      \ ['Darkblue',    'SeaGreen3'],
-      \ ['darkgray',    'DarkOrchid3'],
-      \ ['darkgreen',   'firebrick3'],
-      \ ['darkcyan',    'RoyalBlue3'],
-      \ ['darkred',     'SeaGreen3'],
-      \ ['darkmagenta', 'DarkOrchid3'],
-      \ ['brown',       'firebrick3'],
-      \ ['gray',        'RoyalBlue3'],
-      \ ['darkmagenta', 'DarkOrchid3'],
-      \ ['Darkblue',    'firebrick3'],
-      \ ['darkgreen',   'RoyalBlue3'],
-      \ ['darkcyan',    'SeaGreen3'],
-      \ ['darkred',     'DarkOrchid3'],
-      \ ['red',         'firebrick3'],
-      \]
-let g:rbpt_max = 64
-let g:rbpt_loadcmd_toggle = 0
-au VimEnter * RainbowParenthesesToggle
-au Syntax * RainbowParenthesesLoadRound
-au Syntax * RainbowParenthesesLoadSquare
-au Syntax * RainbowParenthesesLoadBraces
 
 " Plug 'Yggdroot/indentLine'
 " let g:indentLine_setColors = 0

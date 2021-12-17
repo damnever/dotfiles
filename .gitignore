@@ -27,7 +27,7 @@ Temporary Items
 
 ## Vim
 vim/plugins/
-vim/autoload/
+vim/autoload/plug.vim*
 vim/sessions/
 
 
