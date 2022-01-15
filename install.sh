@@ -45,9 +45,9 @@ install_requirements_for_mac() {
 }
 
 change_settings_for_mac() {
-    # Ref: https://github.com/mathiasbynens/dotfiles/issues/687
-    defaults write NSGlobalDomain KeyRepeat -int 1
-    defaults write NSGlobalDomain InitialKeyRepeat -int 10
+    defaults write -g KeyRepeat -int 2
+    defaults write -g InitialKeyRepeat -int 9
+    # defaults write -g ApplePressAndHoldEnabled -bool false
 }
 
 install_requirements_for_ubuntu() {
@@ -130,12 +130,10 @@ setup_config_files() {
 setup_vim() {
     echo "-> setup vim .."
     pip install pynvim vim-vint 'python-language-server[all]' flake8 pyflakes pep8 pylint jedi pipenv yapf -U
-    go get -u golang.org/x/tools/cmd/...
-    go get -u golang.org/x/tools/gopls@latest
-    go get -u github.com/jstemmer/gotags
-    # go get -u github.com/zmb3/gogetdoc
-    # go get -u github.com/alecthomas/gometalinter
-    # gometalinter --install
+    go install golang.org/x/tools/cmd/benchstat@latest
+    go install golang.org/x/tools/cmd/godoc@latest
+    go install golang.org/x/tools/gopls@latest
+    go install github.com/jstemmer/gotags@latest
     # yarn global add bash-language-server
     npm install -g prettier bash-language-server
 

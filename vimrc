@@ -187,6 +187,7 @@ let g:coc_global_extensions = [
     \ 'coc-snippets',
     \ 'coc-rust-analyzer',
     \ 'coc-git',
+    \ 'coc-go',
     \]
 
 hi default link CocErrorSign Error
@@ -443,7 +444,8 @@ if filereadable(expand('go.mod'))  " not working..
             break
         endif
     endfor
-    call coc#config('languageserver.golang.initializationOptions', {
+    " call coc#config('languageserver.golang.initializationOptions', {
+    call coc#config('go.goplsOptions', {
         \ 'local': s:goimportslocal,
         \ })
 endif
