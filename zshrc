@@ -36,7 +36,6 @@ vagrant
 docker kubectl
 pyenv python
 golang
-cargo
 zsh-autosuggestions
 zsh-syntax-highlighting
 autojump
@@ -44,7 +43,7 @@ autojump
 kocmd
 gotools
 proxy
-colors
+tmux-init
 cleaner)
 
 # Binding keys
@@ -99,9 +98,7 @@ else  # Linux
 fi
 eval "$(pyenv init -)"
 export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV="true"
-# pyenv virtualenvwrapper
-# Pipenv
-eval "$(pipenv --completion)"
+
 
 # Golang
 export GOPATH=$HOME/.go:$HOME/dev/ak/Go
