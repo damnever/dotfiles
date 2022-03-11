@@ -2096,21 +2096,21 @@
                         },
                         {
                             "from": {
-                                "key_code": "left_control"
-                            },
-                            "to": [
-                                {
-                                    "key_code": "caps_lock"
-                                }
-                            ]
-                        },
-                        {
-                            "from": {
                                 "key_code": "d"
                             },
                             "to": [
                                 {
                                     "key_code": "d"
+                                }
+                            ]
+                        },
+                        {
+                            "from": {
+                                "key_code": "left_control"
+                            },
+                            "to": [
+                                {
+                                    "key_code": "caps_lock"
                                 }
                             ]
                         }
