@@ -91,20 +91,18 @@ fi
 
 # Pyenv
 if [[ "$platform" == "Darwin" ]]; then  # Mac
-    export PYENV_ROOT=/usr/local/var/pyenv
 else  # Linux
     export PYENV_ROOT="$HOME/.pyenv"
     export PATH="$PYENV_ROOT/bin:$PATH"
 fi
+eval "$(pyenv init --path)"
 eval "$(pyenv init -)"
-export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV="true"
+eval "$(pyenv virtualenv-init -)"
 
 
 # Golang
 export GOPATH=$HOME/.go:$HOME/dev/ak/Go
 export PATH=$PATH:/usr/local/go/bin:$HOME/.go/bin:$HOME/dev/ak/Go/bin
-# for go-torch
-export PATH=$PATH:$HOME/.bin/FlameGraph
 
 # Rust
 # rustup/racer

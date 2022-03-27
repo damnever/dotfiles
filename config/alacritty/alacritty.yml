@@ -775,7 +775,8 @@ colors:
 #
 # If the same trigger is assigned to multiple actions, all of them are executed
 # in the order they were defined in.
-#key_bindings:
+key_bindings:
+  - { key: Back, action:  ReceiveChar}  # Ref: https://github.com/alacritty/alacritty/issues/1606
   #- { key: Paste,                                       action: Paste          }
   #- { key: Copy,                                        action: Copy           }
   #- { key: L,         mods: Control,                    action: ClearLogNotice }

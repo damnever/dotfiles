@@ -54,7 +54,29 @@
   "git.addedSign.text": "+",
   "git.removedSign.text": "_",
   "git.addGBlameToVirtualText": false,
-  "go.goplsOptions": { "local": "" },
+  "go.goplsOptions": {
+    "local": "",
+    "directoryFilters": ["-.git"],
+    "gofumpt": false,
+    "usePlaceholders": false,
+    "analyses": {
+      "fieldalignment": false,
+      "nilness": true,
+      "shadow": true,
+      "unusedparams": true,
+      "unusedwrite": true,
+      "fillstruct": false
+    },
+    "codelenses": {
+      "generate": true,
+      "regenerate_cgo": false,
+      "test": false,
+      "tidy": true,
+      "upgrade_dependency": false,
+      "vendor": false,
+      "gc_details": false
+    }
+  },
   "go.tags": { "skipUnexported": true },
   "languageserver": {
     /*

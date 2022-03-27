@@ -3,11 +3,25 @@
 cur_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 platform=$(uname)
 
+install_xcode_command_line_tools() {
+    output=$(xcode-select --install 2>&1)
+    status=$?
+    if [ $status != 0 ]; then
+        echo "${output}"
+        case "${output}" in
+            *"already installed"*)
+                ;;
+            *)
+                exit 1
+                ;;
+        esac
+    fi
+}
 
 install_requirements_for_mac() {
-    set -e
     # NOTE: XCode is required.
-    xcode-select --install
+    install_xcode_command_line_tools
+    set -e
     /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
     # for vim
     brew install wget
@@ -40,7 +54,7 @@ install_requirements_for_mac() {
     brew install fortune
     # fonts
     brew tap homebrew/cask-fonts
-    brew cask install font-ibm-plex
+    brew install font-ibm-plex --cask
     # thems
 }
 
@@ -87,11 +101,6 @@ install_prerequirements() {
     # rustup toolchain add nightly
     # rustup component add rust-src
     # cargo +nightly install racer
-
-    mkdir $HOME/.bin
-    pushd $HOME/.bin
-    git clone https://github.com/brendangregg/FlameGraph.git
-    popd
 
     # Tmux
     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
