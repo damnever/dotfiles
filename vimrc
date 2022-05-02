@@ -664,9 +664,10 @@ function! AutoSetFileHead()
   endif
 endfunc
 
-autocmd Syntax * call matchadd('Todo',  '\W\zs\(TODO\|FIXME\|CHANGED\|DONE\|XXX\|BUG\|HACK\)')
+autocmd Syntax * call matchadd('Todo',  '\W\zs\(TODO\|FIXME\|XXX\|BUG\|HACK\|DOCME\|TESTME\)')
+autocmd Syntax * call matchadd('Todo',  '\W\zs\(todo\|fixme\|xxx\|bug\|hack\|docme\|testme\)')
 autocmd Syntax * call matchadd('Debug', '\W\zs\(NOTE\|INFO\|WARNING\|WARN\|ERROR\|IDEA\|NOTICE\|MARK\|N\.B\.\)')
-autocmd Syntax * call matchadd('Debug', '\W\zs\(todo\|fixme\|bug\|hack\|note\|notice\|mark\|n\.b\.\)')
+autocmd Syntax * call matchadd('Debug', '\W\zs\(note\|info\|warning\|warn\|error\|idea\|notice\|mark\|n\.b\.\)')
 
 " Ref: https://github.com/neovim/neovim/issues/7994
 autocmd InsertLeave * set nopaste
