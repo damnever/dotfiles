@@ -20,7 +20,7 @@
   "diagnostic.checkCurrentLine": true,
   "diagnostic.level": "hint",
   "diagnostic.enableMessage": "always",
-  "diagnostic.messageTarget": "float",
+  "diagnostic.messageTarget": "echo",
   "diagnostic.displayByAle": false,
   "diagnostic.virtualText": false,
   "diagnostic.virtualTextCurrentLineOnly": true,
