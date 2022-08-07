@@ -47,14 +47,15 @@ install_requirements_for_mac() {
     brew install go
     brew install cloc
     # brew install the_silver_searcher
-    brew install ripgrep
+    brew install ripgrep fd
     brew install tree
     brew install htop iftop
     brew install polipo
     brew install fortune
     # fonts
     brew tap homebrew/cask-fonts
-    brew install font-ibm-plex --cask
+    # brew install font-ibm-plex --cask
+    brew install --cask font-jetbrains-mono-nerd-font
     # thems
 }
 
@@ -139,20 +140,27 @@ setup_config_files() {
 setup_vim() {
     echo "-> setup vim .."
     pip install pynvim vim-vint 'python-language-server[all]' flake8 pyflakes pep8 pylint jedi pipenv yapf -U
+    pip install neovim
     go install golang.org/x/tools/cmd/benchstat@latest
     go install golang.org/x/tools/cmd/godoc@latest
     go install golang.org/x/tools/gopls@latest
     go install github.com/jstemmer/gotags@latest
     # yarn global add bash-language-server
     npm install -g prettier bash-language-server
+    # TODO: install lint and formaters
 
-    curl -fLo "$HOME/.vim/autoload/plug.vim" --create-dirs \
-        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    # Patched fonts(Monaco): https://github.com/ryanoasis/nerd-fonts#font-patcher
 
-    system_shell=$SHELL
-    export SHELL="/bin/sh"
-    vim -u "$HOME/.vimrc" +PlugInstall! +PlugClean! +qall
-    export SHELL=$system_shell
+    mkdir /tmp/nerdfonts
+    pushd /tmp/nerdfonts
+    curl -Lo JetBrainsMono.zip https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/JetBrainsMono.zip
+    unzip JetBrainsMono.zip
+    mv *.ttf ~/Library/Fonts
+    popd
+    rm -rf /tmp/nerdfonts
+
+    # https://github.com/wbthomason/packer.nvim
+    nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
 }
 
 
