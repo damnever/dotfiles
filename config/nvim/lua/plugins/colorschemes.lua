@@ -2,7 +2,7 @@ local package = { -- For 'wbthomason/packer.nvim'
     'folke/tokyonight.nvim',
     requires = {
         { "catppuccin/nvim", as = "catppuccin" },
-        { 'Mofiqul/vscode.nvim' },
+        { 'Mofiqul/vscode.nvim', opt = true },
         -- { 'tomasr/molokai' },
     }
 }

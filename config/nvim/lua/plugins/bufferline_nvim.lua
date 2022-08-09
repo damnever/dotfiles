@@ -1,5 +1,5 @@
 local package = { -- For 'wbthomason/packer.nvim'
-    'akinsho/bufferline.nvim', tag = "v2.*",
+    'akinsho/bufferline.nvim', tag = "v2.*", disable = true,
     requires = { { 'tiagovla/scope.nvim' }, { 'kyazdani42/nvim-web-devicons' }, },
 }
 
