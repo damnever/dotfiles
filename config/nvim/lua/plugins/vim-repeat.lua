@@ -1,8 +1,8 @@
 local package = { -- For 'wbthomason/packer.nvim'
-  'tpope/vim-repeat',
+    'tpope/vim-repeat',
 }
 
 return {
-  package = package,
-  config = config,
+    package = package,
+    config = config,
 }

@@ -1,12 +1,12 @@
 local package = { -- For 'wbthomason/packer.nvim'
-  'lewis6991/gitsigns.nvim',
+    'lewis6991/gitsigns.nvim',
 }
 
 local config = function()
-  require('gitsigns').setup()
+    require('gitsigns').setup()
 end
 
 return {
-  package = package,
-  config = config,
+    package = package,
+    config = config,
 }

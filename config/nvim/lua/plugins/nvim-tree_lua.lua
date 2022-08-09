@@ -5,9 +5,14 @@ local package = { -- For 'wbthomason/packer.nvim'
 
 local config = function()
   require("nvim-tree").setup({
+    auto_reload_on_write = false,
+    hijack_cursor = true,
     sort_by = "case_sensitive",
     view = {
       adaptive_size = false,
+      width = 30,
+      height = 30,
+      side = "left",
       mappings = {
         custom_only = true,
         list = {

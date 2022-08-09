@@ -1,8 +1,8 @@
 local package = { -- For 'wbthomason/packer.nvim'
-  'christoomey/vim-tmux-navigator',
+    'christoomey/vim-tmux-navigator',
 }
 
 return {
-  package = package,
-  config = config,
+    package = package,
+    config = config,
 }

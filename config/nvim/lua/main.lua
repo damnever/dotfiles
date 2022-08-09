@@ -147,10 +147,10 @@ local function set_cursor_line()
   opt('guicursor', nil)
   opt('cursorcolumn', true)
   opt('cursorline', true)
-  vim.cmd([[
-    hi CursorLine term=underline cterm=underline ctermfg=NONE ctermbg=NONE gui=underline guifg=NONE guibg=NONE
-    hi CursorColumn term=NONE cterm=NONE ctermfg=NONE ctermbg=239 gui=NONE guifg=NONE guibg=#4e4e4e
-  ]])
+  -- vim.cmd([[
+    -- hi CursorLine term=underline cterm=underline ctermfg=NONE ctermbg=NONE gui=underline guifg=NONE guibg=NONE
+    -- hi CursorColumn term=NONE cterm=NONE ctermfg=NONE ctermbg=239 gui=NONE guifg=NONE guibg=#4e4e4e
+  -- ]])
 end
 
 local function set_misc_autocmds()

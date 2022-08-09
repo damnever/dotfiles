@@ -1,15 +1,15 @@
 local package = { -- For 'wbthomason/packer.nvim'
-  'kyazdani42/nvim-web-devicons',
+    'kyazdani42/nvim-web-devicons',
 }
 
 local config = function()
-  require('nvim-web-devicons').setup({
-    override = {},
-    default = false,
-  })
+    require('nvim-web-devicons').setup({
+        override = {},
+        default = false,
+    })
 end
 
 return {
-  package = package,
-  config = config,
+    package = package,
+    config = config,
 }
