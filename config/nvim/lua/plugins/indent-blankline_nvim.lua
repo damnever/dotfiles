@@ -2,7 +2,6 @@ local package = { -- For 'wbthomason/packer.nvim'
     'lukas-reineke/indent-blankline.nvim',
 }
 
--- FIXME: https://github.com/p00f/nvim-ts-rainbow/issues/110
 
 local config = function()
     vim.opt.list = true
@@ -15,6 +14,7 @@ local config = function()
         show_current_context_start = false,
     }
 end
+
 
 return {
     package = package,

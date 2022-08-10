@@ -16,12 +16,12 @@ for _, name in ipairs(plugin_modules) do
 end
 
 -- FIXME: Automatically run :PackerCompile whenever plugins/ directory is updated.
-vim.cmd([[
-  augroup packer_user_config
-    autocmd!
-    autocmd BufWritePost plugins.lua source <afile> | PackerCompile
-  augroup end
-]])
+--[[ vim.cmd([[ ]]
+--[[ augroup packer_user_config ]]
+--[[ autocmd! ]]
+--[[ autocmd BufWritePost plugins.lua source <afile> | PackerCompile ]]
+--[[ augroup end ]]
+--[[ <]) ]]
 
 -- FIXME: all actions are async: https://github.com/wbthomason/packer.nvim#user-autocommands
 
@@ -30,7 +30,6 @@ return require('packer').startup(function(use)
     use('wbthomason/packer.nvim')
 
     for _, package in ipairs(packages) do
-        -- print('====', require('lib').dump_table(package))
         use(package)
     end
 

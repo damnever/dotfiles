@@ -6,6 +6,8 @@ local package = { -- For 'wbthomason/packer.nvim'
     },
 }
 
+-- FIXME: rainbow: https://github.com/p00f/nvim-ts-rainbow/issues/110
+
 local config = function()
     require('nvim-treesitter.configs').setup({
         -- A list of parser names, or "all"
@@ -47,6 +49,7 @@ local config = function()
         }
     })
 end
+
 
 return {
     package = package,

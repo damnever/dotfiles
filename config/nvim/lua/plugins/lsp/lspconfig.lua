@@ -1,11 +1,9 @@
 local package = { -- For 'wbthomason/packer.nvim'
     'williamboman/mason.nvim',
-    after = { 'cmp-nvim-lsp', 'lsp-format.nvim' },
+    after = { 'cmp-nvim-lsp' },
     requires = {
         { 'neovim/nvim-lspconfig' },
         { 'williamboman/mason-lspconfig.nvim' },
-        { 'jose-elias-alvarez/null-ls.nvim', requires = { { 'nvim-lua/plenary.nvim' }, { 'folke/trouble.nvim' }, } },
-        { 'lukas-reineke/lsp-format.nvim' },
     },
 }
 
@@ -125,9 +123,76 @@ local config = function()
         })
     end
 
+    local function setup_diagnostic()
+        vim.diagnostic.config({
+            underline = true,
+            virtual_text = false,
+            -- float = {},
+            signs = true,
+            update_in_insert = false,
+            severity_sort = false,
+        })
+        local diagnostic_signs = { Error = ' ', Warn = ' ', Hint = ' ', Info = ' ' }
+        for type, icon in pairs(diagnostic_signs) do
+            local hl = 'DiagnosticSign' .. type
+            vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+        end
+    end
+
+    local function diagnostic_on_attach()
+        local function diagnostic_format(diagnostic)
+            local severity = 'X'
+            if diagnostic.severity == vim.diagnostic.severity.HINT then
+                severity = 'HINT'
+            elseif diagnostic.severity == vim.diagnostic.severity.INFO then
+                severity = 'INFO'
+            elseif diagnostic.severity == vim.diagnostic.severity.WARN then
+                severity = 'WARN'
+            elseif diagnostic.severity == vim.diagnostic.severity.ERROR then
+                severity = 'ERROR'
+            end
+            return string.format('[%s] %s (%s)', severity, diagnostic.message, diagnostic.source)
+        end
+
+        -- https://github.com/neovim/nvim-lspconfig/wiki/UI-Customization#show-line-diagnostics-automatically-in-hover-window
+        return function(client, bufnr)
+            vim.api.nvim_create_autocmd("CursorHold", {
+                buffer = bufnr,
+                callback = function()
+                    vim.diagnostic.open_float(nil, {
+                        focusable = false,
+                        close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
+                        border = 'rounded',
+                        source = false,
+                        prefix = ' ',
+                        scope = 'cursor',
+                        format = diagnostic_format,
+                    })
+                end
+            })
+        end
+    end
+
+    local lspformat_augroup = vim.api.nvim_create_augroup("LspFormatting", {})
+    local function format_on_save(client, bufnr)
+        if client.supports_method("textDocument/formatting") then
+            vim.api.nvim_clear_autocmds({ group = lspformat_augroup, buffer = bufnr })
+            vim.api.nvim_create_autocmd("BufWritePre", {
+                group = lspformat_augroup,
+                buffer = bufnr,
+                callback = function()
+                    -- on 0.8, you should use vim.lsp.buf.format({ bufnr = bufnr }) instead
+                    -- vim.lsp.buf.format({ filter = function(client) return client.name == "LSP-SOURCE-NAME" end, bufnr = bufnr, })
+                    vim.lsp.buf.formatting_sync()
+                end,
+            })
+        end
+    end
+
     local function lspconfig_on_attach(client, bufnr)
         -- Format on save
-        require("lsp-format").on_attach(client, bufnr)
+        format_on_save(client, bufnr)
+        diagnostic_on_attach()(client, bufnr)
 
         -- 'neovim/nvim-lspconfig'
         -- Mappings.
@@ -160,21 +225,6 @@ local config = function()
         vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
         vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
         vim.keymap.set('n', '<space>f', vim.lsp.buf.formatting, bufopts)
-        -- https://github.com/neovim/nvim-lspconfig/wiki/UI-Customization#show-line-diagnostics-automatically-in-hover-window
-        vim.api.nvim_create_autocmd("CursorHold", {
-            buffer = bufnr,
-            callback = function()
-                local opts = {
-                    focusable = false,
-                    close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
-                    border = 'rounded',
-                    source = 'always',
-                    prefix = ' ',
-                    scope = 'cursor',
-                }
-                vim.diagnostic.open_float(nil, opts)
-            end
-        })
     end
 
     local function goto_definition(split_cmd)
@@ -191,8 +241,7 @@ local config = function()
         end
 
         -- note, this handler style is for neovim 0.5.1/0.6, if on 0.5, call with function(_, method, result)
-        -- :h lsp-handler
-        return function(err, result, ctx)
+        return function(err, result, ctx) -- :h lsp-handler
             if result == nil or vim.tbl_isempty(result) then
                 local _ = log.info and log.info(ctx.method, "No location found")
                 return nil
@@ -216,22 +265,6 @@ local config = function()
         end
     end
 
-    vim.lsp.handlers["textDocument/definition"] = goto_definition('split')
-
-    -- { severity = true, }
-    -- vim.diagnostic.severity.HINT,
-    -- vim.diagnostic.severity.INFO,
-    -- vim.diagnostic.severity.WARN,
-    -- vim.diagnostic.severity.ERROR,
-    vim.diagnostic.config({
-        underline = true,
-        virtual_text = false,
-        -- float = {},
-        signs = {},
-        update_in_insert = false,
-        severity_sort = false,
-    })
-
     local function setup_lspconfig()
         local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
         local lspconfig = require('lspconfig')
@@ -245,6 +278,9 @@ local config = function()
             end
             lspconfig[name].setup(opts)
         end
+
+        vim.lsp.handlers["textDocument/definition"] = goto_definition('split')
+        setup_diagnostic()
     end
 
     setup_mason()

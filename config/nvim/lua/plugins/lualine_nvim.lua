@@ -1,7 +1,7 @@
 local package = { -- For 'wbthomason/packer.nvim'
     'nvim-lualine/lualine.nvim',
     requires = {
-        { 'arkav/lualine-lsp-progress' },
+        -- { 'arkav/lualine-lsp-progress' }, -- See: lsp/fidget_nvim.lua
         { 'kyazdani42/nvim-web-devicons', opt = true },
     },
 }
