@@ -1,6 +1,7 @@
 local install_path = vim.fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
+local packer_bootstrap
 if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
-    local packer_bootstrap = vim.fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim',
+    packer_bootstrap = vim.fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim',
         install_path })
     vim.cmd [[packadd packer.nvim]]
 end
@@ -22,6 +23,8 @@ vim.cmd([[
   augroup end
 ]])
 
+-- FIXME: all actions are async: https://github.com/wbthomason/packer.nvim#user-autocommands
+
 return require('packer').startup(function(use)
     -- Packer can manage itself
     use('wbthomason/packer.nvim')
@@ -29,5 +32,9 @@ return require('packer').startup(function(use)
     for _, package in ipairs(packages) do
         -- print('====', require('lib').dump_table(package))
         use(package)
+    end
+
+    if packer_bootstrap then
+        require('packer').sync()
     end
 end)

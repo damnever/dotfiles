@@ -218,8 +218,13 @@ local config = function()
 
     vim.lsp.handlers["textDocument/definition"] = goto_definition('split')
 
+    -- { severity = true, }
+    -- vim.diagnostic.severity.HINT,
+    -- vim.diagnostic.severity.INFO,
+    -- vim.diagnostic.severity.WARN,
+    -- vim.diagnostic.severity.ERROR,
     vim.diagnostic.config({
-        underline = { severity = vim.diagnostic.severity.INFO, },
+        underline = true,
         virtual_text = false,
         -- float = {},
         signs = {},
