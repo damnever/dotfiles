@@ -147,19 +147,12 @@ setup_vim() {
     go install github.com/jstemmer/gotags@latest
     # yarn global add bash-language-server
     npm install -g prettier bash-language-server
-    # TODO: install lint and formaters
+    # TODO: install lint and formaters for neovim null-ls?
 
     # Patched fonts(Monaco): https://github.com/ryanoasis/nerd-fonts#font-patcher
 
-    mkdir /tmp/nerdfonts
-    pushd /tmp/nerdfonts
-    curl -Lo JetBrainsMono.zip https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/JetBrainsMono.zip
-    unzip JetBrainsMono.zip
-    mv *.ttf ~/Library/Fonts
-    popd
-    rm -rf /tmp/nerdfonts
-
-    # https://github.com/wbthomason/packer.nvim
+    # Let's do it twice: https://github.com/wbthomason/packer.nvim
+    nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
     nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
 }
 
