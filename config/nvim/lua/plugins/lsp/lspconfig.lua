@@ -64,6 +64,17 @@ local config = function()
         -- Lua
         sumneko_lua = {
             flags = { debounce_text_changes = 150, },
+            settings = {
+                Lua = {
+                    format = {
+                        enable = true,
+                        defaultConfig = {
+                            indent_style = "space",
+                            indent_size = "3",
+                        },
+                    },
+                }
+            },
         },
         -- Python
         pyright = {
@@ -171,34 +182,42 @@ local config = function()
         local log = require("vim.lsp.log")
         local api = vim.api
 
+        local function maybe_split_buffer(uri)
+            local filename = string.gsub(uri, "^file://", "") -- Trim prefix.
+            local current_buffer_filename = vim.api.nvim_buf_get_name(0)
+            if filename ~= current_buffer_filename and split_cmd then
+                vim.cmd(split_cmd)
+            end
+        end
+
         -- note, this handler style is for neovim 0.5.1/0.6, if on 0.5, call with function(_, method, result)
-        local handler = function(_, result, ctx)
+        -- :h lsp-handler
+        return function(err, result, ctx)
             if result == nil or vim.tbl_isempty(result) then
-                local _ = log.info() and log.info(ctx.method, "No location found")
+                local _ = log.info and log.info(ctx.method, "No location found")
                 return nil
             end
 
-            if split_cmd then
-                vim.cmd(split_cmd)
-            end
-
+            local offset_encoding = vim.lsp.get_client_by_id(ctx.client_id).offset_encoding
             if vim.tbl_islist(result) then
-                util.jump_to_location(result[1])
+                maybe_split_buffer(result[1].uri)
+                util.jump_to_location(result[1], offset_encoding)
 
                 if #result > 1 then
-                    util.set_qflist(util.locations_to_items(result))
+                    -- Use setqflist() instead?
+                    util.set_qflist(util.locations_to_items(result, offset_encoding))
                     api.nvim_command("copen")
                     api.nvim_command("wincmd p")
                 end
             else
-                util.jump_to_location(result)
+                maybe_split_buffer(result.uri)
+                util.jump_to_location(result, offset_encoding)
             end
         end
-
-        return handler
     end
 
     vim.lsp.handlers["textDocument/definition"] = goto_definition('split')
+
     vim.diagnostic.config({
         underline = { severity = vim.diagnostic.severity.INFO, },
         virtual_text = false,

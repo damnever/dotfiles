@@ -55,7 +55,7 @@ install_requirements_for_mac() {
     # fonts
     brew tap homebrew/cask-fonts
     # brew install font-ibm-plex --cask
-    brew install --cask font-jetbrains-mono-nerd-font
+    brew install --cask font-jetbrains-mono-nerd-font font-fira-mono-nerd-font font-go-mono-nerd-font
     # thems
 }
 

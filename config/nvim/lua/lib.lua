@@ -40,7 +40,7 @@ local function list_modules(module_prefix, dir, ignores_pattern)
                 table.insert(modules, module)
             end
         elseif string.match(file, '.+%.lua$') then -- Only lua files.
-            table.insert(modules, module_prefix .. '/' .. string.gsub(file, "%.lua", ""))
+            table.insert(modules, module_prefix .. '/' .. string.gsub(file, "%.lua$", ""))
         end
     end
     return modules
