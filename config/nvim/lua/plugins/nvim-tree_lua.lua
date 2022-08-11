@@ -5,9 +5,15 @@ local package = { -- For 'wbthomason/packer.nvim'
 
 local config = function()
     require("nvim-tree").setup({
+        open_on_tab = true,
+        open_on_setup = true,
         auto_reload_on_write = false,
         hijack_cursor = true,
         sort_by = "case_sensitive",
+        filesystem_watchers = {
+            enable = true,
+            debounce_delay = 800, -- ms
+        },
         view = {
             adaptive_size = false,
             width = 33,
@@ -89,11 +95,23 @@ local config = function()
         { mode = 'n', lhs = '<leader>n', rhs = ':NvimTreeToggle<CR>', opts = { remap = true } },
     })
 
+    -- Exit Vim if Tree is the only window remaining in the only tab.
     vim.api.nvim_create_autocmd("BufEnter", {
         nested = true,
         callback = function()
-            if #vim.api.nvim_list_wins() == 1 and vim.api.nvim_buf_get_name(0):match("NvimTree_") ~= nil then
-                vim.cmd "quit"
+            if vim.fn.tabpagenr('$') == 1 and vim.fn.winnr('$') == 1 and
+                vim.api.nvim_buf_get_name(0):match("NvimTree_") ~= nil then
+                vim.cmd("quit")
+            end
+        end
+    })
+    -- Close the tab if Tree is the only window remaining in it.
+    vim.api.nvim_create_autocmd("BufEnter", {
+        nested = true,
+        callback = function()
+            if vim.fn.winnr('$') == 1 and
+                vim.api.nvim_buf_get_name(0):match("NvimTree_") ~= nil then
+                vim.cmd("quit")
             end
         end
     })
