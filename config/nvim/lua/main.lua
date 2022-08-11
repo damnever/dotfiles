@@ -83,7 +83,7 @@ local function set_options()
     opt('fillchars', 'vert:│', '+')
 
     opt('undofile', true)
-    opt('undodir', lib.ensure_data_dir('undo'))
+    opt('undodir', lib.ensure_data_cache_dir('undo'))
     opt('history', 2000)
     opt('autoread', true)
     opt('backup', false)

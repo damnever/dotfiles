@@ -19,7 +19,7 @@ local function data_cache_dir(name)
     return os.getenv("HOME") .. '/.cache/nvim/' .. name
 end
 
-local function ensure_data_dir(name)
+local function ensure_data_cache_dir(name)
     local dir = data_cache_dir(name)
     if vim.fn.isdirectory(dir) == 0 then
         os.execute("mkdir -p " .. dir)
@@ -94,7 +94,7 @@ return {
 
     split_file_path = split_file_path,
     data_cache_dir = data_cache_dir,
-    ensure_data_dir = ensure_data_dir,
+    ensure_data_cache_dir = ensure_data_cache_dir,
 
     list_modules = list_modules,
 

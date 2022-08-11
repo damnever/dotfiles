@@ -4,7 +4,7 @@ local package = { -- For 'wbthomason/packer.nvim'
     { 'kevinoid/vim-jsonc', ft = { 'json', 'jsonc' } },
     { 'ekalinin/Dockerfile.vim', ft = { 'Dockerfile' } },
     { 'fatih/vim-nginx', ft = { 'nginx' } },
-    { 'plasticboy/vim-markdown', ft = { 'markdown' } },
+    -- { 'plasticboy/vim-markdown', ft = { 'markdown' } },
 }
 
 local config = function()

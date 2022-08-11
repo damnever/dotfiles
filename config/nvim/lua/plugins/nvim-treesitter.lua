@@ -11,8 +11,12 @@ local package = { -- For 'wbthomason/packer.nvim'
 local config = function()
     require('nvim-treesitter.configs').setup({
         -- A list of parser names, or "all"
-        ensure_installed = { "c", "cmake", "bash", "go", "javascript", "json", "json5", "lua", "proto", "python", "rust",
-            "sql", "toml", "vim", "yaml" },
+        ensure_installed = {
+            "c", "cmake", "bash", "go",
+            "javascript", "json", "json5", "lua", "markdown",
+            "proto", "python", "rust", "sql", "toml",
+            "vim", "yaml"
+        },
 
         -- Install parsers synchronously (only applied to `ensure_installed`)
         sync_install = false,

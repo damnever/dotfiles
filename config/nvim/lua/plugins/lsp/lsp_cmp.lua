@@ -80,6 +80,35 @@ local config = function()
                 return vim_item
             end
         },
+        matching = {
+            disallow_fuzzy_matching = false,
+            disallow_partial_matching = false,
+            disallow_prefix_unmatching = false,
+        },
+        sorting = {
+            comparators = {
+                cmp.config.compare.exact,
+                cmp.config.compare.offset,
+                -- cmp.config.compare.scopes,
+                cmp.config.compare.score,
+                cmp.config.compare.recently_used,
+                cmp.config.compare.locality,
+                require("cmp-under-comparator").under,
+                -- cmp.config.compare.kind,
+                cmp.config.compare.sort_text,
+                cmp.config.compare.length,
+                cmp.config.compare.order,
+            },
+        },
+        performance = {
+            debounce = 80,
+            throttle = 30,
+            fetching_timeout = 200,
+        },
+        window = {
+            -- completion = cmp.config.window.bordered(),
+            -- documentation = cmp.config.window.bordered(),
+        },
         snippet = {
             -- REQUIRED - you must specify a snippet engine
             expand = function(args)
@@ -89,11 +118,9 @@ local config = function()
                 -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
             end,
         },
-        window = {
-            -- completion = cmp.config.window.bordered(),
-            -- documentation = cmp.config.window.bordered(),
-        },
         mapping = cmp.mapping.preset.insert({
+            -- ['<C-n>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
+            -- ['<C-p>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
             ['<C-b>'] = cmp.mapping.scroll_docs(-4),
             ['<C-f>'] = cmp.mapping.scroll_docs(4),
             ['<C-Space>'] = cmp.mapping.complete(),
@@ -136,18 +163,6 @@ local config = function()
                 keyword_length = 2,
             },
         }),
-        sorting = {
-            comparators = {
-                cmp.config.compare.offset,
-                cmp.config.compare.exact,
-                cmp.config.compare.score,
-                require("cmp-under-comparator").under,
-                cmp.config.compare.kind,
-                cmp.config.compare.sort_text,
-                cmp.config.compare.length,
-                cmp.config.compare.order,
-            },
-        },
     })
 
     -- Set configuration for specific filetype.

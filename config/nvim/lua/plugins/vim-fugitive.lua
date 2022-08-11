@@ -1,6 +1,5 @@
 local package = { -- For 'wbthomason/packer.nvim'
-    'tpope/vim-fugitive',
-    disable = true,
+    'tpope/vim-fugitive', disable = true,
 }
 
 return {
