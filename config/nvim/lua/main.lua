@@ -156,58 +156,53 @@ end
 
 local function set_misc_autocmds()
     vim.cmd([[
-    autocmd InsertLeave * if pumvisible() == 0|pclose|endif
-    autocmd InsertLeave * set nopaste
+        autocmd InsertLeave * if pumvisible() == 0|pclose|endif
+        autocmd InsertLeave * set nopaste
 
-    autocmd BufNewFile,BufRead *.py inoremap # X<c-h>#
-    autocmd FileType python set tabstop=4 shiftwidth=4 expandtab ai
-    autocmd FileType vim set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
-    autocmd FileType ruby set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
-    autocmd FileType html set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
-    autocmd FileType css set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
-    autocmd FileType javascript set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
-    autocmd FileType typescript set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
-    autocmd FileType yaml set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
-    autocmd FileType json set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
-    autocmd FileType toml set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
-    " autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css
-    autocmd BufRead,BufNewFile *.wxml set filetype=html
-    autocmd BufRead,BufNewFile *.wxss set filetype=css
-    autocmd FileType txt,markdown,rst,asciidoc :call WrapingText()
-    function! WrapingText()
-      setlocal wrap
-      setlocal linebreak
-      " setlocal nolist
-    endfunction
+        autocmd BufNewFile,BufRead *.py inoremap # X<c-h>#
+        autocmd FileType python set tabstop=4 shiftwidth=4 expandtab ai
+        autocmd FileType vim set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
+        autocmd FileType ruby set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
+        autocmd FileType html set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
+        autocmd FileType css set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
+        " autocmd FileType javascript set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
+        " autocmd FileType typescript set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
+        autocmd FileType yaml set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
+        autocmd FileType json set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
+        autocmd FileType toml set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
+        " autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css
+        autocmd BufRead,BufNewFile *.wxml set filetype=html
+        autocmd BufRead,BufNewFile *.wxss set filetype=css
+        autocmd FileType txt,markdown,rst,asciidoc :call WrapingText()
+        function! WrapingText()
+        setlocal wrap
+        setlocal linebreak
+        " setlocal nolist
+        endfunction
 
-    autocmd BufNewFile *.sh,*.py exec ":call AutoSetFileHead()"
-    function! AutoSetFileHead()
-      if &filetype == 'sh'
-        call setline(1, '#!/bin/bash')
-      endif
-    endfunc
+        autocmd BufNewFile *.sh,*.py exec ":call AutoSetFileHead()"
+        function! AutoSetFileHead()
+        if &filetype == 'sh'
+            call setline(1, '#!/bin/bash')
+        endif
+        endfunc
 
-    " autocmd Syntax * call matchadd('Todo',  '\W\zs\(TODO\|FIXME\|XXX\|BUG\|HACK\|DOCME\|TESTME\)')
-    " autocmd Syntax * call matchadd('Todo',  '\W\zs\(todo\|fixme\|xxx\|bug\|hack\|docme\|testme\)')
-    " autocmd Syntax * call matchadd('Debug', '\W\zs\(NOTE\|INFO\|WARNING\|WARN\|ERROR\|IDEA\|NOTICE\|MARK\|N\.B\.\)')
-    " autocmd Syntax * call matchadd('Debug', '\W\zs\(note\|info\|warning\|warn\|error\|idea\|notice\|mark\|n\.b\.\)')
+        " Ref: https://github.com/neovim/neovim/issues/7994
+        autocmd InsertLeave * set nopaste
 
-    " Ref: https://github.com/neovim/neovim/issues/7994
-    autocmd InsertLeave * set nopaste
+        " hi! link SignColumn   LineNr
+        " hi! link ShowMarksHLl DiffAdd
+        " hi! link ShowMarksHLu DiffChange
 
-    hi! link SignColumn   LineNr
-    hi! link ShowMarksHLl DiffAdd
-    hi! link ShowMarksHLu DiffChange
-
-    highlight clear SpellBad
-    highlight SpellBad term=standout ctermfg=1 term=underline cterm=underline
-    highlight clear SpellCap
-    highlight SpellCap term=underline cterm=underline
-    highlight clear SpellRare
-    highlight SpellRare term=underline cterm=underline
-    highlight clear SpellLocal
-    highlight SpellLocal term=underline cterm=underline
-  ]] )
+        " highlight clear SpellBad
+        " highlight SpellBad term=standout ctermfg=1 term=underline cterm=underline
+        " highlight clear SpellCap
+        " highlight SpellCap term=underline cterm=underline
+        " highlight clear SpellRare
+        " highlight SpellRare term=underline cterm=underline
+        " highlight clear SpellLocal
+        " highlight SpellLocal term=underline cterm=underline
+    ]])
 end
 
 local function setup()

@@ -52,11 +52,11 @@ install_requirements_for_mac() {
     brew install htop iftop
     brew install polipo
     brew install fortune
+    brew install direnv
     # fonts
     brew tap homebrew/cask-fonts
     # brew install font-ibm-plex --cask
     brew install --cask font-jetbrains-mono-nerd-font font-fira-mono-nerd-font font-go-mono-nerd-font
-    # thems
 }
 
 change_settings_for_mac() {

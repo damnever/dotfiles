@@ -61,7 +61,7 @@ local config = function()
     cmp.setup({
         view = {
             -- https://github.com/hrsh7th/nvim-cmp/wiki/Menu-Appearance#custom-menu-direction
-            entries = { name = 'custom', selection_order = 'near_cursor' }
+            entries = { name = 'custom', selection_order = 'top_down', }
         },
         formatting = {
             format = function(entry, vim_item)

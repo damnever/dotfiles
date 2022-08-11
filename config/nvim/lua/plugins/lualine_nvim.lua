@@ -30,7 +30,7 @@ local config = function()
             lualine_a = { 'mode' },
             lualine_b = { 'branch', 'diff', 'diagnostics' },
             lualine_c = {
-                'filename', 'lsp_progress'
+                { 'filename', path = 1, }, 'lsp_progress'
             },
             lualine_x = { 'encoding', 'fileformat', 'filetype' },
             lualine_y = { 'progress' },
