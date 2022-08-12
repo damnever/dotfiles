@@ -88,7 +88,7 @@ local function set_options()
     vim.o.autoread = true
     vim.o.backup = false
     vim.o.swapfile = false
-    vim.o.wildignore = '*.o,*.out,*.test,*.swp,*.bak,*.pyc,*.pyo,*.class,*.beam,.svn,.git,__pycache__'
+    vim.o.wildignore = '*.o,*.swp,*.bak,*.pyc,*.pyo,*.class,*.beam,.svn,.git,__pycache__'
 
     vim.o.mouse = nil
     vim.o.visualbell = true
