@@ -1,3 +1,5 @@
+local vimfn = vim.fn
+
 local function dump(o)
     if type(o) == 'table' then
         local s = '{ '
@@ -21,21 +23,21 @@ end
 
 local function ensure_data_cache_dir(name)
     local dir = data_cache_dir(name)
-    if vim.fn.isdirectory(dir) == 0 then
+    if vimfn.isdirectory(dir) == 0 then
         os.execute("mkdir -p " .. dir)
     end
     return dir
 end
 
 local function list_modules(module_prefix, dir, ignores_pattern)
-    local ignores_pattern = ignores_pattern or '^$'
+    ignores_pattern = ignores_pattern or '^$'
     local modules = {}
-    for _, file in pairs(vim.fn.readdir(dir)) do
+    for _, file in pairs(vimfn.readdir(dir)) do
         local path = dir .. '/' .. file
         if string.match(path, ignores_pattern) then
             -- Ignore file.
-        elseif vim.fn.isdirectory(path) ~= 0 then -- Recursively.
-            local sub_modules = list_modules(module_prefix .. '/' .. file, path, ignore_dirs)
+        elseif vimfn.isdirectory(path) ~= 0 then -- Recursively.
+            local sub_modules = list_modules(module_prefix .. '/' .. file, path, ignores_pattern)
             for _, module in ipairs(sub_modules) do
                 table.insert(modules, module)
             end
@@ -44,6 +46,20 @@ local function list_modules(module_prefix, dir, ignores_pattern)
         end
     end
     return modules
+end
+
+local function parse_go_module_name()
+    -- TODO: look up go.mod recursively.
+    local mod_file = vimfn.expand('go.mod')
+    if vimfn.filereadable(mod_file) == 0 then
+        return ''
+    end
+    for _, line in ipairs(vimfn.readfile(mod_file)) do
+        if string.match(line, '^module%s+.+') then
+            return string.gsub(line, '^module%s+', '')
+        end
+    end
+    return ''
 end
 
 -- VIM API enhancements.
@@ -97,6 +113,8 @@ return {
     ensure_data_cache_dir = ensure_data_cache_dir,
 
     list_modules = list_modules,
+
+    parse_go_module_name = parse_go_module_name,
 
     vimbatch = vimbatch,
 
