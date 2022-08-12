@@ -1,4 +1,4 @@
-local vimfn = vim.fn
+local vim = vim
 
 local function dump(o)
     if type(o) == 'table' then
@@ -23,38 +23,52 @@ end
 
 local function ensure_data_cache_dir(name)
     local dir = data_cache_dir(name)
-    if vimfn.isdirectory(dir) == 0 then
+    if vim.fn.isdirectory(dir) == 0 then
         os.execute("mkdir -p " .. dir)
     end
     return dir
 end
 
-local function list_modules(module_prefix, dir, ignores_pattern)
-    ignores_pattern = ignores_pattern or '^$'
-    local modules = {}
-    for _, file in pairs(vimfn.readdir(dir)) do
+-- fn must be function(dir, file, isdir, dirctx) -> (number, subdirctx),
+-- the return values: 0 stop, 1 ok, 2 skip directory, subdirctx is related to directory.
+local function walk_directory(dir, fn, dirctx)
+    for _, file in pairs(vim.fn.readdir(dir)) do
         local path = dir .. '/' .. file
-        if string.match(path, ignores_pattern) then
-            -- Ignore file.
-        elseif vimfn.isdirectory(path) ~= 0 then -- Recursively.
-            local sub_modules = list_modules(module_prefix .. '/' .. file, path, ignores_pattern)
-            for _, module in ipairs(sub_modules) do
-                table.insert(modules, module)
-            end
-        elseif string.match(file, '.+%.lua$') then -- Only lua files.
-            table.insert(modules, module_prefix .. '/' .. string.gsub(file, "%.lua$", ""))
+        local isdir = vim.fn.isdirectory(path) ~= 0
+        local state, subdirctx = fn(dir, file, isdir, dirctx)
+        if state == 0 then
+            return
+        end
+        if state == 1 and isdir then
+            walk_directory(path, fn, subdirctx)
         end
     end
+end
+
+local function list_modules(module_prefix, root_dir, ignores_pattern)
+    ignores_pattern = ignores_pattern or '^$'
+    local modules = {}
+    walk_directory(root_dir, function(dir, file, isdir, dirctx)
+        if string.match(dir .. '/' .. file, ignores_pattern) then
+            return 2, nil
+        end
+        if isdir then
+            return 1, { module_prefix = dirctx.module_prefix .. '/' .. file }
+        end
+        if string.match(file, '.+%.lua$') then -- Only lua files.
+            table.insert(modules, dirctx.module_prefix .. '/' .. string.gsub(file, "%.lua$", ""))
+        end
+        return 1, nil
+    end, { module_prefix = module_prefix })
     return modules
 end
 
-local function parse_go_module_name()
-    -- TODO: look up go.mod recursively.
-    local mod_file = vimfn.expand('go.mod')
-    if vimfn.filereadable(mod_file) == 0 then
+local function parse_golang_module_name()
+    local mod_file = vim.fn.expand('go.mod')
+    if vim.fn.filereadable(mod_file) == 0 then
         return ''
     end
-    for _, line in ipairs(vimfn.readfile(mod_file)) do
+    for _, line in ipairs(vim.fn.readfile(mod_file)) do
         if string.match(line, '^module%s+.+') then
             return string.gsub(line, '^module%s+', '')
         end
@@ -79,32 +93,6 @@ local vimbatch = {
     end
 }
 
-local function set_opt(name, value, op, scopes)
-    scopes = scopes or { vim.o }
-    for _, scope in ipairs(scopes) do
-        -- https://neovim.io/doc/user/options.html
-        if op == nil then
-            scope[name] = value
-        elseif op == '+' then -- :set+=
-            if type(scope[name]) == 'string' then
-                scope[name] = scope[name] .. value
-            else
-                if type(value) ~= 'table' then value = { value } end
-                scope[name] = scope[name] + value
-            end
-        elseif op == '-' then -- :set-=
-            scope[name] = scope[name] - value
-        elseif op == '^' then -- :set^=
-            if type(scope[name]) == 'string' then
-                scope[name] = value .. scope[name]
-            else
-                if type(value) ~= 'table' then value = { value } end
-                scope[name] = scope[name] ^ value
-            end
-        end
-    end
-end
-
 return {
     dump_table = dump,
 
@@ -114,9 +102,7 @@ return {
 
     list_modules = list_modules,
 
-    parse_go_module_name = parse_go_module_name,
+    parse_golang_module_name = parse_golang_module_name,
 
     vimbatch = vimbatch,
-
-    set_opt = set_opt,
 }

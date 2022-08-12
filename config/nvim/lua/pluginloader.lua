@@ -1,3 +1,4 @@
+local vim = vim
 local install_path = vim.fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 local packer_bootstrap
 if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
@@ -15,15 +16,14 @@ for _, name in ipairs(plugin_modules) do
     table.insert(packages, package)
 end
 
--- FIXME: Automatically run :PackerCompile whenever plugins/ directory is updated.
+-- TODO: Automatically run :PackerCompile whenever plugins/ directory is updated.
 --[[ vim.cmd([[ ]]
 --[[ augroup packer_user_config ]]
 --[[ autocmd! ]]
 --[[ autocmd BufWritePost plugins.lua source <afile> | PackerCompile ]]
 --[[ augroup end ]]
 --[[ <]) ]]
-
--- FIXME: all actions are async: https://github.com/wbthomason/packer.nvim#user-autocommands
+-- XXX: all actions are async: https://github.com/wbthomason/packer.nvim#user-autocommands
 
 return require('packer').startup(function(use)
     -- Packer can manage itself

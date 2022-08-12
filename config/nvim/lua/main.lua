@@ -1,5 +1,5 @@
+local vim = vim
 local lib = require('lib')
-local opt = lib.set_opt
 
 local function set_global_variables()
     vim.g.mapleader = [[,]]
@@ -66,78 +66,78 @@ end
 --- :set options
 local function set_options()
     -- opt('smartindent', true)
-    opt('autoindent', true)
-    opt('tabstop', 4)
-    opt('shiftwidth', 4)
-    opt('softtabstop', 4)
-    opt('smarttab', true)
-    opt('expandtab', true)
-    opt('shiftround', true)
+    vim.o.autoindent = true
+    vim.o.tabstop = 4
+    vim.o.shiftwidth = 4
+    vim.o.softtabstop = 4
+    vim.o.smarttab = true
+    vim.o.expandtab = true
+    vim.o.shiftround = true
 
-    opt('updatetime', 300) -- Smaller updatetime for CursorHold & CursorHoldI
-    opt('shortmess', 'c', '+')
-    opt('signcolumn', 'yes')
+    vim.o.updatetime = 300 -- Smaller updatetime for CursorHold & CursorHoldI
+    vim.o.shortmess = vim.o.shortmess .. 'c'
+    vim.o.signcolumn = 'yes'
     -- opt('completeopt', 'preview', '-')
-    opt('list', true)
-    opt('listchars', 'tab:  ,trail:∙,extends:❯,precedes:❮,nbsp:•')
-    opt('fillchars', 'vert:│', '+')
+    vim.o.list = true
+    vim.o.listchars = 'tab:  ,trail:∙,extends:❯,precedes:❮,nbsp:•'
+    vim.o.fillchars = vim.o.fillchars .. 'vert:│'
 
-    opt('undofile', true)
-    opt('undodir', lib.ensure_data_cache_dir('undo'))
-    opt('history', 2000)
-    opt('autoread', true)
-    opt('backup', false)
-    opt('swapfile', false)
-    opt('wildignore', '*.o,*.swp,*.bak,*.pyc,*.pyo,*.class,*.beam,.svn,.git,__pycache__')
+    vim.o.undofile = true
+    vim.o.undodir = lib.ensure_data_cache_dir('undo')
+    vim.o.history = 2000
+    vim.o.autoread = true
+    vim.o.backup = false
+    vim.o.swapfile = false
+    vim.o.wildignore = '*.o,*.out,*.test,*.swp,*.bak,*.pyc,*.pyo,*.class,*.beam,.svn,.git,__pycache__'
 
-    opt('mouse', nil)
-    opt('visualbell', true)
+    vim.o.mouse = nil
+    vim.o.visualbell = true
     -- opt('selection', 'inclusive')
     -- opt('selectmode', 'mouse,key')
-    opt('title', true)
-    -- opt('viminfo', '%', '^') -- save the buffer
-    opt('magic', true) -- regex
-    opt('backspace', 'eol,start,indent')
-    opt('whichwrap', 'b,s,<,>,h,l')
+    vim.o.title = true
+    -- vim.o.viminfo:prepend('%') -- save the buffer
+    vim.o.magic = true
+    vim.o.backspace = 'eol,start,indent'
+    vim.o.whichwrap = 'b,s,<,>,h,l'
 
-    opt('hidden', true)
-    opt('ruler', true)
-    opt('wildmenu', true)
-    opt('showcmd', true)
-    opt('cmdheight', 3)
-    opt('showmode', false)
-    opt('scrolloff', 7)
+    vim.o.hidden = true
+    vim.o.ruler = true
+    vim.o.wildmenu = true
+    vim.o.showcmd = true
+    vim.o.cmdheight = 3
+    vim.o.showmode = false
+    vim.o.scrolloff = 7
     -- opt('statusline', '%<%f\\ %h%m%r%=%k[%{(&fenc==\\"\\")?&enc:&fenc}%{(&bomb?\\",BOM\\":\\"\\")}]\ %-14.(%l,%c%V%)\\ %P')
-    opt('laststatus', 2)
-    opt('number', true)
+    vim.o.laststatus = 2
+    vim.o.number = true
     -- opt('nowrap', true)
-    opt('showmatch', true)
-    opt('matchtime', 2)
+    vim.o.showmatch = true
+    vim.o.matchtime = 2
 
-    opt('hlsearch', true)
-    opt('incsearch', true)
-    opt('ignorecase', true)
-    opt('smartcase', true)
-    opt('foldenable', true)
+    vim.o.hlsearch = true
+    vim.o.incsearch = true
+    vim.o.ignorecase = true
+    vim.o.smartcase = true
+    vim.o.foldenable = true
     -- opt('foldmethod', 'indent')
     -- opt('foldlevel', 50)
 
-    opt('wildmode', 'list:longest')
-    opt('encoding', 'utf-8')
-    opt('termencoding', 'utf-8')
+    vim.o.wildmode = 'list:longest'
+    vim.o.encoding = 'utf-8'
+    vim.o.termencoding = 'utf-8'
 
-    opt('formatoptions', '1jcroql')
+    vim.o.formatoptions = '1jcroql'
 
-    opt('exrc', true)
-    opt('secure', true)
+    vim.o.exrc = true
+    vim.o.secure = true
 
-    opt('termguicolors', true)
+    vim.o.termguicolors = true
 end
 
 local function set_colorscheme(name, background)
     name = name ~= nil and name or 'molokai'
     background = background ~= nil and background or 'dark'
-    opt('background', background)
+    vim.o.background = background
     -- opt('t_Co', '256')
     vim.cmd('colorscheme ' .. name)
 end
@@ -145,9 +145,9 @@ end
 -- TODO: call packer sync manually.
 local function set_cursor_line()
     -- https://github.com/neovim/neovim/wiki/FAQ#how-to-change-cursor-shape-in-the-terminal
-    opt('guicursor', nil)
-    opt('cursorcolumn', true)
-    opt('cursorline', true)
+    vim.o.guicursor = nil
+    vim.o.cursorcolumn = true
+    vim.o.cursorline = true
     -- vim.cmd([[
     -- hi CursorLine term=underline cterm=underline ctermfg=NONE ctermbg=NONE gui=underline guifg=NONE guibg=NONE
     -- hi CursorColumn term=NONE cterm=NONE ctermfg=NONE ctermbg=239 gui=NONE guifg=NONE guibg=#4e4e4e
@@ -175,9 +175,9 @@ local function set_misc_autocmds()
         autocmd BufRead,BufNewFile *.wxss set filetype=css
         autocmd FileType txt,markdown,rst,asciidoc :call WrapingText()
         function! WrapingText()
-        setlocal wrap
-        setlocal linebreak
-        " setlocal nolist
+            setlocal wrap
+            setlocal linebreak
+            " setlocal nolist
         endfunction
 
         autocmd BufNewFile *.sh,*.py exec ":call AutoSetFileHead()"

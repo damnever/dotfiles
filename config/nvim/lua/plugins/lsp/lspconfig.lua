@@ -8,6 +8,8 @@ local package = { -- For 'wbthomason/packer.nvim'
 }
 
 local config = function()
+    local vim = vim
+
     local lsp_servers = {
         -- Bash
         bashls = {
@@ -30,7 +32,7 @@ local config = function()
             root_dir = require("lspconfig/util").root_pattern("go.work", "go.mod", ".git"),
             settings = {
                 gopls = {
-                    ["local"] = require('lib').parse_go_module_name(),
+                    ["local"] = require('lib').parse_golang_module_name(),
                     usePlaceholders = false,
                     analyses = {
                         shadow = true,
@@ -176,8 +178,8 @@ local config = function()
         end
     end
 
-    local lsp_gopls_organize_imports_on_save_augroup = vim.api.nvim_create_augroup("LspGoplsOrganizeImpotsOnSave", {})
-    local function go_organize_imports_on_save(client, bufnr)
+    local gopls_organize_imports_on_save_augroup = vim.api.nvim_create_augroup("LspGoplsOrganizeImportsOnSave", {})
+    local function go_organize_imports_on_save()
         local function go_organize_imports(wait_ms)
             local params = vim.lsp.util.make_range_params()
             params.context = { only = { "source.organizeImports" } }
@@ -192,11 +194,10 @@ local config = function()
             end
         end
 
-        vim.api.nvim_clear_autocmds({ group = lsp_gopls_organize_imports_on_save_augroup, buffer = bufnr })
+        vim.api.nvim_clear_autocmds({ group = gopls_organize_imports_on_save_augroup })
         vim.api.nvim_create_autocmd("BufWritePre", {
-            group = lsp_gopls_organize_imports_on_save_augroup,
+            group = gopls_organize_imports_on_save_augroup,
             pattern = { "*.go" },
-            buffer = bufnr,
             callback = function()
                 go_organize_imports(3000)
             end,
