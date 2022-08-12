@@ -125,6 +125,9 @@ export SHTERM_AUTH_KEY
 # https://github.com/junegunn/fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+# https://github.com/direnv/direnv
+eval "$(direnv hook zsh)"
+
 # GPG
 export GPG_TTY=$(tty)
 ssh-add &> /dev/null
@@ -143,7 +146,6 @@ else
 fi
 unset __conda_setup
 # <<< conda initialize <<<
-
 
 # Print something after each load..
 fortune

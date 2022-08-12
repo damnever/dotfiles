@@ -47,15 +47,16 @@ install_requirements_for_mac() {
     brew install go
     brew install cloc
     # brew install the_silver_searcher
-    brew install ripgrep
+    brew install ripgrep fd
     brew install tree
     brew install htop iftop
     brew install polipo
     brew install fortune
+    brew install direnv
     # fonts
     brew tap homebrew/cask-fonts
-    brew install font-ibm-plex --cask
-    # thems
+    # brew install font-ibm-plex --cask
+    brew install --cask font-jetbrains-mono-nerd-font font-fira-mono-nerd-font font-go-mono-nerd-font
 }
 
 change_settings_for_mac() {
@@ -139,20 +140,20 @@ setup_config_files() {
 setup_vim() {
     echo "-> setup vim .."
     pip install pynvim vim-vint 'python-language-server[all]' flake8 pyflakes pep8 pylint jedi pipenv yapf -U
+    pip install neovim
     go install golang.org/x/tools/cmd/benchstat@latest
     go install golang.org/x/tools/cmd/godoc@latest
     go install golang.org/x/tools/gopls@latest
     go install github.com/jstemmer/gotags@latest
     # yarn global add bash-language-server
     npm install -g prettier bash-language-server
+    # TODO: install lint and formaters for neovim null-ls?
 
-    curl -fLo "$HOME/.vim/autoload/plug.vim" --create-dirs \
-        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    # Patched fonts(Monaco): https://github.com/ryanoasis/nerd-fonts#font-patcher
 
-    system_shell=$SHELL
-    export SHELL="/bin/sh"
-    vim -u "$HOME/.vimrc" +PlugInstall! +PlugClean! +qall
-    export SHELL=$system_shell
+    # Let's do it twice: https://github.com/wbthomason/packer.nvim
+    nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
+    nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
 }
 
 

@@ -102,7 +102,7 @@ window:
 scrolling:
   # Maximum number of lines in the scrollback buffer.
   # Specifying '0' will disable scrolling.
-  history: 10000
+  history: 30000
 
   # Scrolling distance multiplier.
   #multiplier: 3
@@ -114,10 +114,10 @@ font:
     # Font family
     #
     # Default:
-    #   - (macOS) Menlo
+    #   - (macOS) Menlo Monaco
     #   - (Linux/BSD) monospace
     #   - (Windows) Consolas
-    family: Monaco
+    family: 'JetBrainsMono Nerd Font'
 
     # The `style` can be specified to pick a specific face.
     style: Regular
@@ -128,7 +128,7 @@ font:
     #
     # If the bold family is not specified, it will fall back to the
     # value specified for the normal font.
-    family: Monaco
+    family: 'JetBrainsMono Nerd Font'
 
     # The `style` can be specified to pick a specific face.
     style: Bold
@@ -139,21 +139,21 @@ font:
     #
     # If the italic family is not specified, it will fall back to the
     # value specified for the normal font.
-    family: Monaco
+    family: 'JetBrainsMono Nerd Font'
 
     # The `style` can be specified to pick a specific face.
     style: Italic
 
   # Bold italic font face
-  # bold_italic:
+  bold_italic:
     # Font family
     #
     # If the bold italic family is not specified, it will fall back to the
     # value specified for the normal font.
-    # family: Monaco
+    family: 'JetBrainsMono Nerd Font'
 
     # The `style` can be specified to pick a specific face.
-    # style: Bold Italic
+    style: Bold Italic
 
   # Point size
   size: 14.0
@@ -183,7 +183,7 @@ font:
   # If `true`, Alacritty will use a custom built-in font for box drawing
   # characters (Unicode points 2500 - 259f).
   #
-  builtin_box_drawing: true
+  builtin_box_drawing: false
 
 # If `true`, bold text is drawn using the bright color variants.
 draw_bold_text_with_bright_colors: true
