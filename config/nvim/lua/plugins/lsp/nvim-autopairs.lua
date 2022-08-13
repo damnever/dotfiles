@@ -1,5 +1,5 @@
 local package = { -- For 'wbthomason/packer.nvim'
-    'windwp/nvim-autopairs', after = 'nvim-cmp'
+    'windwp/nvim-autopairs', after = 'nvim-cmp',
 }
 
 local config = function()

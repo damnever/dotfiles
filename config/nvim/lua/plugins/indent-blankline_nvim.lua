@@ -1,5 +1,6 @@
 local package = { -- For 'wbthomason/packer.nvim'
     'lukas-reineke/indent-blankline.nvim',
+    event = "BufReadPost",
 }
 
 

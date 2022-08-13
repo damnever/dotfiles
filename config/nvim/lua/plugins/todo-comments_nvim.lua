@@ -1,5 +1,6 @@
 local package = { -- For 'wbthomason/packer.nvim'
     'folke/todo-comments.nvim',
+    event = { "BufReadPost" },
     requires = 'nvim-lua/plenary.nvim',
 }
 

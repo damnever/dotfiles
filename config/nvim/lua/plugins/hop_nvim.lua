@@ -1,5 +1,6 @@
 local package = { -- For 'wbthomason/packer.nvim'
     'phaazon/hop.nvim',
+    event = "BufReadPost",
 }
 
 local config = function()

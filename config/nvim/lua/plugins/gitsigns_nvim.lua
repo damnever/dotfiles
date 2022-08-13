@@ -1,5 +1,6 @@
 local package = { -- For 'wbthomason/packer.nvim'
     'lewis6991/gitsigns.nvim',
+    event = { "BufReadPost", "BufNewFile" },
 }
 
 local config = function()

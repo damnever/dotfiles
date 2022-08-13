@@ -64,8 +64,11 @@ local function set_common_keymaps()
 end
 
 --- :set options
+-- vim.api.nvim_set_option(0, k, v) -- vim.o -- global
+-- vim.api.nvim_win_set_option(0, k, v) -- vim.wo -- window
+-- vim.api.nvim_buf_set_option(0, k, v) -- vim.bo -- bufffer
 local function set_options()
-    -- opt('smartindent', true)
+    vim.o.smartindent = true
     vim.o.autoindent = true
     vim.o.tabstop = 4
     vim.o.shiftwidth = 4
@@ -74,10 +77,10 @@ local function set_options()
     vim.o.expandtab = true
     vim.o.shiftround = true
 
-    vim.o.updatetime = 300 -- Smaller updatetime for CursorHold & CursorHoldI
+    vim.o.updatetime = 200 -- Smaller updatetime for CursorHold & CursorHoldI
     vim.o.shortmess = vim.o.shortmess .. 'c'
     vim.o.signcolumn = 'yes'
-    -- opt('completeopt', 'preview', '-')
+    vim.o.completeopt = 'menuone,noselect'
     vim.o.list = true
     vim.o.listchars = 'tab:  ,trail:∙,extends:❯,precedes:❮,nbsp:•'
     vim.o.fillchars = vim.o.fillchars .. 'vert:│'
@@ -88,10 +91,12 @@ local function set_options()
     vim.o.autoread = true
     vim.o.backup = false
     vim.o.swapfile = false
-    vim.o.wildignore = '*.o,*.swp,*.bak,*.pyc,*.pyo,*.class,*.beam,.svn,.git,__pycache__'
+    vim.o.wildignorecase = false
+    vim.o.wildignore = '*.o,*.out,*.swp,*.bak,*.pyc,*.pyo,__pycache__,*.class,*.beam,.git,.hg,.svn,*.DS_Store'
 
     vim.o.mouse = nil
     vim.o.visualbell = true
+    vim.o.errorbells = true
     -- opt('selection', 'inclusive')
     -- opt('selectmode', 'mouse,key')
     vim.o.title = true
@@ -126,7 +131,10 @@ local function set_options()
     vim.o.encoding = 'utf-8'
     vim.o.termencoding = 'utf-8'
 
-    vim.o.formatoptions = '1jcroql'
+    vim.o.fileformats = 'unix,mac,dos'
+    vim.o.formatoptions = vim.o.formatoptions .. 'mBw'
+    vim.o.synmaxcol = 2500
+    vim.o.wrap = false
 
     vim.o.exrc = true
     vim.o.secure = true
@@ -134,6 +142,7 @@ local function set_options()
     vim.o.termguicolors = true
 end
 
+-- TODO: call packer sync manually, ref: ./plugins/colorschemes.lua.
 local function set_colorscheme(name, background)
     name = name ~= nil and name or 'molokai'
     background = background ~= nil and background or 'dark'
@@ -142,7 +151,6 @@ local function set_colorscheme(name, background)
     vim.cmd('colorscheme ' .. name)
 end
 
--- TODO: call packer sync manually.
 local function set_cursor_line()
     -- https://github.com/neovim/neovim/wiki/FAQ#how-to-change-cursor-shape-in-the-terminal
     vim.o.guicursor = nil
@@ -155,11 +163,48 @@ local function set_cursor_line()
 end
 
 local function set_misc_autocmds()
+    -- auto shebang
+    local filetype_shebangs = {
+        sh = 'bash',
+        py = 'python'
+    }
+    local function auto_shebang()
+        local ext = vim.fn.expand("%:e")
+        local shebang = filetype_shebangs[ext]
+        if shebang then
+            vim.fn.setline(1, '#!/bin/' .. shebang)
+            vim.fn.append(1, '')
+        end
+    end
+
+    local patterns = {}
+    for ft in pairs(filetype_shebangs) do
+        table.insert(patterns, '*.' .. ft)
+    end
+    vim.api.nvim_create_autocmd("BufNewFile", {
+        pattern = patterns,
+        callback = auto_shebang,
+    })
+
+
+    -- wrap line for documents
+    vim.api.nvim_create_autocmd("FileType", {
+        pattern = { 'txt', 'markdown', 'rst', 'asciidoc' },
+        callback = function()
+            vim.wo.wrap = true
+            vim.bo.textwidth = 9999
+            vim.bo.linebreak = true
+            -- vim.wo.nolist = true -- no working!
+        end,
+    })
+
+
+    -- misc
     vim.cmd([[
         autocmd InsertLeave * if pumvisible() == 0|pclose|endif
+        " Ref: https://github.com/neovim/neovim/issues/7994
         autocmd InsertLeave * set nopaste
 
-        autocmd BufNewFile,BufRead *.py inoremap # X<c-h>#
         autocmd FileType python set tabstop=4 shiftwidth=4 expandtab ai
         autocmd FileType vim set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
         autocmd FileType ruby set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
@@ -173,22 +218,6 @@ local function set_misc_autocmds()
         " autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css
         autocmd BufRead,BufNewFile *.wxml set filetype=html
         autocmd BufRead,BufNewFile *.wxss set filetype=css
-        autocmd FileType txt,markdown,rst,asciidoc :call WrapingText()
-        function! WrapingText()
-            setlocal wrap
-            setlocal linebreak
-            " setlocal nolist
-        endfunction
-
-        autocmd BufNewFile *.sh,*.py exec ":call AutoSetFileHead()"
-        function! AutoSetFileHead()
-        if &filetype == 'sh'
-            call setline(1, '#!/bin/bash')
-        endif
-        endfunc
-
-        " Ref: https://github.com/neovim/neovim/issues/7994
-        autocmd InsertLeave * set nopaste
 
         " hi! link SignColumn   LineNr
         " hi! link ShowMarksHLl DiffAdd

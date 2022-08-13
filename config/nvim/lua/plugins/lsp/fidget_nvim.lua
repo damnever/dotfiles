@@ -1,5 +1,6 @@
 local package = { -- For 'wbthomason/packer.nvim'
     'j-hui/fidget.nvim', -- Provide a UI for nvim-lsp's progress handler.
+    event = "BufReadPost",
 }
 
 local config = function()

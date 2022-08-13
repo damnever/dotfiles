@@ -34,10 +34,15 @@ local config = function()
                 gopls = {
                     ["local"] = require('lib').parse_golang_module_name(),
                     usePlaceholders = false,
+                    diagnosticsDelay = "300ms",
                     analyses = {
+                        fieldalignment = false,
+                        nilness = false,
                         shadow = true,
                         unusedparams = true,
                         unusedwrite = true,
+                        useany = false,
+                        unusedvariable = true,
                     },
                     codelenses = {
                         generate = true,

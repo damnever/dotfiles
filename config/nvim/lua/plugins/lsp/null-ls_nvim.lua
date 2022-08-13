@@ -6,6 +6,8 @@ local package = { -- For 'wbthomason/packer.nvim'
 local config = function()
     local null_ls = require("null-ls")
     null_ls.setup({
+        debounce = 500,
+        update_in_insert = false,
         sources = {
             -- Example: https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTIN_CONFIG.md
             -- null_ls.builtins.x.y.with({}),
@@ -28,10 +30,12 @@ local config = function()
             -- null_ls.builtins.formatting.yapf,
             -- sql
             -- null_ls.builtins.formatting.sqlformat,
-            -- Spell
+            -- Writing and Spell
+            null_ls.builtins.diagnostics.alex,
             -- null_ls.builtins.diagnostics.cspell,
-            null_ls.builtins.completion.spell,
+            -- null_ls.builtins.completion.spell, -- NOTE: DO NOT use it!!!
             null_ls.builtins.diagnostics.misspell,
+            -- null_ls.builtins.formatting.codespell,
         },
         diagnostics_format = '[#{c}] #{m} (#{s})',
     })

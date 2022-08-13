@@ -1,7 +1,8 @@
 local package = { -- For 'wbthomason/packer.nvim'
     'hrsh7th/nvim-cmp',
+    -- event = "InsertEnter",
     requires = {
-        { 'hrsh7th/vim-vsnip' },
+        { 'hrsh7th/vim-vsnip', requires = { 'rafamadriz/friendly-snippets' } },
         { 'hrsh7th/cmp-vsnip', after = 'nvim-cmp' },
         { 'hrsh7th/cmp-nvim-lsp' },
         { 'hrsh7th/cmp-buffer', after = 'nvim-cmp' },
@@ -10,12 +11,14 @@ local package = { -- For 'wbthomason/packer.nvim'
         { 'uga-rosa/cmp-dictionary' },
         { 'hrsh7th/cmp-nvim-lsp-signature-help' },
         { 'hrsh7th/cmp-nvim-lsp-document-symbol' },
-        { 'f3fora/cmp-spell' },
+        -- { 'f3fora/cmp-spell' },
         { 'lukas-reineke/cmp-under-comparator' },
     },
 }
 
 local config = function()
+    local vim = vim
+
     local has_words_before = function()
         local line, col = unpack(vim.api.nvim_win_get_cursor(0))
         return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
@@ -80,6 +83,10 @@ local config = function()
                 return vim_item
             end
         },
+        completion = {
+            completeopt = 'menu,menuone,noselect',
+        },
+        preselect = cmp.PreselectMode.None, -- types.cmp.PreselectMode.Item/None
         matching = {
             disallow_fuzzy_matching = false,
             disallow_partial_matching = false,
@@ -87,14 +94,14 @@ local config = function()
         },
         sorting = {
             comparators = {
-                cmp.config.compare.exact,
                 cmp.config.compare.offset,
-                -- cmp.config.compare.scopes,
+                cmp.config.compare.exact,
+                cmp.config.compare.scopes,
                 cmp.config.compare.score,
                 cmp.config.compare.recently_used,
                 cmp.config.compare.locality,
                 require("cmp-under-comparator").under,
-                -- cmp.config.compare.kind,
+                cmp.config.compare.kind,
                 cmp.config.compare.sort_text,
                 cmp.config.compare.length,
                 cmp.config.compare.order,
@@ -119,8 +126,8 @@ local config = function()
             end,
         },
         mapping = cmp.mapping.preset.insert({
-            -- ['<C-n>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
-            -- ['<C-p>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
+            ['<C-n>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }), -- Select/Insert
+            ['<C-p>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
             ['<C-b>'] = cmp.mapping.scroll_docs(-4),
             ['<C-f>'] = cmp.mapping.scroll_docs(4),
             ['<C-Space>'] = cmp.mapping.complete(),
@@ -149,15 +156,20 @@ local config = function()
         sources = cmp.config.sources({
             { name = 'nvim_lsp' },
             { name = 'nvim_lsp_signature_help' },
-            { name = 'nvim_lsp_document_symbol' },
             { name = 'path' },
-            { name = 'spell' },
+            -- { name = 'spell' },
             { name = 'vsnip' }, -- For vsnip users.
             -- { name = 'luasnip' }, -- For luasnip users.
             -- { name = 'ultisnips' }, -- For ultisnips users.
             -- { name = 'snippy' }, -- For snippy users.
         }, {
-            { name = 'buffer' },
+            {
+                name = 'buffer',
+                option = {
+                    keyword_length = 3,
+                    keyword_pattern = [[\%(-\?\d\+\%(\.\d\+\)\?\|\h\w*\%([\-.]\w*\)*\)]],
+                }
+            },
             {
                 name = "dictionary",
                 keyword_length = 2,
@@ -177,9 +189,11 @@ local config = function()
     -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
     cmp.setup.cmdline('/', {
         mapping = cmp.mapping.preset.cmdline(),
-        sources = {
-            { name = 'buffer' }
-        }
+        sources = cmp.config.sources({
+            { name = 'nvim_lsp_document_symbol' },
+        }, {
+            { name = 'buffer' },
+        })
     })
 
     -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
@@ -194,14 +208,13 @@ local config = function()
 
     require("cmp_dictionary").setup({
         dic = {
-            ["*"] = { "/usr/share/dict/words" },
+            ["*"] = { vim.fn.expand("~/.config/nvim/assets/dict/words_alpha.txt") }, -- "/usr/share/dict/words"
         },
-        -- The following are default values.
         exact = 2,
         first_case_insensitive = false,
         document = false,
         document_command = "wn %s -over",
-        async = false,
+        async = true,
         capacity = 5,
         debug = false,
     })

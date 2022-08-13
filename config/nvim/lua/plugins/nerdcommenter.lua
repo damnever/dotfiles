@@ -1,5 +1,6 @@
 local package = { -- For 'wbthomason/packer.nvim'
     'preservim/nerdcommenter',
+    event = { "BufReadPost" },
 }
 
 local config = function()
