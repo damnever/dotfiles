@@ -47,7 +47,7 @@ install_requirements_for_mac() {
     brew install go
     brew install cloc
     # brew install the_silver_searcher
-    brew install ripgrep fd
+    brew install ripgrep fd bat
     brew install tree
     brew install htop iftop
     brew install polipo
@@ -118,9 +118,6 @@ setup_config_files() {
         pypirc \
         tmux.conf \
         zshrc \
-        vim \
-        vimrc \
-        pip \
         config \
     )
     for f in "${files[@]}"
@@ -139,16 +136,16 @@ setup_config_files() {
 
 setup_vim() {
     echo "-> setup vim .."
-    pip install pynvim vim-vint 'python-language-server[all]' flake8 pyflakes pep8 pylint jedi pipenv yapf -U
-    pip install neovim
-    go install golang.org/x/tools/cmd/benchstat@latest
-    go install golang.org/x/tools/cmd/godoc@latest
+    # pip install  flake8 pyflakes pep8  jedi pipenv vim-vint 'python-language-server[all]' 
+    pip install neovim pynvim yapf pylint
+    # go install golang.org/x/tools/cmd/benchstat@latest
+    # go install golang.org/x/tools/cmd/godoc@latest
     go install golang.org/x/tools/gopls@latest
     go install github.com/jstemmer/gotags@latest
     # yarn global add bash-language-server
-    npm install -g prettier bash-language-server
-    # TODO: install lint and formaters for neovim null-ls?
+    # npm install -g prettier bash-language-server
 
+    # TODO: install lint and formaters for neovim null-ls?
     # Patched fonts(Monaco): https://github.com/ryanoasis/nerd-fonts#font-patcher
 
     # Let's do it twice: https://github.com/wbthomason/packer.nvim
