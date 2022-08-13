@@ -133,7 +133,7 @@ local function set_options()
 
     vim.o.fileformats = 'unix,mac,dos'
     vim.o.formatoptions = vim.o.formatoptions .. 'mBw'
-    vim.o.synmaxcol = 2500
+    -- vim.o.synmaxcol = 2500
     vim.o.wrap = false
 
     vim.o.exrc = true
@@ -200,10 +200,13 @@ local function set_misc_autocmds()
 
 
     -- misc
+    -- Ref: https://github.com/neovim/neovim/issues/7994
+    vim.api.nvim_create_autocmd("InsertLeave", {
+        pattern = '*',
+        command = [[set nopaste]]
+    })
     vim.cmd([[
-        autocmd InsertLeave * if pumvisible() == 0|pclose|endif
-        " Ref: https://github.com/neovim/neovim/issues/7994
-        autocmd InsertLeave * set nopaste
+        " autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 
         autocmd FileType python set tabstop=4 shiftwidth=4 expandtab ai
         autocmd FileType vim set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai

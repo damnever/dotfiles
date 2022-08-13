@@ -12,7 +12,7 @@ local config = function()
         sort_by = "case_sensitive",
         filesystem_watchers = {
             enable = true,
-            debounce_delay = 800, -- ms
+            debounce_delay = 1111, -- ms
         },
         view = {
             adaptive_size = false,

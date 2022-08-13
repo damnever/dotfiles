@@ -2,7 +2,8 @@ local package = { -- For 'wbthomason/packer.nvim'
     'folke/tokyonight.nvim',
     requires = {
         { "EdenEast/nightfox.nvim" },
-        { "catppuccin/nvim", as = "catppuccin" },
+        -- { "catppuccin/nvim", as = "catppuccin" },
+        -- { "svrana/neosolarized.nvim", requires = { "tjdevries/colorbuddy.nvim" } },
         -- { 'tomasr/molokai' },
     }
 }
@@ -12,7 +13,7 @@ local config = function()
         -- molokai_original = 1,
         -- rehash256 = 1,
     })
-    -- https://github.com/EdenEast/nightfox.nvim/wiki/Gallery : nordfox, etc.
+    -- https://github.com/EdenEast/nightfox.nvim/wiki/Gallery : nightfox/nordfox, etc.
     require('nightfox').setup({
         options = {
             compile_path = vim.fn.stdpath("cache") .. "/nightfox",
@@ -45,7 +46,13 @@ local config = function()
         groups = {},
     })
 
-    -- vim.o.background = 'dark' -- For tokyonight.
+    --[[
+    require('neosolarized').setup({
+        comment_italics = true,
+    })
+    ]] --
+
+    vim.o.background = 'dark' -- For tokyonight/neosolarized.
     vim.o.t_Co = 256
     vim.o.t_ut = nil
     vim.cmd([[colorscheme nightfox]])

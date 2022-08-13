@@ -12,9 +12,9 @@ local config = function()
     require('nvim-treesitter.configs').setup({
         -- A list of parser names, or "all"
         ensure_installed = {
-            "c", "cmake", "bash", "go",
-            "javascript", "json", "json5", "lua", "markdown",
-            "proto", "python", "rust", "sql", "toml",
+            "bash", "c", "cmake", "go", "gomod", "gowork",
+            "html", "java", "javascript", "json5", "lua", "make", "markdown",
+            "proto", "python", "rust", "rst", "sql", "toml",
             "vim", "yaml"
         },
 
