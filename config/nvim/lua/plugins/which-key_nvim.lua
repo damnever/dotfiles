@@ -1,5 +1,5 @@
 local package = { -- For 'wbthomason/packer.nvim'
-    'folke/which-key.nvim',
+    'folke/which-key.nvim', disable = true,
 }
 
 local config = function()
@@ -66,6 +66,7 @@ local config = function()
             -- most people should not need to change this
             i = { "j", "k" },
             v = { "j", "k" },
+            n = { "v", "y", "[", "]", "d" }
         },
     })
     -- require("which-key").register(mappings, opts)

@@ -9,24 +9,25 @@ local package = { -- For 'wbthomason/packer.nvim'
 }
 
 local config = function()
-    local fixfolds = {
-        hidden = true,
-        attach_mappings = function(_)
-            require("telescope.actions.set").select:enhance({
-                post = function()
-                    vim.cmd(":normal! zx")
-                end,
-            })
-            return true
-        end,
-    }
-    require('telescope').setup {
+    local vim = vim
+    local telescope = require("telescope")
+    local telescopeConfig = require("telescope.config")
+
+    -- Clone the default Telescope configuration
+    local vimgrep_arguments = { unpack(telescopeConfig.values.vimgrep_arguments) }
+    -- Search in hidden/dot files.
+    table.insert(vimgrep_arguments, "--hidden")
+    -- Do nott search in the `.git` directory.
+    table.insert(vimgrep_arguments, "--glob")
+    table.insert(vimgrep_arguments, "!.git/*")
+
+    telescope.setup {
         defaults = {
-            prompt_prefix = "  ",
-            selection_caret = " ",
+            prompt_prefix = " ", -- 
+            selection_caret = " ", -- 
             entry_prefix = " ",
             scroll_strategy = "limit",
-            borderchars = { " ", " ", " ", " ", " ", " ", " ", " " },
+            borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
             layout_strategy = "horizontal",
             path_display = { "absolute" },
             file_ignore_patterns = {},
@@ -36,14 +37,22 @@ local config = function()
                     preview_width = 0.5,
                 },
             },
+            vimgrep_arguments = vimgrep_arguments,
+            preview = {
+                filesize_limit = 10, -- MB
+                timeout = 300, -- ms
+                treesitter = true,
+                msg_bg_fillchar = "╱",
+            },
+            mappings = {
+                i = {
+                    -- ["<esc>"] = require('telescope.actions').close,
+                    ["<C-c>"] = require('telescope.actions').close,
+                },
+            }
         },
         pickers = {
-            buffers = fixfolds,
-            find_files = fixfolds,
-            git_files = fixfolds,
-            grep_string = fixfolds,
-            live_grep = fixfolds,
-            oldfiles = fixfolds,
+            find_command = { "rg", "--files", "--hidden", "--glob", "!.git/*" },
         },
         extensions = {
             fzf = {
@@ -67,6 +76,7 @@ local config = function()
     require('lib').vimbatch.keymaps({
         -- Lists files in your current working directory, respects .gitignore
         { mode = '', lhs = '<leader>p', rhs = function() require('telescope.builtin').find_files() end },
+        { mode = '', lhs = '<leader><space>', rhs = function() require('telescope.builtin').find_files() end },
         -- Searches for the string under your cursor in your current working directory.
         { mode = 'v', lhs = '<leader>g', rhs = function() require('telescope.builtin').grep_string() end },
         -- Search for a string in your current working directory and get results live as you type (respecting .gitignore)

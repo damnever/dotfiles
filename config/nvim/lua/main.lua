@@ -24,26 +24,40 @@ local function set_global_variables()
 end
 
 local function set_common_keymaps()
+    vim.keymap.set('i', '<C-c>', '<ESC>')
+    vim.keymap.set('n', '<leader>q', ':q<CR>')
+    vim.keymap.set('n', '<leader>w', ':w<CR>')
+    vim.keymap.set('n', '<leader>x', ':wq<CR>') -- Tip: Shift + Z Z
+
+    -- Disable direction keys.
     vim.keymap.set('', '<Left>', '<Nop>', { remap = true })
     vim.keymap.set('', '<Right>', '<Nop>', { remap = true })
     vim.keymap.set('', '<Up>', '<Nop>', { remap = true })
     vim.keymap.set('', '<Down>', '<Nop>', { remap = true })
 
+    -- Window movement.
     vim.keymap.set('', '<C-j>', '<C-W>j', { remap = true })
     vim.keymap.set('', '<C-k>', '<C-W>k', { remap = true })
     vim.keymap.set('', '<C-h>', '<C-W>h', { remap = true })
     vim.keymap.set('', '<C-l>', '<C-W>l', { remap = true })
 
+    -- Jump to line start/end.
     vim.keymap.set('', 'H', '^')
     vim.keymap.set('', 'L', '$')
 
+    -- Increase/Decrease number.
+    vim.keymap.set('n', '+', '<C-a>')
+    vim.keymap.set('n', '-', '<C-x>')
+
+    -- Copy.
     vim.keymap.set('', 'Y', 'y$', { remap = true })
     vim.keymap.set('v', '<leader>y', '"+y"')
 
+    -- Search.
     vim.keymap.set({ 'n', 'v' }, '/', '/\\v')
     vim.keymap.set('', '<leader>/', ':nohls<CR>', { silent = true })
 
-    -- tab related
+    -- Tab related
     vim.keymap.set('n', '<C-t>', ':tabnew<CR>')
     vim.keymap.set('n', '<leader>1', '1gt')
     vim.keymap.set('n', '<leader>2', '2gt')
@@ -56,11 +70,12 @@ local function set_common_keymaps()
     vim.keymap.set('n', '<leader>9', '9gt')
     vim.keymap.set('n', '<leader>0', ':tablast<CR>')
     vim.keymap.set('n', '<leader>tt', [[:execute 'tabnext ' . g:last_active_tab<cr>]])
-    vim.cmd([[autocmd TabLeave * let g:last_active_tab = tabpagenr()]])
-
-    vim.keymap.set('i', '<C-c>', '<ESC>')
-    vim.keymap.set('n', '<leader>q', ':q<CR>')
-    vim.keymap.set('n', '<leader>w', ':w<CR>')
+    vim.api.nvim_create_autocmd("TabLeave", {
+        pattern = '*',
+        callback = function()
+            vim.g.last_active_tab = vim.fn.tabpagenr()
+        end,
+    })
 end
 
 --- :set options
@@ -93,6 +108,7 @@ local function set_options()
     vim.o.swapfile = false
     vim.o.wildignorecase = false
     vim.o.wildignore = '*.o,*.out,*.swp,*.bak,*.pyc,*.pyo,__pycache__,*.class,*.beam,.git,.hg,.svn,*.DS_Store'
+    vim.o.wildoptions = "pum"
 
     vim.o.mouse = nil
     vim.o.visualbell = true
@@ -139,6 +155,8 @@ local function set_options()
     vim.o.exrc = true
     vim.o.secure = true
 
+    vim.o.winblend = 0
+    vim.o.pumblend = 5
     vim.o.termguicolors = true
 end
 
@@ -190,12 +208,17 @@ local function set_misc_autocmds()
     -- wrap line for documents
     vim.api.nvim_create_autocmd("FileType", {
         pattern = { 'txt', 'markdown', 'rst', 'asciidoc' },
-        callback = function()
-            vim.wo.wrap = true
-            vim.bo.textwidth = 9999
-            vim.bo.linebreak = true
-            -- vim.wo.nolist = true -- no working!
-        end,
+        command = [[
+            setlocal wrap
+            setlocal linebreak
+            setlocal nolist
+        ]],
+        -- callback = function()
+        -- vim.wo.wrap = true
+        -- vim.bo.textwidth = 9999
+        -- vim.wo.linebreak = true
+        -- vim.wo.nolist = true -- no working!
+        -- end,
     })
 
 

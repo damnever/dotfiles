@@ -9,6 +9,8 @@ local package = { -- For 'wbthomason/packer.nvim'
 }
 
 local config = function()
+    local vim = vim
+
     require('lib').vimbatch.global_vars({
         -- molokai_original = 1,
         -- rehash256 = 1,
@@ -52,7 +54,7 @@ local config = function()
     })
     ]] --
 
-    vim.o.background = 'dark' -- For tokyonight/neosolarized.
+    vim.o.background = 'dark'
     vim.o.t_Co = 256
     vim.o.t_ut = nil
     vim.cmd([[colorscheme nightfox]])

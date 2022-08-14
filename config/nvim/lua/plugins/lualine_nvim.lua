@@ -29,9 +29,7 @@ local config = function()
         sections = {
             lualine_a = { 'mode' },
             lualine_b = { 'branch', 'diff', 'diagnostics' },
-            lualine_c = {
-                { 'filename', path = 1, }, 'lsp_progress'
-            },
+            lualine_c = { { 'filename', path = 1, } },
             lualine_x = { 'encoding', 'fileformat', 'filetype' },
             lualine_y = { 'progress' },
             lualine_z = { 'location' }
@@ -44,10 +42,30 @@ local config = function()
             lualine_y = {},
             lualine_z = {}
         },
-        tabline = {},
+        tabline = { -- kdheepak/tabline.nvim isn't working: https://github.com/kdheepak/tabline.nvim/issues/44
+            lualine_a = {
+                {
+                    'tabs',
+                    -- Maximum width of tabs component.
+                    -- Note:
+                    -- It can also be a function that returns
+                    -- the value of `max_length` dynamically
+                    max_length = function() return vim.o.columns / 3 end,
+                    -- 0: Shows tab_nr, 1: Shows tab_name, 2: Shows tab_nr + tab_name
+                    mode = 2,
+                    tabs_color = {
+                        -- Same values as the general color option can be used here.
+                        -- example: lualine_a_insert / lualine_a_inactive
+                        active = 'lualine_a_normal', -- Color for active tab.
+                        inactive = 'lualine_b_normal', -- Color for inactive tab.
+                    },
+                    fmt = function(label) return ' ' .. label end,
+                },
+            }
+        },
         winbar = {},
         inactive_winbar = {},
-        extensions = {}
+        extensions = { 'nvim-tree' }
     })
 end
 

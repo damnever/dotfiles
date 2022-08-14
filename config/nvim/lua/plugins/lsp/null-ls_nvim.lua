@@ -31,7 +31,7 @@ local config = function()
             -- sql
             -- null_ls.builtins.formatting.sqlformat,
             -- Writing and Spell
-            null_ls.builtins.diagnostics.alex,
+            -- null_ls.builtins.diagnostics.alex,
             -- null_ls.builtins.diagnostics.cspell,
             -- null_ls.builtins.completion.spell, -- NOTE: DO NOT use it!!!
             null_ls.builtins.diagnostics.misspell,

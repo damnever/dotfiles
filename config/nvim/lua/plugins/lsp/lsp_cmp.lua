@@ -108,7 +108,7 @@ local config = function()
             },
         },
         performance = {
-            debounce = 80,
+            debounce = 90,
             throttle = 30,
             fetching_timeout = 200,
         },
@@ -132,7 +132,7 @@ local config = function()
             ['<C-f>'] = cmp.mapping.scroll_docs(4),
             ['<C-Space>'] = cmp.mapping.complete(),
             ['<C-e>'] = cmp.mapping.abort(),
-            ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+            ['<CR>'] = cmp.mapping.confirm({ select = false }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
             -- Super-Tab like mapping.
             ["<Tab>"] = cmp.mapping(function(fallback)
                 if cmp.visible() then
@@ -156,12 +156,12 @@ local config = function()
         sources = cmp.config.sources({
             { name = 'nvim_lsp' },
             { name = 'nvim_lsp_signature_help' },
-            { name = 'path' },
             -- { name = 'spell' },
             { name = 'vsnip' }, -- For vsnip users.
             -- { name = 'luasnip' }, -- For luasnip users.
             -- { name = 'ultisnips' }, -- For ultisnips users.
             -- { name = 'snippy' }, -- For snippy users.
+            { name = 'path' },
         }, {
             {
                 name = 'buffer',
@@ -211,7 +211,7 @@ local config = function()
             ["*"] = { vim.fn.expand("~/.config/nvim/assets/dict/words_alpha.txt") }, -- "/usr/share/dict/words"
         },
         exact = 2,
-        first_case_insensitive = false,
+        first_case_insensitive = true,
         document = false,
         document_command = "wn %s -over",
         async = true,

@@ -5,14 +5,15 @@ local package = { -- For 'wbthomason/packer.nvim'
 
 local config = function()
     require("nvim-tree").setup({
-        open_on_tab = true,
-        open_on_setup = true,
+        open_on_tab = false,
+        open_on_setup = false, -- Open if startup buffer is a directory.
+        open_on_setup_file = false,
         auto_reload_on_write = false,
         hijack_cursor = true,
         sort_by = "case_sensitive",
         filesystem_watchers = {
             enable = true,
-            debounce_delay = 1111, -- ms
+            debounce_delay = 1234, -- ms
         },
         view = {
             adaptive_size = false,
@@ -95,6 +96,7 @@ local config = function()
         { mode = 'n', lhs = '<leader>n', rhs = ':NvimTreeToggle<CR>', opts = { remap = true } },
     })
 
+    -- FIXME: some times not working.
     -- Exit Vim if Tree is the only window remaining in the only tab.
     vim.api.nvim_create_autocmd("BufEnter", {
         nested = true,

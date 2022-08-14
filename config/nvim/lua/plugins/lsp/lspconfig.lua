@@ -13,22 +13,29 @@ local config = function()
     local lsp_servers = {
         -- Bash
         bashls = {
+            filetypes = { "sh" },
             flags = { debounce_text_changes = 150, },
         },
         -- C/C++
         clangd = {
+            filetypes = { "c", "cpp", "objc", "objcpp", "cuda" },
+            flags = { debounce_text_changes = 150, },
+        },
+        -- CSS
+        cssls = {
+            filetypes = { "css", "scss", "less" },
             flags = { debounce_text_changes = 150, },
         },
         -- Deno
         -- "denols",
         -- Golang
         gopls = {
+            filetypes = { "go", "gomod", "gowork", "gotmpl" },
             flags = {
                 debounce_text_changes = 150,
             },
             single_file_support = true,
             cmd = { "gopls", "serve" },
-            filetypes = { "go", "gomod", "gowork", "gotmpl" },
             root_dir = require("lspconfig/util").root_pattern("go.work", "go.mod", ".git"),
             settings = {
                 gopls = {
@@ -52,25 +59,28 @@ local config = function()
             },
         },
         -- Grammarly
-        grammarly = {
-            flags = { debounce_text_changes = 150, },
-        },
+        -- grammarly = { filetypes = { "markdown", "txt", "rst" }, },
         -- HTML
         html = {
+            filetypes = { "html" },
             flags = { debounce_text_changes = 150, },
         },
         -- Java
         -- "jdtls",
         -- JSON
         jsonls = {
+            filetypes = { "json", "jsonc" },
             flags = { debounce_text_changes = 150, },
         },
         -- Javascript
         tsserver = {
+            filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact",
+                "typescript.tsx" },
             flags = { debounce_text_changes = 150, },
         },
         -- Lua
         sumneko_lua = {
+            filetypes = { "lua" },
             flags = { debounce_text_changes = 150, },
             settings = {
                 Lua = {
@@ -86,18 +96,22 @@ local config = function()
         },
         -- Python
         pyright = {
+            filetypes = { "python" },
             flags = { debounce_text_changes = 150, },
         },
         -- Rust
         rust_analyzer = {
+            filetypes = { "rust" },
             flags = { debounce_text_changes = 150, },
         },
         -- TOML
         taplo = {
+            filetypes = { "toml" },
             flags = { debounce_text_changes = 150, },
         },
         -- YAML
         yamlls = {
+            filetypes = { "yaml" },
             flags = { debounce_text_changes = 150, },
         },
 
@@ -301,12 +315,32 @@ local config = function()
         end
     end
 
+    local function lsp_handlers()
+        -- TODO: https://github.com/neovim/nvim-lspconfig/wiki/UI-Customization#borders
+        --[[ local border = { ]]
+        --[[ { "🭽", "FloatBorder" }, ]]
+        --[[ { "▔", "FloatBorder" }, ]]
+        --[[ { "🭾", "FloatBorder" }, ]]
+        --[[ { "▕", "FloatBorder" }, ]]
+        --[[ { "🭿", "FloatBorder" }, ]]
+        --[[ { "▁", "FloatBorder" }, ]]
+        --[[ { "🭼", "FloatBorder" }, ]]
+        --[[ { "▏", "FloatBorder" }, ]]
+        --[[ } ]]
+        -- LSP settings (for overriding per client)
+        return {
+            ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded", }),
+            ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded", }),
+        }
+    end
+
     local function setup_lspconfig()
         local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
         local lspconfig = require('lspconfig')
         local must_opts = {
             capabilities = capabilities,
             on_attach = lspconfig_on_attach,
+            handlers = lsp_handlers(),
         }
         for name, opts in pairs(lsp_servers) do
             for k, v in pairs(must_opts) do
