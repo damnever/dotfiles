@@ -32,7 +32,7 @@ install_requirements_for_mac() {
     # brew install --HEAD macvim-dev/macvim/macvim
     brew install neovim
     brew install gnupg
-    brew install zsh  # antigen?
+    brew install zsh # antigen?
     brew install ctags
     brew install fzf
     /usr/local/opt/fzf/install
@@ -136,7 +136,7 @@ setup_config_files() {
 
 setup_vim() {
     echo "-> setup vim .."
-    # pip install  flake8 pyflakes pep8  jedi pipenv vim-vint 'python-language-server[all]' 
+    # pip install  flake8 pyflakes pep8  jedi pipenv vim-vint 'python-language-server[all]'
     pip install neovim pynvim yapf pylint
     # go install golang.org/x/tools/cmd/benchstat@latest
     # go install golang.org/x/tools/cmd/godoc@latest

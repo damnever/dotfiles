@@ -1,5 +1,27 @@
+# Plugins
+if [[ ! -d ~/.zplug ]]; then
+  git clone https://github.com/zplug/zplug ~/.zplug
+  source ~/.zplug/init.zsh && zplug update --self
+fi
+source ~/.zplug/init.zsh
+
+zplug "zsh-users/zsh-autosuggestions"
+zplug "zsh-users/zsh-syntax-highlighting"
+
+if ! zplug check --verbose; then
+    printf "Install plugins? [y/N]: "
+    if read -q; then
+        echo; zplug install
+    fi
+fi
+zplug load
+
+
 # Path to oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
+# Custom folder than $ZSH/custom
+ZSH_CUSTOM=$HOME/.zsh_damnever
+fpath+=~/.zfunc
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -21,10 +43,6 @@ ZSH_THEME="normal"
 # The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
 # HIST_STAMPS="mm/dd/yyyy"
 
-# Custom folder than $ZSH/custom
-ZSH_CUSTOM=$HOME/.zsh_damnever
-fpath+=~/.zfunc
-
 # Zsh plugins can be found in ~/.oh-my-zsh/plugins/*
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Add wisely, as too many plugins slow down shell startup.
@@ -36,8 +54,6 @@ vagrant
 docker kubectl
 pyenv python
 golang
-zsh-autosuggestions
-zsh-syntax-highlighting
 autojump
 # Custom plugins
 kocmd
@@ -118,10 +134,6 @@ fi
 # Swift
 export TOOLCHAINS=swift
 
-# scp
-SHTERM_AUTH_KEY=`cat ~/.ssh/id_rsa`
-export SHTERM_AUTH_KEY
-
 # https://github.com/junegunn/fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
@@ -148,4 +160,4 @@ unset __conda_setup
 # <<< conda initialize <<<
 
 # Print something after each load..
-fortune
+# fortune

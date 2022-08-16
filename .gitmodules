@@ -1,12 +1,4 @@
-[submodule "zsh_damnever/plugins/zsh-autosuggestions"]
-	path = zsh_damnever/plugins/zsh-autosuggestions
-	url = git://github.com/zsh-users/zsh-autosuggestions
-	shallow = true
 [submodule "third_configs/gdb-dashboard"]
 	path = third_configs/gdb-dashboard
 	url = git@github.com:cyrus-and/gdb-dashboard.git
-	shallow = true
-[submodule "zsh_damnever/plugins/zsh-syntax-highlighting"]
-	path = zsh_damnever/plugins/zsh-syntax-highlighting
-	url = git@github.com:zsh-users/zsh-syntax-highlighting.git
 	shallow = true
