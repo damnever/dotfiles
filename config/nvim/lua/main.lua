@@ -181,7 +181,13 @@ local function set_cursor_line()
 end
 
 local function set_misc_autocmds()
-    -- auto shebang
+    -- Remove trailing whitespaces
+    vim.api.nvim_create_autocmd({ "BufWritePre" }, {
+        pattern = { "*" },
+        command = [[%s/\s\+$//e]],
+    })
+
+    -- Auto shebang
     local filetype_shebangs = {
         sh = 'bash',
         py = 'python'
@@ -192,6 +198,7 @@ local function set_misc_autocmds()
         if shebang then
             vim.fn.setline(1, '#!/bin/' .. shebang)
             vim.fn.append(1, '')
+            vim.fn.cursor(2, 0)
         end
     end
 
@@ -205,7 +212,7 @@ local function set_misc_autocmds()
     })
 
 
-    -- wrap line for documents
+    -- Wrap lines for documents
     vim.api.nvim_create_autocmd("FileType", {
         pattern = { 'txt', 'markdown', 'rst', 'asciidoc' },
         command = [[

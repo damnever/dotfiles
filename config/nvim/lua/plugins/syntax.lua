@@ -1,8 +1,6 @@
 local package = { -- For 'wbthomason/packer.nvim'
     'tmux-plugins/vim-tmux', ft = { 'tmux' },
     { 'solarnz/thrift.vim', ft = { 'thrift' } },
-    { 'kevinoid/vim-jsonc', ft = { 'json', 'jsonc' } },
-    { 'ekalinin/Dockerfile.vim', ft = { 'Dockerfile' } },
     { 'fatih/vim-nginx', ft = { 'nginx' } },
     -- { 'plasticboy/vim-markdown', ft = { 'markdown' } },
 }
