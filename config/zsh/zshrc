@@ -4,6 +4,10 @@
 # Global variables.
 ZSH_CACHE=${XDG_CACHE_HOME:-$HOME/.cache}/zsh
 [[ -d "$ZSH_CACHE" ]] || mkdir -p "$ZSH_CACHE"
+# Ref: https://github.com/ohmyzsh/ohmyzsh/blob/7dcabbe6826073ef6069c8a4b6f9a943f00d2df0/oh-my-zsh.sh#L55
+ZSH_CACHE_DIR=$ZSH_CACHE
+[[ -d "$ZSH_CACHE_DIR/completions" ]] || mkdir -p "$ZSH_CACHE_DIR/completions"
+(( ${fpath[(Ie)"$ZSH_CACHE_DIR/completions"]} )) || fpath=("$ZSH_CACHE_DIR/completions" $fpath)
 
 # Plugin manager.
 # This must be done before running compinit.

@@ -1,5 +1,5 @@
-ohmyzsh/ohmyzsh path:plugins/colored-man-pages
-ohmyzsh/ohmyzsh path:plugins/z
+ohmyzsh/ohmyzsh path:plugins/colored-man-pages kind:zsh
+ohmyzsh/ohmyzsh path:plugins/z kind:zsh
 ohmyzsh/ohmyzsh path:plugins/kubectl kind:fpath
 ohmyzsh/ohmyzsh path:plugins/docker kind:fpath
 ohmyzsh/ohmyzsh path:plugins/golang kind:fpath
@@ -7,8 +7,10 @@ ohmyzsh/ohmyzsh path:plugins/fzf kind:zsh
 ohmyzsh/ohmyzsh path:plugins/ripgrep kind:fpath
 ohmyzsh/ohmyzsh path:plugins/fd kind:fpath
 ohmyzsh/ohmyzsh path:plugins/terraform kind:fpath
+ohmyzsh/ohmyzsh path:plugins/httpie kind:fpath
+ohmyzsh/ohmyzsh path:plugins/rust kind:zsh
 
-# zsh-users/zsh-history-substring-search
-zsh-users/zsh-completions
-zsh-users/zsh-autosuggestions
-zsh-users/zsh-syntax-highlighting
+# zsh-users/zsh-history-substring-search kind:zsh
+zsh-users/zsh-completions kind:zsh
+zsh-users/zsh-autosuggestions kind:zsh
+zsh-users/zsh-syntax-highlighting kind:zsh
