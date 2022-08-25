@@ -1,5 +1,5 @@
 local package = { -- For 'wbthomason/packer.nvim'
-    'romgrk/barbar.nvim', disable = true,
+    'romgrk/barbar.nvim', disable = true, -- liuchengxu/vista.vim ?
 }
 
 

@@ -14,7 +14,7 @@ local function set_global_variables()
 
     -- Disable builtin plugins.
     local builtin_plugins = {
-        'gzip', 'man', 'matchit', 'matchparen', 'netrwPlugin',
+        'gzip', 'man', 'matchparen', 'matchit', 'netrwPlugin',
         'shada', 'tarPlugin', 'tohtml',
         'tutor', 'zipPlugin',
     }

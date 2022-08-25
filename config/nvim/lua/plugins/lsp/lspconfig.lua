@@ -114,7 +114,11 @@ local config = function()
             filetypes = { "yaml" },
             flags = { debounce_text_changes = 150, },
         },
-
+        -- Terraform (hashicorp)
+        terraformls = {
+            filetypes = { "terraform" },
+            flags = { debounce_text_changes = 150, },
+        },
     }
 
     local function setup_mason()

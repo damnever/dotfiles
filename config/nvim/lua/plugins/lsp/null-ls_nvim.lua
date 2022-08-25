@@ -27,7 +27,7 @@ local config = function()
             -- require('null-ls').builtins.diagnostics.pylint,
             -- null_ls.builtins.diagnostics.flake8,
             -- null_ls.builtins.formatting.autopep8,
-            -- null_ls.builtins.formatting.yapf,
+            null_ls.builtins.formatting.yapf,
             -- sql
             -- null_ls.builtins.formatting.sqlformat,
             -- Writing and Spell

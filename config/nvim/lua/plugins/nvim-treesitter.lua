@@ -2,7 +2,7 @@ local package = { -- For 'wbthomason/packer.nvim'
     'nvim-treesitter/nvim-treesitter', run = ':TSUpdate',
     requires = {
         { 'nvim-treesitter/nvim-treesitter-textobjects' },
-        { 'p00f/nvim-ts-rainbow' },
+        -- { 'p00f/nvim-ts-rainbow' },
     },
 }
 
@@ -46,15 +46,18 @@ local config = function()
         indent = {
             enable = true
         },
-        -- textobjects = {},
-        rainbow = {
-            enable = true,
-            disable = { "dockerfile" }, -- list of languages you want to disable the plugin for
-            extended_mode = { html = true }, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
-            max_file_lines = 2300, -- Do not enable for files with more than n lines, int
-            -- colors = {}, -- table of hex strings
-            -- termcolors = {} -- table of colour name strings
+        autopairs = {
+            enable = true
         },
+        -- textobjects = {},
+        -- rainbow = {
+        -- enable = true,
+        -- disable = { "dockerfile" }, -- list of languages you want to disable the plugin for
+        -- extended_mode = { html = true }, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
+        -- max_file_lines = 2300, -- Do not enable for files with more than n lines, int
+        -- -- colors = {}, -- table of hex strings
+        -- -- termcolors = {} -- table of colour name strings
+        -- },
     })
 end
 

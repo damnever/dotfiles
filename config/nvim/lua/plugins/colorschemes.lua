@@ -1,7 +1,7 @@
 local package = { -- For 'wbthomason/packer.nvim'
-    'folke/tokyonight.nvim',
+    "EdenEast/nightfox.nvim",
     requires = {
-        { "EdenEast/nightfox.nvim" },
+        -- { 'folke/tokyonight.nvim' },
         -- { "catppuccin/nvim", as = "catppuccin" },
         -- { "svrana/neosolarized.nvim", requires = { "tjdevries/colorbuddy.nvim" } },
         -- { 'tomasr/molokai' },
