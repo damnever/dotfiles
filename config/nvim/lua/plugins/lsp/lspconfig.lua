@@ -237,7 +237,7 @@ local config = function()
                 callback = function()
                     -- on 0.8, you should use vim.lsp.buf.format({ bufnr = bufnr }) instead
                     -- vim.lsp.buf.format({ filter = function(client) return client.name == "LSP-SOURCE-NAME" end, bufnr = bufnr, })
-                    vim.lsp.buf.formatting_sync(nil, 3000)
+                    vim.lsp.buf.formatting_sync(nil, 5000)
                 end,
             })
         end
