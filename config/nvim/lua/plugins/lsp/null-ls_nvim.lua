@@ -4,9 +4,27 @@ local package = { -- For 'wbthomason/packer.nvim'
 }
 
 local config = function()
+    local vim = vim
+    local lspformat_augroup = vim.api.nvim_create_augroup("NULLLSFormatting", {})
+    local function format_on_save(client, bufnr)
+        if client.supports_method("textDocument/formatting") then
+            vim.api.nvim_clear_autocmds({ group = lspformat_augroup, buffer = bufnr })
+            vim.api.nvim_create_autocmd("BufWritePre", {
+                group = lspformat_augroup,
+                buffer = bufnr,
+                callback = function()
+                    -- on 0.8, you should use vim.lsp.buf.format({ bufnr = bufnr }) instead
+                    -- vim.lsp.buf.format({ filter = function(client) return client.name == "LSP-SOURCE-NAME" end, bufnr = bufnr, })
+                    vim.lsp.buf.formatting_sync(nil, 3000)
+                end,
+            })
+        end
+    end
+
     local null_ls = require("null-ls")
     null_ls.setup({
         debounce = 500,
+        on_attach = format_on_save,
         update_in_insert = false,
         sources = {
             -- Example: https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTIN_CONFIG.md

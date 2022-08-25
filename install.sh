@@ -32,7 +32,8 @@ install_requirements_for_mac() {
     # brew install --HEAD macvim-dev/macvim/macvim
     brew install neovim
     brew install gnupg
-    brew install zsh # antigen?
+    # brew install zsh  # Default on macOS
+    brew install fish
     brew install ctags
     brew install fzf
     /usr/local/opt/fzf/install
@@ -86,7 +87,9 @@ install_prerequirements() {
     if [[ "$platform" == "Darwin" ]]; then  # Mac
         change_settings_for_mac
         install_requirements_for_mac
-        sudo chsh -s "$(which zsh)"
+        grep -qxF "$(which fish)" /etc/shells || echo "$(which fish)" | sudo tee -a /etc/shells
+        chsh -s "$(which fish)" # zsh
+        sudo chsh -s "$(which fish)" # Install for root as well.
     elif [[ "$platform" == "Linux" ]]; then  # ubuntu for me
         install_requirements_for_ubuntu
         sudo chsh -s "$(which zsh)" ubuntu # vagrant
@@ -113,7 +116,6 @@ install_prerequirements() {
 setup_config_files() {
     echo "-> setup config files .."
     files=(\
-        zsh_damnever \
         gitconfig \
         pypirc \
         tmux.conf \

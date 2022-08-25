@@ -20,7 +20,7 @@ zplug load
 # Path to oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 # Custom folder than $ZSH/custom
-ZSH_CUSTOM=$HOME/.zsh_damnever
+ZSH_CUSTOM=$HOME/.config/zsh_damnever
 fpath+=~/.zfunc
 
 # Set name of the theme to load.

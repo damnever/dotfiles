@@ -84,13 +84,13 @@ end
 -- vim.api.nvim_buf_set_option(0, k, v) -- vim.bo -- bufffer
 local function set_options()
     vim.o.smartindent = true
-    vim.o.autoindent = true
-    vim.o.tabstop = 4
-    vim.o.shiftwidth = 4
+    vim.o.autoindent  = true
+    vim.o.tabstop     = 4
+    vim.o.shiftwidth  = 4
     vim.o.softtabstop = 4
-    vim.o.smarttab = true
-    vim.o.expandtab = true
-    vim.o.shiftround = true
+    vim.o.smarttab    = true
+    vim.o.expandtab   = true
+    vim.o.shiftround  = true
 
     vim.o.updatetime = 200 -- Smaller updatetime for CursorHold & CursorHoldI
     vim.o.shortmess = vim.o.shortmess .. 'c'
@@ -283,3 +283,4 @@ end
 return {
     setup = setup,
 }
+

@@ -76,6 +76,7 @@ local function parse_golang_module_name()
     return ''
 end
 
+------------------------------------
 -- VIM API enhancements.
 local vimbatch = {
     keymaps = function(keymaps)
