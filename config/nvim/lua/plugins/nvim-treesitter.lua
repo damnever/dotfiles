@@ -1,5 +1,7 @@
 local package = { -- For 'wbthomason/packer.nvim'
-    'nvim-treesitter/nvim-treesitter', run = ':TSUpdate',
+    'nvim-treesitter/nvim-treesitter',
+    -- https://github.com/nvim-treesitter/nvim-treesitter/wiki/Installation#packernvim
+    run = function() require('nvim-treesitter.install').update({ with_sync = true }) end,
     requires = {
         { 'nvim-treesitter/nvim-treesitter-textobjects' },
         -- { 'p00f/nvim-ts-rainbow' },

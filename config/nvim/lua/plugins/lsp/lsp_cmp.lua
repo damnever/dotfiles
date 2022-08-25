@@ -110,7 +110,7 @@ local config = function()
             comparators = {
                 cmp.config.compare.offset,
                 cmp.config.compare.exact,
-                cmp.config.compare.scopes,
+                -- cmp.config.compare.scopes,
                 cmp.config.compare.score,
                 cmp.config.compare.recently_used,
                 cmp.config.compare.locality,
@@ -196,13 +196,16 @@ local config = function()
     })
 
     -- Set configuration for specific filetype.
-    cmp.setup.filetype('gitcommit', {
-        sources = cmp.config.sources({
-            { name = 'cmp_git' }, -- You can specify the `cmp_git` source if you were installed it.
-        }, {
-            { name = 'buffer' },
+    for _, gitft in ipairs({ 'gitcommit', 'gitrebase' }) do
+        cmp.setup.filetype(gitft, {
+            sources = cmp.config.sources({
+                { name = 'cmp_git', }, -- You can specify the `cmp_git` source if you were installed it.
+            }, {
+                { name = 'buffer' },
+                { name = 'dictionary' },
+            })
         })
-    })
+    end
 
     -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
     cmp.setup.cmdline('/', {
@@ -229,6 +232,7 @@ local config = function()
             ["*"] = { vim.fn.expand("~/.config/nvim/assets/dict/words_alpha.txt") }, -- "/usr/share/dict/words"
         },
         exact = 2,
+        max_items = 5000,
         first_case_insensitive = true,
         document = false,
         document_command = "wn %s -over",
