@@ -44,7 +44,8 @@ local config = function()
             additional_vim_regex_highlighting = false,
         },
         indent = {
-            enable = true
+            enable = true,
+            disable = { "python" }, -- hynek/vim-python-pep8-indent
         },
         autopairs = {
             enable = true

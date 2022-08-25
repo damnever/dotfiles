@@ -3,6 +3,7 @@ local package = { -- For 'wbthomason/packer.nvim'
     { 'solarnz/thrift.vim', ft = { 'thrift' } },
     { 'fatih/vim-nginx', ft = { 'nginx' } },
     -- { 'plasticboy/vim-markdown', ft = { 'markdown' } },
+    { 'hynek/vim-python-pep8-indent', ft = { 'python' } },
 }
 
 local config = function()
