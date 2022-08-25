@@ -52,7 +52,7 @@ local function set_common_keymaps()
 
     -- Copy.
     vim.keymap.set('', 'Y', 'y$', { remap = true })
-    vim.keymap.set('v', '<leader>y', '"+y"')
+    vim.keymap.set('v', '<leader>y', '"+y')
 
     -- Search.
     vim.keymap.set({ 'n', 'v' }, '/', '/\\v')
@@ -159,6 +159,13 @@ local function set_options()
     vim.o.winblend = 0
     vim.o.pumblend = 5
     vim.o.termguicolors = true
+
+    vim.g.clipboard = {
+        name = "macOS-clipboard",
+        copy = { ["+"] = "pbcopy", ["*"] = "pbcopy" },
+        paste = { ["+"] = "pbpaste", ["*"] = "pbpaste" },
+        cache_enabled = 0,
+    }
 end
 
 -- TODO: call packer sync manually, ref: ./plugins/colorschemes.lua.
