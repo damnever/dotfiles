@@ -5,12 +5,13 @@ local function set_global_variables()
     vim.g.mapleader = [[,]]
     vim.g.maplocalleader = [[,]]
 
-    local python_bin = vim.fn.substitute(vim.fn.resolve(vim.fn.system('pyenv which python')), '\\n\\+$', '', '')
-    if string.match(vim.fn.system(python_bin .. ' -V'), '^2%..+') == nil then
-        vim.g.python3_host_prog = python_bin
-    else
-        vim.g.python_host_prog = python_bin
-    end
+    -- This is slow..
+    -- local python_bin = vim.fn.substitute(vim.fn.resolve(vim.fn.system('pyenv which python')), '\\n\\+$', '', '')
+    -- if string.match(vim.fn.system(python_bin .. ' -V'), '^2%..+') == nil then
+    -- else
+    -- vim.g.python_host_prog = python_bin
+    -- end
+    vim.g.python3_host_prog = '/Users/xiaochaodong/.pyenv/shims/python'
 
     -- Disable builtin plugins.
     local builtin_plugins = {
