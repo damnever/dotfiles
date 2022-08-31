@@ -32,7 +32,7 @@ install_requirements_for_mac() {
     # brew install --HEAD macvim-dev/macvim/macvim
     brew install neovim
     brew install gnupg
-    # brew install zsh  # Default on macOS
+    brew install zsh  # Default on macOS
     brew install fish
     brew install ctags
     brew install fzf
@@ -87,9 +87,9 @@ install_prerequirements() {
     if [[ "$platform" == "Darwin" ]]; then  # Mac
         change_settings_for_mac
         install_requirements_for_mac
-        grep -qxF "$(which fish)" /etc/shells || echo "$(which fish)" | sudo tee -a /etc/shells
-        chsh -s "$(which fish)" # zsh
-        sudo chsh -s "$(which fish)" # Install for root as well.
+        # grep -qxF "$(which fish)" /etc/shells || echo "$(which fish)" | sudo tee -a /etc/shells
+        chsh -s "$(which zsh)" #
+        sudo chsh -s "$(which zsh)" # Install for root as well.
     elif [[ "$platform" == "Linux" ]]; then  # ubuntu for me
         install_requirements_for_ubuntu
         sudo chsh -s "$(which zsh)" ubuntu # vagrant
@@ -108,8 +108,6 @@ install_prerequirements() {
 
     # Tmux
     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-
-    sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 }
 
 

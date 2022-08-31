@@ -1,163 +1,103 @@
-# Plugins
-if [[ ! -d ~/.zplug ]]; then
-  git clone https://github.com/zplug/zplug ~/.zplug
-  source ~/.zplug/init.zsh && zplug update --self
+# See the last line.
+# zmodload zsh/zprof
+
+# Plugin manager.
+# This must be done before running compinit.
+# NOTE: should delete ~/.cache/zsh/compdump to make autocompletion plugin work.
+# Ref: https://getantidote.github.io/#:~:text=ultra%20high%20performance%20install
+if [ ! -d ~/.local/share/antidote ]; then mkdir -p ~/.local/share/antidote; fi
+antidotepath=${ZDOTDIR:-~/.local/share/antidote}/.antidote
+if ! [[ -e $antidotepath ]]; then
+  git clone https://github.com/mattmc3/antidote.git $antidotepath
 fi
-source ~/.zplug/init.zsh
-
-zplug "zsh-users/zsh-autosuggestions"
-zplug "zsh-users/zsh-syntax-highlighting"
-
-if ! zplug check --verbose; then
-    printf "Install plugins? [y/N]: "
-    if read -q; then
-        echo; zplug install
-    fi
-fi
-zplug load
+antidotebundlefile=~/.config/zsh/antidote_zsh_plugins.txt
+zstyle ':antidote:bundle' file $antidotebundlefile
+antidotestaticfile=~/.local/share/antidote/zsh_plugins.zsh
+zstyle ':antidote:static' file $antidotestaticfile
+zstyle ':antidote:bundle' use-friendly-names 'yes'
+# source antidote and load plugins from `${ZDOTDIR:-~}/.zsh_plugins.txt`
+source $antidotepath/antidote.zsh
+antidote load
 
 
-# Path to oh-my-zsh installation.
-export ZSH=$HOME/.oh-my-zsh
-# Custom folder than $ZSH/custom
-ZSH_CUSTOM=$HOME/.config/zsh_damnever
-fpath+=~/.zfunc
+# We will run some scripts to setup things, including compinit.
+for setup in ~/.config/zsh/core/*; do
+    source $setup
+done
 
-# Set name of the theme to load.
-# Look in ~/.oh-my-zsh/themes/
-# Optionally, if you set this to "random", it'll load a random theme each
-# time that oh-my-zsh is loaded.
-ZSH_THEME="normal"
+# My custom theme.
+source ~/.config/zsh/themes/damnever.zsh-theme
 
-# how often to auto-update (in days).
-# export UPDATE_ZSH_DAYS=7
+# Functions
+for function in ~/.config/zsh/functions/*; do
+  source $function
+done
 
-# Enable command auto-correction.
-# ENABLE_CORRECTION="true"
-
-# Display red dots whilst waiting for completion.
-# COMPLETION_WAITING_DOTS="true"
-
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# HIST_STAMPS="mm/dd/yyyy"
-
-# Zsh plugins can be found in ~/.oh-my-zsh/plugins/*
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Add wisely, as too many plugins slow down shell startup.
-plugins=(
-git
-brew
-pip
-vagrant
-docker kubectl
-pyenv python
-golang
-autojump
-# Custom plugins
-kocmd
-gotools
-proxy
-tmux-init
-cleaner)
 
 # Binding keys
 # As an addition to https://github.com/jlevy/the-art-of-command-line#everyday-use
+bindkey -e  # https://stackoverflow.com/questions/23128353/zsh-shortcut-ctrl-a-not-working
 bindkey '^j' backward-word
 bindkey '^k' forward-word
 
 
-# User configuration
-platform=$(uname)
-
 export PATH="$PATH:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin"
 # export MANPATH="/usr/local/man:$MANPATH"
-if [[ "$platform" == "Darwin" ]]; then  # Mac
+if [[ "$OSTYPE" == "darwin"* ]]; then  # Mac
     export PATH="$PATH:/usr/local/opt/coreutils/libexec/gnubin"
     export MANPATH="$MANPATH:/usr/local/opt/coreutils/libexec/gnuman"
     export MANPATH="$MANPATH:/usr/local/opt/findutils/libexec/gnuman"
     export PATH="$PATH:/usr/local/opt/findutils/libexec/gnubin:/usr/local/opt/llvm/bin"
 fi
 
-source $ZSH/oh-my-zsh.sh
-
 # Manually set your language environment
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
+export EDITOR='nvim'
 
-# Personal aliases
-if [[ "$platform" == "Darwin" ]]; then  # Mac
-    alias vim='nvim'  # 'mvim -v'
-fi
-
-
-# autojump
-if [[ "$platform" == "Darwin" ]]; then  # Mac
-    [ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
-fi
+# Aliases
+alias v='nvim'
+alias vim='nvim'
+alias ll='ls -lh'
 
 
 # Pyenv
-if [[ "$platform" == "Darwin" ]]; then  # Mac
-else  # Linux
-    export PYENV_ROOT="$HOME/.pyenv"
-    export PATH="$PYENV_ROOT/bin:$PATH"
-fi
-eval "$(pyenv init --path)"
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -  --path --no-rehash zsh)"
+# eval "$(pyenv virtualenv-init -)" # Too slow and maybe useless
 
 
 # Golang
-export GOPATH=$HOME/.go:$HOME/dev/ak/Go
-export PATH=$PATH:/usr/local/go/bin:$HOME/.go/bin:$HOME/dev/ak/Go/bin
+export GOPATH=$HOME/.go
+export PATH=$PATH:/usr/local/go/bin:$HOME/.go/bin
 
 # Rust
-# rustup/racer
 source $HOME/.cargo/env
 export PATH=$PATH:$HOME/.cargo/bin
-export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
 
 # Java
-if [[ "$platform" == "Darwin" ]]; then  # Mac
+if [[ "$OSTYPE" == "darwin"* ]]; then  # Mac
     export JAVA_HOME=$(/usr/libexec/java_home)
 fi
 
 # Swift
 export TOOLCHAINS=swift
 
-# https://github.com/junegunn/fzf
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# Fzf: https://github.com/junegunn/fzf
+# $(brew --prefix)/opt/fzf/install --no-bash --no-fish
+# [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# https://github.com/direnv/direnv
+# Direnv: https://github.com/direnv/direnv
 eval "$(direnv hook zsh)"
 
 # GPG
 export GPG_TTY=$(tty)
 ssh-add &> /dev/null
 
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('$HOME/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "$HOME/anaconda3/etc/profile.d/conda.sh" ]; then
-        . "$HOME/anaconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="$HOME/anaconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
-
 # Print something after each load..
 # fortune
+
+# See the first line.
+# zprof
