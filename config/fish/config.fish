@@ -13,6 +13,7 @@ if status is-interactive
 
     alias v nvim
     alias vim nvim
+    alias unset 'set --global --erase'
 
     # Autojump: https://github.com/wting/autojump
     if [ -f /usr/local/share/autojump/autojump.fish ];
