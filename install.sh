@@ -87,7 +87,7 @@ install_prerequirements() {
     if [[ "$platform" == "Darwin" ]]; then  # Mac
         change_settings_for_mac
         install_requirements_for_mac
-        # grep -qxF "$(which fish)" /etc/shells || echo "$(which fish)" | sudo tee -a /etc/shells
+        grep -qxF "$(which zsh)" /etc/shells || echo "$(which zsh)" | sudo tee -a /etc/shells
         chsh -s "$(which zsh)" #
         sudo chsh -s "$(which zsh)" # Install for root as well.
     elif [[ "$platform" == "Linux" ]]; then  # ubuntu for me

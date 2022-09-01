@@ -27,6 +27,19 @@ local config = function()
         vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
     end
 
+    local border = function(hl)
+        return {
+            { "╭", hl },
+            { "─", hl },
+            { "╮", hl },
+            { "│", hl },
+            { "╯", hl },
+            { "─", hl },
+            { "╰", hl },
+            { "│", hl },
+        }
+    end
+
     local kind_icons = {
         Text = "",
         Method = "",
@@ -59,6 +72,7 @@ local config = function()
         Operator = "",
         TypeParameter = ""
     }
+
 
     local cmp = require('cmp')
     cmp.setup({
@@ -115,6 +129,10 @@ local config = function()
         window = {
             -- completion = cmp.config.window.bordered(),
             -- documentation = cmp.config.window.bordered(),
+            documentation = {
+                border = border("CmpBorder"),
+                winhighlight = 'Normal:CmpPmenu,FloatBorder:CmpPmenuBorder,CursorLine:PmenuSel,Search:None',
+            },
         },
         snippet = {
             -- REQUIRED - you must specify a snippet engine
@@ -219,8 +237,11 @@ local config = function()
         debug = false,
     })
 
-    -- https://github.com/hrsh7th/nvim-cmp/wiki/Menu-Appearance#how-to-add-visual-studio-code-dark-theme-colors-to-the-menu
     vim.cmd([[
+        " CmpBorder
+        highlight! CmpBorder guibg=NONE guifg=#5576a4
+
+        " https://github.com/hrsh7th/nvim-cmp/wiki/Menu-Appearance#how-to-add-visual-studio-code-dark-theme-colors-to-the-menu
         " gray
         highlight! CmpItemAbbrDeprecated guibg=NONE gui=strikethrough guifg=#808080
         " blue

@@ -1,5 +1,6 @@
 ohmyzsh/ohmyzsh path:plugins/colored-man-pages
 ohmyzsh/ohmyzsh path:plugins/autojump
+ohmyzsh/ohmyzsh path:plugins/z
 ohmyzsh/ohmyzsh path:plugins/kubectl kind:fpath
 ohmyzsh/ohmyzsh path:plugins/docker kind:fpath
 ohmyzsh/ohmyzsh path:plugins/golang kind:fpath

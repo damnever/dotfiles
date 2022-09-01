@@ -13,7 +13,7 @@ local config = function()
         -- A list of parser names, or "all"
         ensure_installed = {
             "bash", "c", "cmake", "go", "gomod", "gowork",
-            "html", "java", "javascript", "json5", "lua", "make", "markdown",
+            "html", "javascript", "json5", "make", "markdown",
             "proto", "python", "rust", "rst", "sql", "toml",
             "vim", "yaml"
         },
@@ -48,9 +48,23 @@ local config = function()
             disable = { "python" }, -- hynek/vim-python-pep8-indent
         },
         autopairs = {
+            disable = {},
             enable = true
         },
-        -- textobjects = {},
+        textobjects = {
+            select = {
+                enable = true,
+                -- Automatically jump forward to textobj, similar to targets.vim
+                lookahead = true,
+                keymaps = {
+                    -- You can use the capture groups defined in textobjects.scm
+                    ["af"] = "@function.outer",
+                    ["if"] = "@function.inner",
+                    ["ac"] = "@class.outer",
+                    ["ic"] = "@class.inner",
+                }
+            },
+        }
         -- rainbow = {
         -- enable = true,
         -- disable = { "dockerfile" }, -- list of languages you want to disable the plugin for

@@ -44,8 +44,7 @@ zstyle ':completion:*:cd:*' tag-order local-directories directory-stack path-dir
 
 # Ref: https://getantidote.github.io/completions
 # https://github.com/mattmc3/zephyr/blob/main/plugins/completions/completions.plugin.zsh
-_cache_dir=${XDG_CACHE_HOME:-$HOME/.cache}/zsh
-[[ -d "$_cache_dir" ]] || mkdir -p "$_cache_dir"
+_cache_dir=${ZSH_CACHE}
 _zcompdump="$_cache_dir/compdump"
 _zcompcache="$_cache_dir/compcache"
 
