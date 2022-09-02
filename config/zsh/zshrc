@@ -38,6 +38,8 @@ for function in ~/.config/zsh/functions/*; do
 done
 
 
+set -k  # INTERACTIVE_COMMENTS
+
 # Binding keys
 # As an addition to https://github.com/jlevy/the-art-of-command-line#everyday-use
 bindkey -e  # https://stackoverflow.com/questions/23128353/zsh-shortcut-ctrl-a-not-working
