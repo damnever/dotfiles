@@ -31,9 +31,8 @@ install_requirements_for_mac() {
     # brew tap macvim-dev/macvim
     # brew install --HEAD macvim-dev/macvim/macvim
     brew install neovim
-    brew install gnupg
+    brew install gnupg pinentry-mac
     brew install zsh  # Default on macOS
-    brew install fish
     brew install ctags
     brew install fzf
     /usr/local/opt/fzf/install
@@ -44,7 +43,7 @@ install_requirements_for_mac() {
     # brew install yarn
     brew install node
     brew install watch
-    brew install autojump
+    # brew install autojump
     brew install go
     brew install cloc
     # brew install the_silver_searcher
@@ -57,7 +56,7 @@ install_requirements_for_mac() {
     # fonts
     brew tap homebrew/cask-fonts
     # brew install font-ibm-plex --cask
-    brew install --cask font-jetbrains-mono-nerd-font font-fira-mono-nerd-font font-go-mono-nerd-font
+    brew install --cask font-jetbrains-mono-nerd-font # https://www.nerdfonts.com/
 }
 
 change_settings_for_mac() {
@@ -115,7 +114,6 @@ setup_config_files() {
     echo "-> setup config files .."
     files=(\
         gitconfig \
-        pypirc \
         tmux.conf \
         zshrc \
         config \
@@ -127,7 +125,7 @@ setup_config_files() {
     mkdir -vp "$HOME/.gnupg"
     cp -rfv "$cur_dir/gnupg/*" "$HOME/.gnupg"
     # shellcheck source=/dev/null
-    source $cur_dir/third_configs/install.sh
+    source "$cur_dir/third_configs/install.sh"
 
     echo "-> create dirs .."
     # mkdir -vp "$HOME/dev/ak/{C,Go,Python,Scheme,Erlang,Elixir,Rust}"
@@ -137,20 +135,25 @@ setup_config_files() {
 setup_vim() {
     echo "-> setup vim .."
     # pip install  flake8 pyflakes pep8  jedi pipenv vim-vint 'python-language-server[all]'
-    pip install neovim pynvim yapf pylint
+    pip install pynvim yapf pylint
     # go install golang.org/x/tools/cmd/benchstat@latest
     # go install golang.org/x/tools/cmd/godoc@latest
-    go install golang.org/x/tools/gopls@latest
-    go install github.com/jstemmer/gotags@latest
+    # go install golang.org/x/tools/gopls@latest
+    # go install github.com/jstemmer/gotags@latest
     # yarn global add bash-language-server
     # npm install -g prettier bash-language-server
 
     # TODO: install lint and formaters for neovim null-ls?
-    # Patched fonts(Monaco): https://github.com/ryanoasis/nerd-fonts#font-patcher
 
     # Let's do it twice: https://github.com/wbthomason/packer.nvim
     nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
-    nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
+}
+
+
+install_fonts() {
+    unzip config/_asserts/fonts.zip -d /tmp/dotfiles-fonts
+    mv "/tmp/dotfiles-fonts/fonts/Monaco Nerd Font Complete.ttf" "$HOME/Library/Fonts/"
+    rm -rf /tmp/dotfiles-fonts
 }
 
 
@@ -159,10 +162,11 @@ usage() {
     echo "       -r install requirements" >&2
     echo "       -c setup config files" >&2
     echo "       -v setup vim" >&2
+    echo "       -f install patched https://www.nerdfonts.com/" >&2
     exit 1
 }
 
-while getopts ":rcv" opt; do
+while getopts ":rcvf" opt; do
     case "${opt}" in
         r )
             noargs=1
@@ -175,6 +179,10 @@ while getopts ":rcv" opt; do
         v )
             noargs=1
             setup_vim
+            ;;
+        f )
+            noargs=1
+            install_fonts
             ;;
         * )
             echo "invalid option -${opt}"

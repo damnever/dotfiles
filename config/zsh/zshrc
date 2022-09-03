@@ -99,7 +99,6 @@ eval "$(direnv hook zsh)"
 
 # GPG
 export GPG_TTY=$(tty)
-ssh-add &> /dev/null
 
 # Print something after each load..
 # fortune

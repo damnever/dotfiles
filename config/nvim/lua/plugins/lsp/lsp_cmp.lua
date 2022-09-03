@@ -229,7 +229,7 @@ local config = function()
 
     require("cmp_dictionary").setup({
         dic = {
-            ["*"] = { vim.fn.expand("~/.config/nvim/assets/dict/words_alpha.txt") }, -- "/usr/share/dict/words"
+            ["*"] = { vim.fn.expand("~/.config/_asserts/dict/words_alpha.txt") }, -- "/usr/share/dict/words"
         },
         exact = 2,
         max_items = 5000,

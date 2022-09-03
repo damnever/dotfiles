@@ -8,5 +8,5 @@ tmux-init() {
         tmux new-session -d -s $s
     done
     echo ""
-    echo "You can attach to a tmux session like this: tmux a -t d"
+    echo "Attach to a tmux session like this: tmux a -t d"
 }
