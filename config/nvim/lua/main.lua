@@ -236,6 +236,14 @@ local function set_misc_autocmds()
         pattern = '*',
         command = [[set nopaste]]
     })
+
+    -- Languages related.
+    -- Ref: https://github.com/nvim-treesitter/nvim-treesitter/issues/3288
+    vim.api.nvim_create_autocmd("FileType", {
+        pattern = 'go',
+        command = [[set noexpandtab]]
+    })
+
     vim.cmd([[
         " autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 
