@@ -1,6 +1,8 @@
 docker-clean() {
-    # docker container rm $(docker container ls -f status=exited | awk '{if (NR > 1) print $1}') 2>/dev/null
-    # docker rmi $(docker images | awk '{if (NR > 1 && $2 == "<none>") print $3}') 2>/dev/null
-    # docker rmi $(docker images -f "dangling=true" -q)
-    docker system prune --volumes
+    local _query=$1
+    if [ -z $_query ]; then
+        docker system prune --volumes
+    else
+        docker rmi $(docker images | grep "$_query" | awk '{print $3}')
+    fi
 }

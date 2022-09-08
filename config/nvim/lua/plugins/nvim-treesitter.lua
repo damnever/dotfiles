@@ -4,6 +4,7 @@ local package = { -- For 'wbthomason/packer.nvim'
     run = function() require('nvim-treesitter.install').update({ with_sync = true }) end,
     requires = {
         { 'nvim-treesitter/nvim-treesitter-textobjects' },
+        { 'JoosepAlviste/nvim-ts-context-commentstring' },
         -- { 'p00f/nvim-ts-rainbow' },
     },
 }
@@ -66,6 +67,13 @@ local config = function()
                     ["ic"] = "@class.inner",
                 }
             },
+        },
+        context_commentstring = {
+            enable = true,
+            config = {
+                go = '// %s',
+                python = '# %s',
+            }
         }
         -- rainbow = {
         -- enable = true,
