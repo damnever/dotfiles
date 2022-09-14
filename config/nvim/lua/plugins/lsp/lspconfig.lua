@@ -64,6 +64,14 @@ local config = function()
         html = {
             filetypes = { "html" },
             flags = { debounce_text_changes = 150, },
+            init_options = {
+                provideFormatter = true,
+            },
+            settings = {
+                html = {
+                    format = { wrapLineLength = 0 }
+                }
+            }
         },
         -- Java
         -- "jdtls",
