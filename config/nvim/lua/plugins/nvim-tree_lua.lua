@@ -18,7 +18,6 @@ local config = function()
         view = {
             adaptive_size = false,
             width = 33,
-            height = 30,
             side = "left",
             mappings = {
                 custom_only = true,
