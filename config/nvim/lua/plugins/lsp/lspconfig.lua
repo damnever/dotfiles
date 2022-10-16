@@ -347,7 +347,9 @@ local config = function()
     end
 
     local function setup_lspconfig()
-        local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+        -- Ref: https://github.com/hrsh7th/cmp-nvim-lsp/issues/38
+        -- local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+        local capabilities = require("cmp_nvim_lsp").default_capabilities()
         local lspconfig = require('lspconfig')
         local must_opts = {
             capabilities = capabilities,
