@@ -13,9 +13,7 @@ local config = function()
                 group = lspformat_augroup,
                 buffer = bufnr,
                 callback = function()
-                    -- on 0.8, you should use vim.lsp.buf.format({ bufnr = bufnr }) instead
-                    -- vim.lsp.buf.format({ filter = function(client) return client.name == "LSP-SOURCE-NAME" end, bufnr = bufnr, })
-                    vim.lsp.buf.formatting_sync(nil, 3000)
+                    vim.lsp.buf.format({ async = true, timeout_ms = 5000, bufnr = bufnr, })
                 end,
             })
         end
