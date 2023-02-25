@@ -22,7 +22,15 @@ install_requirements_for_mac() {
     # NOTE: XCode is required.
     install_xcode_command_line_tools
     set -e
-    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+
+    # https://docs.brew.sh/Installation
+    HOMEBREW_PREFIX=/opt/homebrew
+    if ! command -v brew &> /dev/null; then
+        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+        echo "eval $($HOMEBREW_PREFIX/bin/brew shellenv)" >> ~/.zprofile
+        eval "$($HOMEBREW_PREFIX/bin/brew shellenv)"
+    fi
+
     # TODO: brew bundle --file=Brewfile
     brew install wget
     brew install llvm
@@ -32,7 +40,7 @@ install_requirements_for_mac() {
     brew install zsh  # Default on macOS
     brew install ctags
     brew install fzf
-    /usr/local/opt/fzf/install
+    $HOMEBREW_PREFIX/opt/fzf/install
     brew install pyenv pyenv-virtualenv # pyenv-virtualenvwrapper
     brew install tmux reattach-to-user-namespace
     brew install coreutils findutils gnu-getopt
@@ -40,7 +48,7 @@ install_requirements_for_mac() {
     brew install node yarn  # Nodejs and..
     brew install watch
     brew install go  # Golang
-    brew install ripgrep fd bat  # the_silver_searcher
+    brew install ripgrep fd bat jq
     brew install tree
     brew install htop iftop
     brew install fortune
@@ -65,6 +73,7 @@ install_prerequirements() {
 
     change_settings_for_mac
     install_requirements_for_mac
+
     grep -qxF "$(which zsh)" /etc/shells || echo "$(which zsh)" | sudo tee -a /etc/shells
     chsh -s "$(which zsh)" #
     sudo chsh -s "$(which zsh)" # Install for root as well.
@@ -73,12 +82,13 @@ install_prerequirements() {
     # https://github.com/pyenv/pyenv/issues/1219
     pyenv install $GLOBAL_PYTHON
     pyenv global $GLOBAL_PYTHON
-    pip install ipython
+    pip install ipython httpie
 
-    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-    rustup toolchain add nightly
-    rustup component add rust-src
-    # cargo +nightly install racer
+    if ! command -v rustup &> /dev/null; then
+        curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+        rustup toolchain add nightly
+        rustup component add rust-src
+    fi
 
     # Tmux
     # git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
