@@ -1,5 +1,5 @@
 ohmyzsh/ohmyzsh path:plugins/colored-man-pages kind:zsh
-ohmyzsh/ohmyzsh path:plugins/z kind:zsh
+ohmyzsh/ohmyzsh path:plugins/zoxide kind:zsh  # brew install zoxide
 ohmyzsh/ohmyzsh path:plugins/kubectl kind:fpath
 ohmyzsh/ohmyzsh path:plugins/docker kind:fpath
 ohmyzsh/ohmyzsh path:plugins/golang kind:fpath

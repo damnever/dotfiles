@@ -47,6 +47,7 @@ install_command_line_tools() {
     brew install htop iftop
     brew install fortune
     brew install direnv
+    brew install zoxide
     # fonts
     # brew tap homebrew/cask-fonts
     # brew install font-ibm-plex --cask
