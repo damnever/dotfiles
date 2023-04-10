@@ -42,6 +42,7 @@ install_command_line_tools() {
     brew install node yarn  # Nodejs and..
     brew install watch
     brew install go  # Golang
+    brew install git git-lfs
     brew install ripgrep fd bat jq
     brew install tree
     brew install htop iftop

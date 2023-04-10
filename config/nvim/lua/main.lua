@@ -200,7 +200,6 @@ local function set_misc_autocmds()
     -- Auto shebang
     local filetype_shebangs = {
         sh = 'bash',
-        py = 'python'
     }
     local function auto_shebang()
         local ext = vim.fn.expand("%:e")

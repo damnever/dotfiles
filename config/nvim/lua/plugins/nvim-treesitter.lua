@@ -1,7 +1,11 @@
-local package = { -- For 'wbthomason/packer.nvim'
+local package = {
+    -- For 'wbthomason/packer.nvim'
     'nvim-treesitter/nvim-treesitter',
     -- https://github.com/nvim-treesitter/nvim-treesitter/wiki/Installation#packernvim
-    run = function() require('nvim-treesitter.install').update({ with_sync = true }) end,
+    run = function()
+        local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
+        ts_update()
+    end,
     requires = {
         { 'nvim-treesitter/nvim-treesitter-textobjects' },
         { 'JoosepAlviste/nvim-ts-context-commentstring' },
@@ -20,16 +24,12 @@ local config = function()
             "proto", "python", "rust", "rst", "sql", "toml",
             "vim", "yaml"
         },
-
         -- Install parsers synchronously (only applied to `ensure_installed`)
         sync_install = false,
-
         -- Automatically install missing parsers when entering buffer
         auto_install = true,
-
         -- List of parsers to ignore installing (for "all")
         ignore_install = {},
-
         highlight = {
             -- `false` will disable the whole extension
             enable = true,
