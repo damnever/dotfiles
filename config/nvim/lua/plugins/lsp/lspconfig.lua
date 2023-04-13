@@ -138,6 +138,11 @@ local config = function()
         yamlls = {
             filetypes = { "yaml" },
             flags = { debounce_text_changes = 150, },
+            settings = {
+                 yaml = {
+                     keyOrdering = false
+                 }
+             }
         },
         -- Terraform (hashicorp)
         terraformls = {
