@@ -1,5 +1,6 @@
-local package = { -- For 'wbthomason/packer.nvim'
+local package = {
     'j-hui/fidget.nvim', -- Provide a UI for nvim-lsp's progress handler.
+    tag = "legacy",
     event = "BufReadPost",
 }
 
