@@ -20,8 +20,8 @@ local config = function()
         vim.keymap.set('n', '<C-k>', api.node.show_info_popup, opts('Info'))
         vim.keymap.set('n', '<C-r>', api.fs.rename_sub, opts('Rename: Omit Filename'))
         vim.keymap.set('n', '<C-t>', api.node.open.tab, opts('Open: New Tab'))
-        vim.keymap.set('n', '<C-v>', api.node.open.vertical, opts('Open: Vertical Split'))
-        vim.keymap.set('n', '<C-x>', api.node.open.horizontal, opts('Open: Horizontal Split'))
+        vim.keymap.set('n', 'v', api.node.open.vertical, opts('Open: Vertical Split')) -- Default to '<C-v>'
+        vim.keymap.set('n', 's', api.node.open.horizontal, opts('Open: Horizontal Split')) -- Default to '<C-x>'
         vim.keymap.set('n', '<BS>', api.node.navigate.parent_close, opts('Close Directory'))
         vim.keymap.set('n', '<CR>', api.node.open.edit, opts('Open'))
         vim.keymap.set('n', '<Tab>', api.node.open.preview, opts('Open Preview'))
@@ -56,9 +56,9 @@ local config = function()
         vim.keymap.set('n', 'p', api.fs.paste, opts('Paste'))
         vim.keymap.set('n', 'P', api.node.navigate.parent, opts('Parent Directory'))
         vim.keymap.set('n', 'q', api.tree.close, opts('Close'))
-        vim.keymap.set('n', 'r', api.fs.rename, opts('Rename'))
-        vim.keymap.set('n', 'R', api.tree.reload, opts('Refresh'))
-        vim.keymap.set('n', 's', api.node.run.system, opts('Run System'))
+        vim.keymap.set('n', 'r', api.tree.reload, opts('Refresh')) -- Default to 'R'
+        vim.keymap.set('n', 'R', api.fs.rename, opts('Rename')) -- Default to 'r'
+        vim.keymap.set('n', '<C-s>', api.node.run.system, opts('Run System')) -- Default ot 's'
         vim.keymap.set('n', 'S', api.tree.search_node, opts('Search'))
         vim.keymap.set('n', 'U', api.tree.toggle_custom_filter, opts('Toggle Hidden'))
         vim.keymap.set('n', 'W', api.tree.collapse_all, opts('Collapse'))
