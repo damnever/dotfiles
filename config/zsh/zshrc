@@ -104,9 +104,8 @@ eval "$(direnv hook zsh)"
 # GPG
 export GPG_TTY=$(tty)
 
-# NOTE: run the following command to disable auto activation:
-#   conda config --set auto_activate_base false
-#
+# Ref: https://stackoverflow.com/a/57974390/2996656
+export CONDA_AUTO_ACTIVATE_BASE=false
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
 __conda_setup="$('/Users/damnever/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
