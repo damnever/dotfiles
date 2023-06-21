@@ -1,9 +1,11 @@
-local package = { -- For 'wbthomason/packer.nvim'
-    'tmux-plugins/vim-tmux', ft = { 'tmux' },
-    { 'solarnz/thrift.vim', ft = { 'thrift' } },
-    { 'fatih/vim-nginx', ft = { 'nginx' } },
+local package = {
+-- For 'wbthomason/packer.nvim'
+    'tmux-plugins/vim-tmux',
+    ft = { 'tmux' },
+    { 'solarnz/thrift.vim',            ft = { 'thrift' } },
+    { 'fatih/vim-nginx',               ft = { 'nginx' } },
     -- { 'plasticboy/vim-markdown', ft = { 'markdown' } },
-    { 'hynek/vim-python-pep8-indent', ft = { 'python' } },
+    { 'Vimjas/vim-python-pep8-indent', ft = { 'python' } },
 }
 
 local config = function()
