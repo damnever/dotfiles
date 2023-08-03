@@ -45,10 +45,6 @@ local config = function()
                 msg_bg_fillchar = "╱",
             },
             mappings = {
-                i = {
-                    -- ["<esc>"] = require('telescope.actions').close,
-                    ["<C-c>"] = require('telescope.actions').close,
-                },
             }
         },
         pickers = {
