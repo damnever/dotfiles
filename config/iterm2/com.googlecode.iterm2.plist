@@ -9,7 +9,7 @@
 	<key>AllowClipboardAccess</key>
 	<true/>
 	<key>AutoHideTmuxClientSession</key>
-	<false/>
+	<true/>
 	<key>Coprocess MRU</key>
 	<array>
 		<string>/usr/local/bin/iterm2-recv-zmodem.sh</string>
@@ -85824,9 +85824,9 @@
 	<key>TmuxUsesDedicatedProfile</key>
 	<false/>
 	<key>TmuxWarnBeforePausing</key>
-	<false/>
+	<true/>
 	<key>UseTmuxStatusBar</key>
-	<false/>
+	<true/>
 	<key>VisualIndicatorForEsc</key>
 	<false/>
 	<key>WordCharacters</key>
