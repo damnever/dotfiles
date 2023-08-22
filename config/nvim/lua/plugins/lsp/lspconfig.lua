@@ -1,4 +1,5 @@
-local package = { -- For 'wbthomason/packer.nvim'
+-- For 'wbthomason/packer.nvim'
+local package = {
     'williamboman/mason.nvim',
     after = { 'cmp-nvim-lsp' },
     requires = {
@@ -114,6 +115,10 @@ local config = function()
                         defaultConfig = {
                             indent_style = "space",
                             indent_size = "3",
+                            space_around_table_field_list = "true",
+                            space_before_inline_comment = "1",
+                            align_continuous_assign_statement = "false",
+                            align_array_table = "false",
                         },
                     },
                 }
@@ -139,10 +144,10 @@ local config = function()
             filetypes = { "yaml" },
             flags = { debounce_text_changes = 150, },
             settings = {
-                 yaml = {
-                     keyOrdering = false
-                 }
-             }
+                yaml = {
+                    keyOrdering = false
+                }
+            }
         },
         -- Terraform (hashicorp)
         terraformls = {
