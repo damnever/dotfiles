@@ -1,17 +1,94 @@
 {
-  "title": "Improved Chinese Input Method",
+  "title": "Improved Input Candidate Selection",
   "rules": [
     {
-      "description": "[Improved Chinese Input Method] UP/Down Paging ('[ ]' -> 'Ctrl p/n')",
+      "description": "[Improved Input Candidate Selection] Tab to select the next candidate",
       "manipulators": [
         {
           "conditions": [
             {
               "input_sources": [
                 {
-                  "input_mode_id": "com.apple.inputmethod.SCIM.ITABC",
-                  "input_source_id": "com.apple.inputmethod.SCIM.ITABC",
                   "language": "zh-Hans"
+                },
+                {
+                  "language": "zh-Hant"
+                },
+                {
+                  "language": "yue-Hant"
+                },
+                {
+                  "language": "ja"
+                }
+              ],
+              "type": "input_source_if"
+            }
+          ],
+          "from": {
+            "key_code": "tab"
+          },
+          "to": [
+            {
+              "key_code": "right_arrow"
+            }
+          ],
+          "type": "basic"
+        },
+        {
+          "conditions": [
+            {
+              "input_sources": [
+                {
+                  "language": "zh-Hans"
+                },
+                {
+                  "language": "zh-Hant"
+                },
+                {
+                  "language": "yue-Hant"
+                },
+                {
+                  "language": "ja"
+                }
+              ],
+              "type": "input_source_if"
+            }
+          ],
+          "from": {
+            "key_code": "tab",
+            "modifiers": {
+              "mandatory": [
+                "left_shift"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "left_arrow"
+            }
+          ],
+          "type": "basic"
+        }
+      ]
+    },
+    {
+      "description": "[Improved Input Candidate Selection] left_ctrl p/n for up/down paging",
+      "manipulators": [
+        {
+          "conditions": [
+            {
+              "input_sources": [
+                {
+                  "language": "zh-Hans"
+                },
+                {
+                  "language": "zh-Hant"
+                },
+                {
+                  "language": "yue-Hant"
+                },
+                {
+                  "language": "ja"
                 }
               ],
               "type": "input_source_if"
@@ -37,9 +114,16 @@
             {
               "input_sources": [
                 {
-                  "input_mode_id": "com.apple.inputmethod.SCIM.ITABC",
-                  "input_source_id": "com.apple.inputmethod.SCIM.ITABC",
                   "language": "zh-Hans"
+                },
+                {
+                  "language": "zh-Hant"
+                },
+                {
+                  "language": "yue-Hant"
+                },
+                {
+                  "language": "ja"
                 }
               ],
               "type": "input_source_if"
@@ -63,16 +147,23 @@
       ]
     },
     {
-      "description": "[Improved Chinese Input Method] Vi Style Arrows [left_control + hjkl]",
+      "description": "[Improved Input Candidate Selection] Vi-style movements (left_control + hjkl)",
       "manipulators": [
         {
           "conditions": [
             {
               "input_sources": [
                 {
-                  "input_mode_id": "com.apple.inputmethod.SCIM.ITABC",
-                  "input_source_id": "com.apple.inputmethod.SCIM.ITABC",
                   "language": "zh-Hans"
+                },
+                {
+                  "language": "zh-Hant"
+                },
+                {
+                  "language": "yue-Hant"
+                },
+                {
+                  "language": "ja"
                 }
               ],
               "type": "input_source_if"
@@ -98,9 +189,16 @@
             {
               "input_sources": [
                 {
-                  "input_mode_id": "com.apple.inputmethod.SCIM.ITABC",
-                  "input_source_id": "com.apple.inputmethod.SCIM.ITABC",
                   "language": "zh-Hans"
+                },
+                {
+                  "language": "zh-Hant"
+                },
+                {
+                  "language": "yue-Hant"
+                },
+                {
+                  "language": "ja"
                 }
               ],
               "type": "input_source_if"
@@ -126,9 +224,16 @@
             {
               "input_sources": [
                 {
-                  "input_mode_id": "com.apple.inputmethod.SCIM.ITABC",
-                  "input_source_id": "com.apple.inputmethod.SCIM.ITABC",
                   "language": "zh-Hans"
+                },
+                {
+                  "language": "zh-Hant"
+                },
+                {
+                  "language": "yue-Hant"
+                },
+                {
+                  "language": "ja"
                 }
               ],
               "type": "input_source_if"
@@ -154,9 +259,16 @@
             {
               "input_sources": [
                 {
-                  "input_mode_id": "com.apple.inputmethod.SCIM.ITABC",
-                  "input_source_id": "com.apple.inputmethod.SCIM.ITABC",
                   "language": "zh-Hans"
+                },
+                {
+                  "language": "zh-Hant"
+                },
+                {
+                  "language": "yue-Hant"
+                },
+                {
+                  "language": "ja"
                 }
               ],
               "type": "input_source_if"
