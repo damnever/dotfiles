@@ -2,76 +2,6 @@
   "title": "Improved Input Candidate Selection",
   "rules": [
     {
-      "description": "[Improved Input Candidate Selection] Tab to select the next candidate",
-      "manipulators": [
-        {
-          "conditions": [
-            {
-              "input_sources": [
-                {
-                  "language": "zh-Hans"
-                },
-                {
-                  "language": "zh-Hant"
-                },
-                {
-                  "language": "yue-Hant"
-                },
-                {
-                  "language": "ja"
-                }
-              ],
-              "type": "input_source_if"
-            }
-          ],
-          "from": {
-            "key_code": "tab"
-          },
-          "to": [
-            {
-              "key_code": "right_arrow"
-            }
-          ],
-          "type": "basic"
-        },
-        {
-          "conditions": [
-            {
-              "input_sources": [
-                {
-                  "language": "zh-Hans"
-                },
-                {
-                  "language": "zh-Hant"
-                },
-                {
-                  "language": "yue-Hant"
-                },
-                {
-                  "language": "ja"
-                }
-              ],
-              "type": "input_source_if"
-            }
-          ],
-          "from": {
-            "key_code": "tab",
-            "modifiers": {
-              "mandatory": [
-                "left_shift"
-              ]
-            }
-          },
-          "to": [
-            {
-              "key_code": "left_arrow"
-            }
-          ],
-          "type": "basic"
-        }
-      ]
-    },
-    {
       "description": "[Improved Input Candidate Selection] left_ctrl p/n for up/down paging",
       "manipulators": [
         {
@@ -79,16 +9,16 @@
             {
               "input_sources": [
                 {
-                  "language": "zh-Hans"
+                  "language": "^zh-Hans$"
                 },
                 {
-                  "language": "zh-Hant"
+                  "language": "^zh-Hant$"
                 },
                 {
-                  "language": "yue-Hant"
+                  "language": "^yue-Hant$"
                 },
                 {
-                  "language": "ja"
+                  "language": "^ja$"
                 }
               ],
               "type": "input_source_if"
@@ -104,7 +34,7 @@
           },
           "to": [
             {
-              "key_code": "close_bracket"
+              "key_code": "down_arrow"
             }
           ],
           "type": "basic"
@@ -114,16 +44,16 @@
             {
               "input_sources": [
                 {
-                  "language": "zh-Hans"
+                  "language": "^zh-Hans$"
                 },
                 {
-                  "language": "zh-Hant"
+                  "language": "^zh-Hant$"
                 },
                 {
-                  "language": "yue-Hant"
+                  "language": "^yue-Hant$"
                 },
                 {
-                  "language": "ja"
+                  "language": "^ja$"
                 }
               ],
               "type": "input_source_if"
@@ -139,7 +69,7 @@
           },
           "to": [
             {
-              "key_code": "open_bracket"
+              "key_code": "up_arrow"
             }
           ],
           "type": "basic"
@@ -154,16 +84,16 @@
             {
               "input_sources": [
                 {
-                  "language": "zh-Hans"
+                  "language": "^zh-Hans$"
                 },
                 {
-                  "language": "zh-Hant"
+                  "language": "^zh-Hant$"
                 },
                 {
-                  "language": "yue-Hant"
+                  "language": "^yue-Hant$"
                 },
                 {
-                  "language": "ja"
+                  "language": "^ja$"
                 }
               ],
               "type": "input_source_if"
@@ -189,16 +119,16 @@
             {
               "input_sources": [
                 {
-                  "language": "zh-Hans"
+                  "language": "^zh-Hans$"
                 },
                 {
-                  "language": "zh-Hant"
+                  "language": "^zh-Hant$"
                 },
                 {
-                  "language": "yue-Hant"
+                  "language": "^yue-Hant$"
                 },
                 {
-                  "language": "ja"
+                  "language": "^ja$"
                 }
               ],
               "type": "input_source_if"
@@ -224,16 +154,16 @@
             {
               "input_sources": [
                 {
-                  "language": "zh-Hans"
+                  "language": "^zh-Hans$"
                 },
                 {
-                  "language": "zh-Hant"
+                  "language": "^zh-Hant$"
                 },
                 {
-                  "language": "yue-Hant"
+                  "language": "^yue-Hant$"
                 },
                 {
-                  "language": "ja"
+                  "language": "^ja$"
                 }
               ],
               "type": "input_source_if"
@@ -259,16 +189,16 @@
             {
               "input_sources": [
                 {
-                  "language": "zh-Hans"
+                  "language": "^zh-Hans$"
                 },
                 {
-                  "language": "zh-Hant"
+                  "language": "^zh-Hant$"
                 },
                 {
-                  "language": "yue-Hant"
+                  "language": "^yue-Hant$"
                 },
                 {
-                  "language": "ja"
+                  "language": "^ja$"
                 }
               ],
               "type": "input_source_if"
@@ -285,6 +215,76 @@
           "to": [
             {
               "key_code": "right_arrow"
+            }
+          ],
+          "type": "basic"
+        }
+      ]
+    },
+    {
+      "description": "[Improved Input Candidate Selection] Tab to select the next candidate (not recommended)",
+      "manipulators": [
+        {
+          "conditions": [
+            {
+              "input_sources": [
+                {
+                  "language": "^zh-Hans$"
+                },
+                {
+                  "language": "^zh-Hant$"
+                },
+                {
+                  "language": "^yue-Hant$"
+                },
+                {
+                  "language": "^ja$"
+                }
+              ],
+              "type": "input_source_if"
+            }
+          ],
+          "from": {
+            "key_code": "tab"
+          },
+          "to": [
+            {
+              "key_code": "right_arrow"
+            }
+          ],
+          "type": "basic"
+        },
+        {
+          "conditions": [
+            {
+              "input_sources": [
+                {
+                  "language": "^zh-Hans$"
+                },
+                {
+                  "language": "^zh-Hant$"
+                },
+                {
+                  "language": "^yue-Hant$"
+                },
+                {
+                  "language": "^ja$"
+                }
+              ],
+              "type": "input_source_if"
+            }
+          ],
+          "from": {
+            "key_code": "tab",
+            "modifiers": {
+              "mandatory": [
+                "left_shift"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "left_arrow"
             }
           ],
           "type": "basic"
