@@ -134,6 +134,11 @@ local config = function()
             filetypes = { "rust" },
             flags = { debounce_text_changes = 150, },
         },
+        -- Swift
+        sourcekit = {
+            no_install_required = true,
+            filetypes = { "swift", "objective-c", "objective-cpp" },
+        },
         -- TOML
         taplo = {
             filetypes = { "toml" },
@@ -168,8 +173,10 @@ local config = function()
         })
         -- https://github.com/williamboman/mason-lspconfig.nvim/blob/main/doc/server-mapping.md
         local lsp_server_names = {}
-        for k in pairs(lsp_servers) do
-            table.insert(lsp_server_names, k)
+        for k, v in pairs(lsp_servers) do
+            if not v.no_install_required then
+                table.insert(lsp_server_names, k)
+            end
         end
         require("mason-lspconfig").setup({
             -- A list of servers to automatically install if they're not already installed. Example: { "rust_analyzer@nightly", "sumneko_lua" }
@@ -382,6 +389,7 @@ local config = function()
             handlers = lsp_handlers(),
         }
         for name, opts in pairs(lsp_servers) do
+            opts["no_install_required"] = nil -- remove it
             for k, v in pairs(must_opts) do
                 opts[k] = v
             end
