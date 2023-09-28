@@ -73,6 +73,7 @@ local config = function()
             config = {
                 go = '// %s',
                 python = '# %s',
+                swift = '// %s',
             }
         }
         -- rainbow = {
