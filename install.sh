@@ -50,6 +50,7 @@ install_command_line_tools() {
     brew install fortune
     brew install direnv
     brew install zoxide
+    brew install wireguard-tools
     # fonts
     # brew tap homebrew/cask-fonts
     # brew install font-ibm-plex --cask
