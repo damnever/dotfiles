@@ -68,14 +68,6 @@ local config = function()
                 }
             },
         },
-        context_commentstring = {
-            enable = true,
-            config = {
-                go = '// %s',
-                python = '# %s',
-                swift = '// %s',
-            }
-        }
         -- rainbow = {
         -- enable = true,
         -- disable = { "dockerfile" }, -- list of languages you want to disable the plugin for
@@ -84,6 +76,15 @@ local config = function()
         -- -- colors = {}, -- table of hex strings
         -- -- termcolors = {} -- table of colour name strings
         -- },
+    })
+
+    require('ts_context_commentstring').setup({
+        enable_autocmd = false,
+        languages = {
+            go = '// %s',
+            python = '# %s',
+            swift = '// %s',
+        },
     })
 end
 
