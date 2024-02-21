@@ -1,5 +1,7 @@
 [init]
 	defaultBranch = main
+[branch]
+    sort = -committerdate
 
 [user]
     name = Xiaochao Dong (@damnever)
@@ -11,6 +13,8 @@
     autocrlf = input
     whitespace = trailing-space,cr-at-eol  # indent-with-non-tab
 
+[diff]
+    algorithm = histogram
 [diff "bin"]
     # Use `hexdump` to diff binary files
     textconv = hexdump -v -C
@@ -33,6 +37,7 @@
 
 [merge]
     tool = nvimdiff
+    conflictstyle = zdiff3
 [rerere]
     enabled = true
 [mergetool]

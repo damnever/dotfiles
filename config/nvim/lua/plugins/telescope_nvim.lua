@@ -1,7 +1,7 @@
 -- For 'wbthomason/packer.nvim'
 local package = {
     'nvim-telescope/telescope.nvim',
-    tag = '0.1.0',
+    tag = '0.1.5',
     requires = {
         { 'nvim-lua/plenary.nvim' },
         { 'nvim-lua/popup.nvim' },
@@ -43,7 +43,7 @@ local config = function()
             vimgrep_arguments = vimgrep_arguments,
             preview = {
                 filesize_limit = 10, -- MB
-                timeout = 300, -- ms
+                timeout = 300,       -- ms
                 treesitter = true,
                 msg_bg_fillchar = "╱",
             },
@@ -111,7 +111,7 @@ local config = function()
                     paste_behind = '<s-k>',
                     replay = '<s-q>', -- replay a macro
                     delete = '<c-d>', -- delete an entry
-                    edit = '<c-e>', -- edit an entry
+                    edit = '<c-e>',   -- edit an entry
                     custom = {},
                 },
                 n = {

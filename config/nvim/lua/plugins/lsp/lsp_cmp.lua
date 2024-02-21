@@ -3,12 +3,12 @@ local package = {
     'hrsh7th/nvim-cmp',
     -- event = "InsertEnter",
     requires = {
-        { 'hrsh7th/vim-vsnip',                   requires = { 'rafamadriz/friendly-snippets' } },
-        { 'hrsh7th/cmp-vsnip',                   after = 'nvim-cmp' },
+        { 'hrsh7th/vim-vsnip', requires = { 'rafamadriz/friendly-snippets' } },
+        { 'hrsh7th/cmp-vsnip', after = 'nvim-cmp' },
         { 'hrsh7th/cmp-nvim-lsp' },
-        { 'hrsh7th/cmp-buffer',                  after = 'nvim-cmp' },
-        { 'hrsh7th/cmp-path',                    after = 'nvim-cmp' },
-        { 'hrsh7th/cmp-cmdline',                 after = 'nvim-cmp' },
+        { 'hrsh7th/cmp-buffer', after = 'nvim-cmp' },
+        { 'hrsh7th/cmp-path', after = 'nvim-cmp' },
+        { 'hrsh7th/cmp-cmdline', after = 'nvim-cmp' },
         { 'uga-rosa/cmp-dictionary' },
         { 'hrsh7th/cmp-nvim-lsp-signature-help' },
         { 'hrsh7th/cmp-nvim-lsp-document-symbol' },
@@ -87,14 +87,14 @@ local config = function()
                 vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind) -- This concatonates the icons with the name of the item kind
                 -- Source
                 vim_item.menu = ({
-                        buffer = "[Buffer]",
-                        nvim_lsp = "[LSP]",
-                        vsnip = "[VSnip]",
-                        luasnip = "[LuaSnip]",
-                        nvim_lua = "[Lua]",
-                        latex_symbols = "[LaTeX]",
-                        dictionary = "[Dict]",
-                    })[entry.source.name]
+                    buffer = "[Buffer]",
+                    nvim_lsp = "[LSP]",
+                    vsnip = "[VSnip]",
+                    luasnip = "[LuaSnip]",
+                    nvim_lua = "[Lua]",
+                    latex_symbols = "[LaTeX]",
+                    dictionary = "[Dict]",
+                })[entry.source.name]
                 return vim_item
             end
         },
@@ -147,7 +147,7 @@ local config = function()
         mapping = cmp.mapping.preset.insert({
             ['<C-n>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }), -- Select/Insert
             ['<C-p>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
-            ['<C-b>'] = cmp.mapping.scroll_docs( -4),
+            ['<C-b>'] = cmp.mapping.scroll_docs(-4),
             ['<C-f>'] = cmp.mapping.scroll_docs(4),
             ['<C-Space>'] = cmp.mapping.complete(),
             ['<C-e>'] = cmp.mapping.abort(),
@@ -167,7 +167,7 @@ local config = function()
             ["<S-Tab>"] = cmp.mapping(function()
                 if cmp.visible() then
                     cmp.select_prev_item()
-                elseif vim.fn["vsnip#jumpable"]( -1) == 1 then
+                elseif vim.fn["vsnip#jumpable"](-1) == 1 then
                     feedkey("<Plug>(vsnip-jump-prev)", "")
                 end
             end, { "i", "s" }),
@@ -230,20 +230,17 @@ local config = function()
 
     local dict = require("cmp_dictionary")
     dict.setup({
-        exact = 2,
-        max_items = 5000,
+        exact_length = 2,
+        max_number_items = 3333,
         first_case_insensitive = true,
-        document = false,
-        document_command = "wn %s -over",
-        capacity = 5,
-        debug = false,
-    })
-    dict.switcher({
-        spelllang = {
-            en = vim.fn.expand("~/.config/_asserts/dict/words_alpha.txt"), -- "/usr/share/dict/words"
+        document = {
+            enable = false,
+            command = { "wn", "${label}", "-over" },
+        },
+        paths = {
+            vim.fn.expand("~/.config/_asserts/dict/words_alpha.txt"), -- "/usr/share/dict/words"
         },
     })
-    dict.update()
 
     vim.cmd([[
         " CmpBorder
