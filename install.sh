@@ -23,7 +23,7 @@ HOMEBREW_PREFIX=/opt/homebrew
 change_mac_settings() {
     defaults write -g KeyRepeat -int 2
     defaults write -g InitialKeyRepeat -int 9
-    # defaults write -g ApplePressAndHoldEnabled -bool false
+    defaults write -g ApplePressAndHoldEnabled -bool false
 }
 
 install_command_line_tools() {
