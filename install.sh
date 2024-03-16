@@ -106,6 +106,7 @@ sync_configuration_files() {
 setup_vim() {
     echo "-> setup vim .."
     brew install neovim
+    brew install xcode-build-server
     pip install pynvim yapf
     go install github.com/client9/misspell/cmd/misspell@latest
 
