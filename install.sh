@@ -109,7 +109,7 @@ setup_vim() {
     brew install neovim
     brew install xcode-build-server
     pip install pynvim yapf
-    go install github.com/client9/misspell/cmd/misspell@latest
+    # go install github.com/client9/misspell/cmd/misspell@latest
 
     # Let's do it twice: https://github.com/wbthomason/packer.nvim
     nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'

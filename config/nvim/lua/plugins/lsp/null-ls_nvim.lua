@@ -1,5 +1,5 @@
-local package = { -- For 'wbthomason/packer.nvim'
-    'jose-elias-alvarez/null-ls.nvim',
+local package = {             -- For 'wbthomason/packer.nvim'
+    'nvimtools/none-ls.nvim', -- a community-maintained version of jose-elias-alvarez/null-ls.nvim
     requires = { { 'nvim-lua/plenary.nvim' }, { 'folke/trouble.nvim' }, }
 }
 
@@ -46,7 +46,7 @@ local config = function()
             null_ls.builtins.formatting.yapf,
             -- Swift
             null_ls.builtins.formatting.swiftformat.with({
-                extra_args = { "--disable", "redundantSelf", "--maxwidth", "120" },
+                extra_args = { "--disable", "redundantSelf", "--maxwidth", "120", "--stripunusedargs", "unnamed-only" },
             }),
             -- sql
             -- null_ls.builtins.formatting.sqlformat,
@@ -54,7 +54,6 @@ local config = function()
             -- null_ls.builtins.diagnostics.alex,
             -- null_ls.builtins.diagnostics.cspell,
             -- null_ls.builtins.completion.spell, -- NOTE: DO NOT use it!!!
-            null_ls.builtins.diagnostics.misspell,
             -- null_ls.builtins.formatting.codespell,
         },
         diagnostics_format = '[#{c}] #{m} (#{s})',
