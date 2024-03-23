@@ -14,7 +14,14 @@
     whitespace = trailing-space,cr-at-eol  # indent-with-non-tab
 
 [diff]
-    algorithm = histogram
+    external = difft
+    tool = difftastic
+[difftool]
+    prompt = false
+[difftool "difftastic"]
+    cmd = difft "$LOCAL" "$REMOTE"
+[pager]
+    difftool = true
 [diff "bin"]
     # Use `hexdump` to diff binary files
     textconv = hexdump -v -C

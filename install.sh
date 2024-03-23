@@ -43,6 +43,7 @@ install_command_line_tools() {
     brew install watch
     brew install go  # Golang
     brew install swiftformat
+    brew install difftastic
     brew install git git-lfs
     brew install ripgrep fd bat jq
     brew install tree
