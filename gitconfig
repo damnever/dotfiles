@@ -3,6 +3,10 @@
 [branch]
     sort = -committerdate
 
+[alias]
+    diffne = "diff --no-ext-diff"
+    showe = "show --ext-diff"
+
 [user]
     name = Xiaochao Dong (@damnever)
     email = the.xcdong@gmail.com

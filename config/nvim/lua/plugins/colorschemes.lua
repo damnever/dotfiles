@@ -20,11 +20,11 @@ local config = function()
         options = {
             compile_path = vim.fn.stdpath("cache") .. "/nightfox",
             compile_file_suffix = "_compiled", -- Compiled file suffix
-            transparent = false, -- Disable setting background
-            terminal_colors = true, -- Set terminal colors (vim.g.terminal_color_*) used in `:terminal`
-            dim_inactive = false, -- Non focused panes set to alternative background
-            styles = { -- Style to be applied to different syntax groups
-                comments = "NONE", -- Value is any valid attr-list value `:help attr-list`
+            transparent = false,               -- Disable setting background
+            terminal_colors = true,            -- Set terminal colors (vim.g.terminal_color_*) used in `:terminal`
+            dim_inactive = false,              -- Non focused panes set to alternative background
+            styles = {                         -- Style to be applied to different syntax groups
+                comments = "NONE",             -- Value is any valid attr-list value `:help attr-list`
                 conditionals = "NONE",
                 constants = "NONE",
                 functions = "NONE",
@@ -43,7 +43,12 @@ local config = function()
             modules = { -- List of various plugins and additional options
             },
         },
-        palettes = {},
+        palettes = {
+            carbonfox = {
+                sel0 = "#525253", -- Popup bg, visual selection bg
+                sel1 = "#003366", -- Popup sel bg, search bg
+            }
+        },
         specs = {},
         groups = {},
     })
@@ -52,12 +57,14 @@ local config = function()
     require('neosolarized').setup({
         comment_italics = true,
     })
-    ]] --
+    ]]
+    --
 
     vim.o.background = 'dark'
     vim.o.t_Co = 256
     vim.o.t_ut = nil
-    vim.cmd([[colorscheme nightfox]])
+    -- nightfox
+    vim.cmd([[colorscheme carbonfox]])
 end
 
 return {

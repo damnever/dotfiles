@@ -130,16 +130,19 @@ local config = function()
     })
 
 
+    local builtin = require('telescope.builtin')
     require('lib').vimbatch.keymaps({
+        { mode = '', lhs = '<leader><space>', rhs = ':Telescope<CR>' },
         -- Lists files in your current working directory, respects .gitignore
-        { mode = '', lhs = '<leader>p', rhs = function() require('telescope.builtin').find_files() end },
-        { mode = '', lhs = '<leader><space>', rhs = function() require('telescope.builtin').find_files() end },
+        { mode = '', lhs = '<leader>p', rhs = builtin.find_files },
         -- Searches for the string under your cursor in your current working directory.
-        { mode = 'v', lhs = '<leader>g', rhs = function() require('telescope.builtin').grep_string() end },
+        { mode = 'v', lhs = '<leader>g', rhs = builtin.grep_string },
         -- Search for a string in your current working directory and get results live as you type (respecting .gitignore)
-        { mode = '', lhs = '<leader>G', rhs = function() require('telescope.builtin').live_grep() end },
+        { mode = '', lhs = '<leader>G', rhs = builtin.live_grep },
+        -- Lists commands that were executed recently, and reruns them on <cr>.
+        { mode = '', lhs = '<leader>h', rhs = builtin.command_history },
         -- Lists normal mode keymappings.
-        { mode = '', lhs = '<leader>k', rhs = function() require('telescope.builtin').keymaps() end },
+        { mode = '', lhs = '<leader>k', rhs = builtin.keymaps },
         -- Launch the neoclip(clipboard manager).
         { mode = '', lhs = '<leader>cp', rhs = ':Telescope neoclip<CR>' },
     })

@@ -242,28 +242,27 @@ local config = function()
         },
     })
 
-    vim.cmd([[
-        " CmpBorder
-        highlight! CmpBorder guibg=NONE guifg=#5576a4
+    vim.api.nvim_set_hl(0, 'PmenuSel', { bg = 'NONE', fg = '#003366' })
 
-        " https://github.com/hrsh7th/nvim-cmp/wiki/Menu-Appearance#how-to-add-visual-studio-code-dark-theme-colors-to-the-menu
-        " gray
-        highlight! CmpItemAbbrDeprecated guibg=NONE gui=strikethrough guifg=#808080
-        " blue
-        highlight! CmpItemAbbrMatch guibg=NONE guifg=#569CD6
-        highlight! CmpItemAbbrMatchFuzzy guibg=NONE guifg=#569CD6
-        " light blue
-        highlight! CmpItemKindVariable guibg=NONE guifg=#9CDCFE
-        highlight! CmpItemKindInterface guibg=NONE guifg=#9CDCFE
-        highlight! CmpItemKindText guibg=NONE guifg=#9CDCFE
-        " pink
-        highlight! CmpItemKindFunction guibg=NONE guifg=#C586C0
-        highlight! CmpItemKindMethod guibg=NONE guifg=#C586C0
-        " front
-        highlight! CmpItemKindKeyword guibg=NONE guifg=#D4D4D4
-        highlight! CmpItemKindProperty guibg=NONE guifg=#D4D4D4
-        highlight! CmpItemKindUnit guibg=NONE guifg=#D4D4D4
-    ]])
+    vim.api.nvim_set_hl(0, 'CmpItemAbbrDeprecated', { bg = 'NONE', strikethrough = true, fg = '#808080' })
+    -- vim.api.nvim_set_hl(0, 'Pmenu', { bg = '#5576a4', fg = 'NONE' })
+    -- https://github.com/hrsh7th/nvim-cmp/wiki/Menu-Appearance#how-to-add-visual-studio-code-dark-theme-colors-to-the-menu
+    -- gray
+    vim.api.nvim_set_hl(0, 'CmpItemAbbrDeprecated', { bg = 'NONE', strikethrough = true, fg = '#808080' })
+    -- blue
+    vim.api.nvim_set_hl(0, 'CmpItemAbbrMatch', { bg = 'NONE', fg = '#569CD6' })
+    vim.api.nvim_set_hl(0, 'CmpItemAbbrMatchFuzzy', { link = 'CmpIntemAbbrMatch' })
+    -- light blue
+    vim.api.nvim_set_hl(0, 'CmpItemKindVariable', { bg = 'NONE', fg = '#9CDCFE' })
+    vim.api.nvim_set_hl(0, 'CmpItemKindInterface', { link = 'CmpItemKindVariable' })
+    vim.api.nvim_set_hl(0, 'CmpItemKindText', { link = 'CmpItemKindVariable' })
+    -- pink
+    vim.api.nvim_set_hl(0, 'CmpItemKindFunction', { bg = 'NONE', fg = '#C586C0' })
+    vim.api.nvim_set_hl(0, 'CmpItemKindMethod', { link = 'CmpItemKindFunction' })
+    -- front
+    vim.api.nvim_set_hl(0, 'CmpItemKindKeyword', { bg = 'NONE', fg = '#D4D4D4' })
+    vim.api.nvim_set_hl(0, 'CmpItemKindProperty', { link = 'CmpItemKindKeyword' })
+    vim.api.nvim_set_hl(0, 'CmpItemKindUnit', { link = 'CmpItemKindKeyword' })
 end
 
 return {

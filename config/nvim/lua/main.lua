@@ -84,88 +84,88 @@ end
 -- vim.api.nvim_win_set_option(0, k, v) -- vim.wo -- window
 -- vim.api.nvim_buf_set_option(0, k, v) -- vim.bo -- bufffer
 local function set_options()
-    vim.o.spelllang      = 'en'
+    vim.o.spelllang = 'en'
 
-    vim.o.smartindent    = true
-    vim.o.autoindent     = true
-    vim.o.tabstop        = 4
-    vim.o.shiftwidth     = 4
-    vim.o.softtabstop    = 4
-    vim.o.smarttab       = true
-    vim.o.expandtab      = true
-    vim.o.shiftround     = true
+    vim.o.smartindent = true
+    vim.o.autoindent = true
+    vim.o.tabstop = 4
+    vim.o.shiftwidth = 4
+    vim.o.softtabstop = 4
+    vim.o.smarttab = true
+    vim.o.expandtab = true
+    vim.o.shiftround = true
 
-    vim.o.updatetime     = 200 -- Smaller updatetime for CursorHold & CursorHoldI
-    vim.o.shortmess      = vim.o.shortmess .. 'c'
-    vim.o.signcolumn     = 'yes'
-    vim.o.completeopt    = 'menuone,noselect'
-    vim.o.list           = true
-    vim.o.listchars      = 'tab:  ,trail:∙,extends:❯,precedes:❮,nbsp:•'
-    vim.o.fillchars      = vim.o.fillchars .. 'vert:│'
+    vim.o.updatetime = 200 -- Smaller updatetime for CursorHold & CursorHoldI
+    vim.o.shortmess = vim.o.shortmess .. 'c'
+    vim.o.signcolumn = 'yes'
+    vim.o.completeopt = 'menuone,noselect'
+    vim.o.list = true
+    vim.o.listchars = 'tab:  ,trail:∙,extends:❯,precedes:❮,nbsp:•'
+    vim.o.fillchars = vim.o.fillchars .. 'vert:│'
 
-    vim.o.undofile       = true
-    vim.o.undodir        = lib.ensure_data_cache_dir('undo')
-    vim.o.history        = 2000
-    vim.o.autoread       = true
-    vim.o.backup         = false
-    vim.o.swapfile       = false
+    vim.o.undofile = true
+    vim.o.undodir = lib.ensure_data_cache_dir('undo')
+    vim.o.history = 2000
+    vim.o.autoread = true
+    vim.o.backup = false
+    vim.o.swapfile = false
     vim.o.wildignorecase = false
-    vim.o.wildignore     = '*.o,*.out,*.swp,*.bak,*.pyc,*.pyo,__pycache__,*.class,*.beam,.git,.hg,.svn,*.DS_Store'
-    vim.o.wildoptions    = "pum"
+    vim.o.wildignore = '*.o,*.out,*.swp,*.bak,*.pyc,*.pyo,__pycache__,*.class,*.beam,.git,.hg,.svn,*.DS_Store'
+    vim.o.wildoptions = "pum"
 
-    vim.o.mouse          = nil
-    vim.o.visualbell     = true
-    vim.o.errorbells     = true
+    vim.o.mouse = nil
+    vim.o.visualbell = true
+    vim.o.errorbells = true
     -- opt('selection', 'inclusive')
     -- opt('selectmode', 'mouse,key')
-    vim.o.title          = true
+    vim.o.title = true
     -- vim.o.viminfo:prepend('%') -- save the buffer
-    vim.o.magic          = true
-    vim.o.backspace      = 'eol,start,indent'
-    vim.o.whichwrap      = 'b,s,<,>,h,l'
+    vim.o.magic = true
+    vim.o.backspace = 'eol,start,indent'
+    vim.o.whichwrap = 'b,s,<,>,h,l'
 
-    vim.o.hidden         = true
-    vim.o.ruler          = true
-    vim.o.wildmenu       = true
-    vim.o.showcmd        = true
-    vim.o.cmdheight      = 3
-    vim.o.showmode       = false
-    vim.o.scrolloff      = 7
+    vim.o.hidden = true
+    vim.o.ruler = true
+    vim.o.wildmenu = true
+    vim.o.showcmd = true
+    vim.o.cmdheight = 1
+    vim.o.showmode = false
+    vim.o.scrolloff = 7
     -- opt('statusline', '%<%f\\ %h%m%r%=%k[%{(&fenc==\\"\\")?&enc:&fenc}%{(&bomb?\\",BOM\\":\\"\\")}]\ %-14.(%l,%c%V%)\\ %P')
-    vim.o.laststatus     = 2
-    vim.o.number         = true
+    vim.o.laststatus = 2
+    vim.o.number = true
     -- opt('nowrap', true)
-    vim.o.showmatch      = true
-    vim.o.matchtime      = 2
+    vim.o.showmatch = true
+    vim.o.matchtime = 2
 
-    vim.o.hlsearch       = true
-    vim.o.incsearch      = true
-    vim.o.ignorecase     = true
-    vim.o.smartcase      = true
-    vim.o.foldenable     = true
+    vim.o.hlsearch = true
+    vim.o.incsearch = true
+    vim.o.ignorecase = true
+    vim.o.smartcase = true
+    vim.o.foldenable = true
     -- opt('foldmethod', 'indent')
     -- opt('foldlevel', 50)
 
-    vim.o.wildmode       = 'list:longest'
-    vim.o.encoding       = 'utf-8'
-    vim.o.termencoding   = 'utf-8'
+    vim.o.wildmode = 'list:longest'
+    vim.o.encoding = 'utf-8'
+    vim.o.termencoding = 'utf-8'
 
-    vim.o.fileformats    = 'unix,mac,dos'
-    vim.o.formatoptions  = vim.o.formatoptions .. 'mBw'
+    vim.o.fileformats = 'unix,mac,dos'
+    vim.o.formatoptions = vim.o.formatoptions .. 'mBw'
     -- vim.o.synmaxcol = 2500
-    vim.o.wrap           = false
+    vim.o.wrap = false
 
-    vim.o.exrc           = true
-    vim.o.secure         = true
+    vim.o.exrc = true
+    vim.o.secure = true
 
-    vim.o.winblend       = 0
-    vim.o.pumblend       = 5
-    vim.o.termguicolors  = true
+    vim.o.winblend = 0
+    vim.o.pumblend = 5
+    vim.o.termguicolors = true
 
-    vim.g.clipboard      = {
+    vim.g.clipboard = {
         name = "macOS-clipboard",
-        copy = { ["+"] = "pbcopy",["*"] = "pbcopy" },
-        paste = { ["+"] = "pbpaste",["*"] = "pbpaste" },
+        copy = { ["+"] = "pbcopy", ["*"] = "pbcopy" },
+        paste = { ["+"] = "pbpaste", ["*"] = "pbpaste" },
         cache_enabled = 0,
     }
 end
