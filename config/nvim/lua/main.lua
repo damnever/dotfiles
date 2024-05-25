@@ -254,8 +254,8 @@ local function set_misc_autocmds()
         autocmd FileType ruby set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
         autocmd FileType html set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
         autocmd FileType css set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
-        " autocmd FileType javascript set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
-        " autocmd FileType typescript set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
+        autocmd FileType javascript set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
+        autocmd FileType typescript set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
         autocmd FileType yaml set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
         autocmd FileType json set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
         autocmd FileType toml set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
