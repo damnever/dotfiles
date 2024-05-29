@@ -39,7 +39,7 @@ local config = function()
         vim.keymap.set('n', 'd', api.fs.remove, opts('Delete'))
         vim.keymap.set('n', 'D', api.fs.trash, opts('Trash'))
         vim.keymap.set('n', 'E', api.tree.expand_all, opts('Expand All'))
-        vim.keymap.set('n', 'e', api.fs.rename_basename, opts('Rename: Basename'))
+        -- vim.keymap.set('n', 'e', api.fs.rename_basename, opts('Rename: Basename'))
         vim.keymap.set('n', ']e', api.node.navigate.diagnostics.next, opts('Next Diagnostic'))
         vim.keymap.set('n', '[e', api.node.navigate.diagnostics.prev, opts('Prev Diagnostic'))
         vim.keymap.set('n', 'F', api.live_filter.clear, opts('Clean Filter'))
@@ -109,7 +109,7 @@ local config = function()
             }
         },
         auto_reload_on_write = false,
-        hijack_cursor = true,
+        hijack_cursor = false,
         sort_by = "case_sensitive",
         filesystem_watchers = {
             enable = true,
