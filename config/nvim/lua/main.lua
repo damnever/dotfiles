@@ -148,7 +148,6 @@ local function set_options()
 
     vim.o.wildmode = 'list:longest'
     vim.o.encoding = 'utf-8'
-    vim.o.termencoding = 'utf-8'
 
     vim.o.fileformats = 'unix,mac,dos'
     vim.o.formatoptions = vim.o.formatoptions .. 'mBw'
