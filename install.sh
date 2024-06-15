@@ -24,6 +24,10 @@ change_mac_settings() {
     defaults write -g KeyRepeat -int 2
     defaults write -g InitialKeyRepeat -int 9
     defaults write -g ApplePressAndHoldEnabled -bool false
+    # defaults -currentHost delete -globalDomain NSStatusItemSpacing
+    # defaults -currentHost write -globalDomain NSStatusItemSpacing -int 8
+    # defaults -currentHost delete -globalDomain NSStatusItemSelectionPadding
+    # defaults -currentHost write -globalDomain NSStatusItemSelectionPadding -int 8
 }
 
 install_command_line_tools() {
@@ -107,7 +111,13 @@ sync_configuration_files() {
 setup_vim() {
     echo "-> setup vim .."
     brew install neovim
+
+    # https://github.com/wojciech-kulik/xcodebuild.nvim
     brew install xcode-build-server
+    brew install xcbeautify
+    brew install ruby
+    gem install xcodeproj
+    # Python
     pip install pynvim yapf
     # go install github.com/client9/misspell/cmd/misspell@latest
 

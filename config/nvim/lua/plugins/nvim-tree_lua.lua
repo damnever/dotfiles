@@ -20,7 +20,7 @@ local config = function()
         vim.keymap.set('n', '<C-k>', api.node.show_info_popup, opts('Info'))
         vim.keymap.set('n', '<C-r>', api.fs.rename_sub, opts('Rename: Omit Filename'))
         vim.keymap.set('n', '<C-t>', api.node.open.tab, opts('Open: New Tab'))
-        vim.keymap.set('n', 'v', api.node.open.vertical, opts('Open: Vertical Split')) -- Default to '<C-v>'
+        vim.keymap.set('n', 'v', api.node.open.vertical, opts('Open: Vertical Split'))     -- Default to '<C-v>'
         vim.keymap.set('n', 's', api.node.open.horizontal, opts('Open: Horizontal Split')) -- Default to '<C-x>'
         vim.keymap.set('n', '<BS>', api.node.navigate.parent_close, opts('Close Directory'))
         vim.keymap.set('n', '<CR>', api.node.open.edit, opts('Open'))
@@ -56,8 +56,8 @@ local config = function()
         vim.keymap.set('n', 'p', api.fs.paste, opts('Paste'))
         vim.keymap.set('n', 'P', api.node.navigate.parent, opts('Parent Directory'))
         vim.keymap.set('n', 'q', api.tree.close, opts('Close'))
-        vim.keymap.set('n', 'r', api.tree.reload, opts('Refresh')) -- Default to 'R'
-        vim.keymap.set('n', 'R', api.fs.rename, opts('Rename')) -- Default to 'r'
+        vim.keymap.set('n', 'r', api.tree.reload, opts('Refresh'))            -- Default to 'R'
+        vim.keymap.set('n', 'R', api.fs.rename, opts('Rename'))               -- Default to 'r'
         vim.keymap.set('n', '<C-s>', api.node.run.system, opts('Run System')) -- Default ot 's'
         vim.keymap.set('n', 'S', api.tree.search_node, opts('Search'))
         vim.keymap.set('n', 'U', api.tree.toggle_custom_filter, opts('Toggle Hidden'))
@@ -65,8 +65,8 @@ local config = function()
         vim.keymap.set('n', 'x', api.fs.cut, opts('Cut'))
         vim.keymap.set('n', 'y', api.fs.copy.filename, opts('Copy Name'))
         vim.keymap.set('n', 'Y', api.fs.copy.relative_path, opts('Copy Relative Path'))
-        vim.keymap.set('n', '<2-LeftMouse>', api.node.open.edit, opts('Open'))
-        vim.keymap.set('n', '<2-RightMouse>', api.tree.change_root_to_node, opts('CD'))
+        -- vim.keymap.set('n', '<2-LeftMouse>', api.node.open.edit, opts('Open'))
+        -- vim.keymap.set('n', '<2-RightMouse>', api.tree.change_root_to_node, opts('CD'))
         -- END_DEFAULT_ON_ATTACH
 
 
@@ -114,6 +114,9 @@ local config = function()
         filesystem_watchers = {
             enable = true,
             debounce_delay = 1234, -- ms
+            ignore_dirs = {
+                "node_modules"
+            },
         },
         renderer = {
             group_empty = true,
@@ -155,17 +158,17 @@ local config = function()
         local tab_bufs = vim.tbl_map(vim.api.nvim_win_get_buf, tab_wins)
         if buf_info.name:match(".*NvimTree_%d*$") then -- close buffer was nvim tree
             -- Close all nvim tree on :q
-            if not vim.tbl_isempty(tab_bufs) then -- and was not the last window (not closed automatically by code below)
+            if not vim.tbl_isempty(tab_bufs) then      -- and was not the last window (not closed automatically by code below)
                 api.tree.close()
             end
-        else -- else closed buffer was normal buffer
-            if #tab_bufs == 1 then -- if there is only 1 buffer left in the tab
+        else                                                          -- else closed buffer was normal buffer
+            if #tab_bufs == 1 then                                    -- if there is only 1 buffer left in the tab
                 local last_buf_info = vim.fn.getbufinfo(tab_bufs[1])[1]
-                if last_buf_info.name:match(".*NvimTree_%d*$") then -- and that buffer is nvim tree
+                if last_buf_info.name:match(".*NvimTree_%d*$") then   -- and that buffer is nvim tree
                     vim.schedule(function()
-                        if #vim.api.nvim_list_wins() == 1 then -- if its the last buffer in vim
-                            vim.cmd "quit" -- then close all of vim
-                        else -- else there are more tabs open
+                        if #vim.api.nvim_list_wins() == 1 then        -- if its the last buffer in vim
+                            vim.cmd "quit"                            -- then close all of vim
+                        else                                          -- else there are more tabs open
                             vim.api.nvim_win_close(tab_wins[1], true) -- then close only the tab
                         end
                     end)

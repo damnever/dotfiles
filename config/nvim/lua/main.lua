@@ -113,11 +113,11 @@ local function set_options()
     vim.o.wildignore = '*.o,*.out,*.swp,*.bak,*.pyc,*.pyo,__pycache__,*.class,*.beam,.git,.hg,.svn,*.DS_Store'
     vim.o.wildoptions = "pum"
 
-    vim.o.mouse = nil
+    vim.o.mouse = nil -- 'a'
     vim.o.visualbell = true
     vim.o.errorbells = true
-    -- opt('selection', 'inclusive')
-    -- opt('selectmode', 'mouse,key')
+    vim.o.selection = 'inclusive'
+    vim.o.selectmode = 'mouse,key'
     vim.o.title = true
     -- vim.o.viminfo:prepend('%') -- save the buffer
     vim.o.magic = true
@@ -160,6 +160,7 @@ local function set_options()
     vim.o.winblend = 0
     vim.o.pumblend = 5
     vim.o.termguicolors = true
+    vim.o.guicursor = 'n-v-i-c:block-Cursor'
 
     vim.g.clipboard = {
         name = "macOS-clipboard",

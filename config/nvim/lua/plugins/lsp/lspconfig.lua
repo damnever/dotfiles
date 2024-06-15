@@ -299,7 +299,7 @@ local config = function()
         -- Use an on_attach function to only map the following keys
         -- after the language server attaches to the current buffer
         -- Enable completion triggered by <c-x><c-o>
-        vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+        vim.api.nvim_set_option_value('omnifunc', 'v:lua.vim.lsp.omnifunc', { buf = bufnr })
 
         -- Mappings.
         -- See `:help vim.lsp.*` for documentation on any of the below functions
@@ -318,7 +318,9 @@ local config = function()
         end, bufopts)
         vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
         vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
-        vim.keymap.set('n', '<space>f', vim.lsp.buf.formatting, bufopts)
+        vim.keymap.set('n', '<space>f', function()
+            vim.lsp.buf.format({ async = true })
+        end, bufopts)
     end
 
     local function goto_definition(split_cmd)
@@ -342,7 +344,7 @@ local config = function()
             end
 
             local offset_encoding = vim.lsp.get_client_by_id(ctx.client_id).offset_encoding
-            if vim.tbl_islist(result) then
+            if vim.islist(result) then
                 maybe_split_buffer(result[1].uri)
                 util.jump_to_location(result[1], offset_encoding)
 

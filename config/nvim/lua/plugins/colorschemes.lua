@@ -61,8 +61,6 @@ local config = function()
     --
 
     vim.o.background = 'dark'
-    vim.o.t_Co = 256
-    vim.o.t_ut = nil
     -- nightfox
     vim.cmd([[colorscheme carbonfox]])
 end
