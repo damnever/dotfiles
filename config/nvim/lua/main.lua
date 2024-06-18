@@ -116,8 +116,8 @@ local function set_options()
     vim.o.mouse = nil -- 'a'
     vim.o.visualbell = true
     vim.o.errorbells = true
-    vim.o.selection = 'inclusive'
-    vim.o.selectmode = 'mouse,key'
+    -- vim.o.selection = 'inclusive'
+    -- vim.o.selectmode = 'mouse,key'
     vim.o.title = true
     -- vim.o.viminfo:prepend('%') -- save the buffer
     vim.o.magic = true
