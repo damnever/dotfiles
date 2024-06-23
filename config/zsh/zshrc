@@ -91,6 +91,13 @@ if [[ "$OSTYPE" == "darwin"* ]]; then  # Mac
     export JAVA_HOME=$(/usr/libexec/java_home)
 fi
 
+# Ruby (homebrew)
+if [[ -x "/opt/homebrew/opt/ruby/bin/ruby" ]]; then
+    # TODO: consider cache this, ruby is slow..
+    RUBY_GEM_BIN_DIR=$(/opt/homebrew/opt/ruby/bin/ruby -e 'puts File.join(Gem.dir, "bin")')
+    export PATH="/opt/homebrew/opt/ruby/bin:$PATH:$RUBY_GEM_BIN_DIR"
+fi
+
 # Swift
 export TOOLCHAINS=swift
 

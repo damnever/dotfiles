@@ -115,7 +115,8 @@ setup_vim() {
     # https://github.com/wojciech-kulik/xcodebuild.nvim
     brew install xcode-build-server
     brew install xcbeautify
-    gem install xcodeproj --user-install
+    brew install ruby
+    gem install xcodeproj
     # Python
     pip install pynvim yapf
     # go install github.com/client9/misspell/cmd/misspell@latest
