@@ -5,6 +5,7 @@ local package = { -- For 'wbthomason/packer.nvim'
 
 local config = function()
     require('lib').vimbatch.global_vars({
+        copilot_enabled = false,
         copilot_no_tab_map = true,
     })
     require('lib').vimbatch.keymaps({
