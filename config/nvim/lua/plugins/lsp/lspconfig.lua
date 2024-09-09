@@ -82,7 +82,7 @@ local config = function()
             flags = { debounce_text_changes = 150, },
         },
         -- Javascript
-        tsserver = {
+        ts_ls = {
             filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact",
                 "typescript.tsx" },
             flags = { debounce_text_changes = 150, },
@@ -136,6 +136,8 @@ local config = function()
         },
         -- Swift
         sourcekit = {
+            -- clone sourcekit-lsp; switch release-of-xcode-swift-version; xcrun swift build --configuration=release
+            -- cmd = { "/usr/local/bin/sourcekit-lsp" },
             no_install_required = true,
             filetypes = { "swift", "objective-c", "objective-cpp" },
         },

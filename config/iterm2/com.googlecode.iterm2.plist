@@ -10,11 +10,6 @@
 	<true/>
 	<key>AutoHideTmuxClientSession</key>
 	<true/>
-	<key>Coprocess MRU</key>
-	<array>
-		<string>/usr/local/bin/iterm2-recv-zmodem.sh</string>
-		<string>/usr/local/bin/iterm2-send-zmodem.sh</string>
-	</array>
 	<key>Custom Color Presets</key>
 	<dict>
 		<key>3024 Day</key>
@@ -85350,6 +85345,8 @@
 			<string>No</string>
 			<key>Custom Directory</key>
 			<string>No</string>
+			<key>Custom Locale</key>
+			<string>en_US.UTF-8</string>
 			<key>Default Bookmark</key>
 			<string>No</string>
 			<key>Description</key>
@@ -85736,6 +85733,8 @@
 			</dict>
 			<key>Send Code When Idle</key>
 			<false/>
+			<key>Set Local Environment Vars</key>
+			<integer>2</integer>
 			<key>Shortcut</key>
 			<string></string>
 			<key>Silence Bell</key>

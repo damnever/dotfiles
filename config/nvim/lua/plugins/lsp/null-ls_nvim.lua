@@ -46,7 +46,7 @@ local config = function()
             null_ls.builtins.formatting.yapf,
             -- Swift
             null_ls.builtins.formatting.swiftformat.with({
-                extra_args = { "--disable", "redundantSelf", "--maxwidth", "120", "--stripunusedargs", "unnamed-only" },
+                extra_args = { "--disable", "redundantSelf,redundantStaticSelf", "--maxwidth", "120", "--stripunusedargs", "unnamed-only" },
             }),
             -- sql
             -- null_ls.builtins.formatting.sqlformat,

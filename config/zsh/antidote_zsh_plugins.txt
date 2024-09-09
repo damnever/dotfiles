@@ -9,6 +9,7 @@ ohmyzsh/ohmyzsh path:plugins/fd kind:fpath
 ohmyzsh/ohmyzsh path:plugins/terraform kind:fpath
 ohmyzsh/ohmyzsh path:plugins/httpie kind:fpath
 ohmyzsh/ohmyzsh path:plugins/rust kind:zsh
+ohmyzsh/ohmyzsh path:plugins/swiftpm kind:zsh
 
 # zsh-users/zsh-history-substring-search kind:zsh
 zsh-users/zsh-completions kind:zsh
