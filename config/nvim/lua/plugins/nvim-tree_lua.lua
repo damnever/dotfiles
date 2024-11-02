@@ -121,6 +121,14 @@ local config = function()
         renderer = {
             group_empty = true,
         },
+        update_focused_file = {
+            enable = true,
+            update_root = {
+                enable = false,
+                ignore_list = {},
+            },
+            exclude = false,
+        },
         filters = {
             dotfiles = false,
             custom = { -- vim regex (|string-match|).

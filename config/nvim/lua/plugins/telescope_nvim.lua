@@ -8,16 +8,21 @@ local package = {
         { 'nvim-telescope/telescope-frecency.nvim', requires = { "tami5/sqlite.lua" } },
         { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' },
         { 'AckslD/nvim-neoclip.lua' },
+        { 'folke/trouble.nvim' },
     }
 }
 
 local config = function()
     local vim = vim
     local telescope = require("telescope")
-    local telescopeConfig = require("telescope.config")
+    local telescope_config = require("telescope.config")
+    local actions = require('telescope.actions')
+    local action_set = require('telescope.actions.set')
+    local action_state = require('telescope.actions.state')
+
 
     -- Clone the default Telescope configuration
-    local vimgrep_arguments = { unpack(telescopeConfig.values.vimgrep_arguments) }
+    local vimgrep_arguments = { unpack(telescope_config.values.vimgrep_arguments) }
     -- Search in hidden/dot files.
     table.insert(vimgrep_arguments, "--hidden")
     -- Do nott search in the `.git` directory.
@@ -48,10 +53,53 @@ local config = function()
                 msg_bg_fillchar = "╱",
             },
             mappings = {
+                i = {
+                    ["<esc>"] = actions.close,
+                    ['<C-g>'] = function(prompt_bufnr)
+                        -- Ref: https://github.com/nvim-telescope/telescope.nvim/wiki/Configuration-Recipes#using-nvim-window-picker-to-choose-a-target-window-when-opening-a-file-from-any-picker
+                        -- Use nvim-window-picker to choose the window by dynamically attaching a function
+                        local picker = action_state.get_current_picker(prompt_bufnr)
+                        picker.get_selection_window = function(picker, entry)
+                            local picked_window_id = require('window-picker').pick_window() or
+                                vim.api.nvim_get_current_win()
+                            -- Unbind after using so next instance of the picker acts normally
+                            picker.get_selection_window = nil
+                            return picked_window_id
+                        end
+
+                        return action_set.edit(prompt_bufnr, 'edit')
+                    end,
+                    ["<c-t>"] = function(prompt_bufnr)
+                        return require("trouble.sources.telescope").open(prompt_bufnr)
+                    end,
+                },
+                n = {
+                    ["<esc>"] = actions.close,
+                    ["<c-t>"] = function(prompt_bufnr)
+                        return require("trouble.sources.telescope").open(prompt_bufnr)
+                    end,
+                },
             }
         },
         pickers = {
             find_command = { "rg", "--files", "--hidden", "--glob", "!.git/*" },
+            -- find_files = { mappings = { i = { }, }, },
+            commands = {
+                mappings = {
+                    i = {
+                        -- Set a value in the command line and run it (modified version of actions.set_command_line).
+                        ['<C-r>'] = function(prompt_bufnr)
+                            local selection = action_state.get_selected_entry()
+                            if selection == nil then
+                                return
+                            end
+                            actions.close(prompt_bufnr)
+                            vim.fn.histadd("cmd", selection.name)
+                            vim.cmd(selection.name)
+                        end,
+                    }
+                }
+            },
         },
         extensions = {
             fzf = {
@@ -132,7 +180,9 @@ local config = function()
 
     local builtin = require('telescope.builtin')
     require('lib').vimbatch.keymaps({
-        { mode = '', lhs = '<leader><space>', rhs = ':Telescope<CR>' },
+        -- Lists available plugin/user commands and runs them on `<cr>`
+        { mode = '', lhs = '<leader><space>', rhs = builtin.commands },
+        -- { mode = '', lhs = '<leader><space>', rhs = ':Telescope<CR>' },
         -- Lists files in your current working directory, respects .gitignore
         { mode = '', lhs = '<leader>p', rhs = builtin.find_files },
         -- Searches for the string under your cursor in your current working directory.
