@@ -273,6 +273,11 @@ local config = function()
 
     local lspformat_augroup = vim.api.nvim_create_augroup("LspFormatting", {})
     local function format_on_save(client, bufnr)
+        local filetype = vim.api.nvim_get_option_value("filetype", { buf = bufnr })
+        if filetype == "swift" then
+            -- Prefer SwiftFormat from null-ls/none-ls rather than swift-format from sourcekit-lsp, as they conflict with each other.
+            return
+        end
         if client.supports_method("textDocument/formatting") then
             vim.api.nvim_clear_autocmds({ group = lspformat_augroup, buffer = bufnr })
             vim.api.nvim_create_autocmd("BufWritePre", {
