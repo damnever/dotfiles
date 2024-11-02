@@ -1,8 +1,3 @@
-local package = {
-    'tamago324/nlsp-settings.nvim',
-    requires = { 'neovim/nvim-lspconfig' },
-}
-
 local config = function()
     require("nlspsettings").setup({
         config_home = vim.fn.stdpath('config') .. '/nlsp-settings',
@@ -13,7 +8,8 @@ local config = function()
     })
 end
 
-return {
-    package = package,
+return { {
+    'tamago324/nlsp-settings.nvim',
+    dependencies = { 'neovim/nvim-lspconfig' },
     config = config,
-}
+} }

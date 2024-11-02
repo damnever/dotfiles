@@ -1,9 +1,4 @@
-local package = { -- For 'wbthomason/packer.nvim'
+return { {
     'tpope/vim-surround',
     event = { "BufReadPost", "BufNewFile" },
-}
-
-return {
-    package = package,
-    config = config,
-}
+} }

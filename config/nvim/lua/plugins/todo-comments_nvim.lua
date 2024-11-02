@@ -1,11 +1,3 @@
-local package = {
-    -- For 'wbthomason/packer.nvim'
-    'folke/todo-comments.nvim',
-    -- event = { "BufReadPost" },
-    requires = 'nvim-lua/plenary.nvim',
-}
-
-
 local config = function()
     require("todo-comments").setup({
         signs = true,      -- show icons in the signs column
@@ -76,7 +68,9 @@ local config = function()
 end
 
 
-return {
-    package = package,
+return { {
+    'folke/todo-comments.nvim',
+    -- event = { "BufReadPost" },
+    dependencies = 'nvim-lua/plenary.nvim',
     config = config,
-}
+} }

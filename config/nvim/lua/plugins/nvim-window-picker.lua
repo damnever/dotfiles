@@ -1,9 +1,3 @@
-local package = { -- For 'wbthomason/packer.nvim'
-    's1n7ax/nvim-window-picker',
-    tag = 'v2.*',
-    -- event = "BufReadPost",
-}
-
 local config = function()
     local vim = vim
 
@@ -144,7 +138,8 @@ local config = function()
     })
 end
 
-return {
-    package = package,
+return { {
+    's1n7ax/nvim-window-picker',
+    version = 'v2.*',
     config = config,
-}
+} }

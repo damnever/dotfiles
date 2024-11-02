@@ -1,19 +1,3 @@
-local package = {
-    -- For 'wbthomason/packer.nvim'
-    'nvim-treesitter/nvim-treesitter',
-    -- https://github.com/nvim-treesitter/nvim-treesitter/wiki/Installation#packernvim
-    run = function()
-        local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
-        ts_update()
-    end,
-    requires = {
-        { 'nvim-treesitter/nvim-treesitter-textobjects' },
-        { 'nvim-treesitter/nvim-treesitter-context' },
-        { 'JoosepAlviste/nvim-ts-context-commentstring' },
-        -- { 'p00f/nvim-ts-rainbow' },
-    },
-}
-
 -- FIXME: rainbow: https://github.com/p00f/nvim-ts-rainbow/issues/110
 
 local config = function()
@@ -103,7 +87,7 @@ local config = function()
         enable = true,            -- Enable this plugin (Can be enabled/disabled later via commands)
         multiwindow = false,      -- Enable multiwindow support.
         max_lines = 2,            -- How many lines the window should span. Values <= 0 mean no limit.
-        min_window_height = 0,    -- Minimum editor window height to enable context. Values <= 0 mean no limit.
+        min_window_height = 35,   -- Minimum editor window height to enable context. Values <= 0 mean no limit.
         line_numbers = true,
         multiline_threshold = 10, -- Maximum number of lines to show for a single context
         trim_scope = 'outer',     -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
@@ -120,7 +104,14 @@ local config = function()
 end
 
 
-return {
-    package = package,
+return { {
+    'nvim-treesitter/nvim-treesitter',
+    build = ":TSUpdate",
+    dependencies = {
+        { 'nvim-treesitter/nvim-treesitter-textobjects' },
+        { 'nvim-treesitter/nvim-treesitter-context' },
+        { 'JoosepAlviste/nvim-ts-context-commentstring' },
+        -- { 'p00f/nvim-ts-rainbow' },
+    },
     config = config,
-}
+} }

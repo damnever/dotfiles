@@ -1,13 +1,3 @@
--- For 'wbthomason/packer.nvim'
-local package = {
-    'williamboman/mason.nvim',
-    after = { 'cmp-nvim-lsp' },
-    requires = {
-        { 'neovim/nvim-lspconfig' },
-        { 'williamboman/mason-lspconfig.nvim' },
-    },
-}
-
 local config = function()
     local vim = vim
 
@@ -415,7 +405,12 @@ local config = function()
 end
 
 
-return {
-    package = package,
+return { {
+    'williamboman/mason.nvim',
+    dependencies = {
+        { 'cmp-nvim-lsp' },
+        { 'neovim/nvim-lspconfig' },
+        { 'williamboman/mason-lspconfig.nvim' },
+    },
     config = config,
-}
+} }

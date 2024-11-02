@@ -1,11 +1,3 @@
-local package = { -- For 'wbthomason/packer.nvim'
-    'folke/trouble.nvim',
-    requires = {
-        'kyazdani42/nvim-web-devicons',
-    },
-    cmd = { "Trouble", "TroubleToggle", "TroubleRefresh" },
-}
-
 local config = function()
     require("trouble").setup({
         auto_close = false,      -- auto close when there are no items
@@ -202,7 +194,11 @@ local config = function()
     })
 end
 
-return {
-    package = package,
+return { {
+    'folke/trouble.nvim',
+    dependencies = {
+        'kyazdani42/nvim-web-devicons',
+    },
+    cmd = { "Trouble", "TroubleToggle", "TroubleRefresh" },
     config = config,
-}
+} }

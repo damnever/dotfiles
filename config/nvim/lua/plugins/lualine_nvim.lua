@@ -1,11 +1,3 @@
-local package = { -- For 'wbthomason/packer.nvim'
-    'nvim-lualine/lualine.nvim',
-    requires = {
-        -- { 'arkav/lualine-lsp-progress' }, -- See: lsp/fidget_nvim.lua
-        { 'kyazdani42/nvim-web-devicons', opt = true },
-    },
-}
-
 local config = function()
     require('lualine').setup({
         options = {
@@ -56,7 +48,7 @@ local config = function()
                     tabs_color = {
                         -- Same values as the general color option can be used here.
                         -- example: lualine_a_insert / lualine_a_inactive
-                        active = 'lualine_a_normal', -- Color for active tab.
+                        active = 'lualine_a_normal',   -- Color for active tab.
                         inactive = 'lualine_b_normal', -- Color for inactive tab.
                     },
                     fmt = function(label) return ' ' .. label end,
@@ -70,7 +62,11 @@ local config = function()
 end
 
 
-return {
-    package = package,
+return { {
+    'nvim-lualine/lualine.nvim',
+    dependencies = {
+        -- { 'arkav/lualine-lsp-progress' }, -- See: lsp/fidget_nvim.lua
+        { 'kyazdani42/nvim-web-devicons' },
+    },
     config = config,
-}
+} }

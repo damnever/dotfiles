@@ -112,6 +112,7 @@ sync_configuration_files() {
 
 setup_vim() {
     echo "-> setup vim .."
+    brew install luajit
     brew install neovim
 
     # https://github.com/wojciech-kulik/xcodebuild.nvim
@@ -122,10 +123,6 @@ setup_vim() {
     # Python
     pip install pynvim yapf
     # go install github.com/client9/misspell/cmd/misspell@latest
-
-    # Let's do it twice: https://github.com/wbthomason/packer.nvim
-    nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
-    nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
 }
 
 

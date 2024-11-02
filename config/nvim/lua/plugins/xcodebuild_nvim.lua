@@ -1,11 +1,3 @@
-local package = { -- For 'wbthomason/packer.nvim'
-    "wojciech-kulik/xcodebuild.nvim",
-    requires = {
-        { "nvim-telescope/telescope.nvim" },
-        { "MunifTanjim/nui.nvim" },
-    },
-}
-
 local config = function()
     require("xcodebuild").setup({
         restore_on_start = true,               -- logs, diagnostics, and marks will be loaded on VimEnter (may affect performance)
@@ -19,28 +11,28 @@ local config = function()
             lsp_timeout = 200,                 -- LSP timeout in milliseconds
         },
         commands = {
-            cache_devices = true,                                   -- cache recently loaded devices. Restart Neovim to clean cache.
-            extra_build_args = "-parallelizeTargets",               -- extra arguments for `xcodebuild build`
-            extra_test_args = "-parallelizeTargets",                -- extra arguments for `xcodebuild test`
-            project_search_max_depth = 3,                           -- maxdepth of xcodeproj/xcworkspace search while using configuration wizard
-            remote_debugger = nil,                                  -- optional path to local copy of remote_debugger (check out README for details)
-            remote_debugger_port = 65123,                           -- port used by remote debugger (passed to pymobiledevice3)
+            cache_devices = true,                                                     -- cache recently loaded devices. Restart Neovim to clean cache.
+            extra_build_args = "-parallelizeTargets",                                 -- extra arguments for `xcodebuild build`
+            extra_test_args = "-parallelizeTargets",                                  -- extra arguments for `xcodebuild test`
+            project_search_max_depth = 3,                                             -- maxdepth of xcodeproj/xcworkspace search while using configuration wizard
+            remote_debugger = nil,                                                    -- optional path to local copy of remote_debugger (check out README for details)
+            remote_debugger_port = 65123,                                             -- port used by remote debugger (passed to pymobiledevice3)
         },
-        logs = {                                                    -- build & test logs
-            auto_open_on_success_tests = false,                     -- open logs when tests succeeded
-            auto_open_on_failed_tests = false,                      -- open logs when tests failed
-            auto_open_on_success_build = false,                     -- open logs when build succeeded
-            auto_open_on_failed_build = false,                      -- open logs when build failed
-            auto_close_on_app_launch = false,                       -- close logs when app is launched
-            auto_close_on_success_build = false,                    -- close logs when build succeeded (only if auto_open_on_success_build=false)
-            auto_focus = false,                                     -- focus logs buffer when opened
-            filetype = "",                                      -- file type set for buffer with logs
-            open_command = "silent botright 20split {path}",        -- command used to open logs panel. You must use {path} variable to load the log file
+        logs = {                                                                      -- build & test logs
+            auto_open_on_success_tests = false,                                       -- open logs when tests succeeded
+            auto_open_on_failed_tests = false,                                        -- open logs when tests failed
+            auto_open_on_success_build = false,                                       -- open logs when build succeeded
+            auto_open_on_failed_build = false,                                        -- open logs when build failed
+            auto_close_on_app_launch = false,                                         -- close logs when app is launched
+            auto_close_on_success_build = false,                                      -- close logs when build succeeded (only if auto_open_on_success_build=false)
+            auto_focus = false,                                                       -- focus logs buffer when opened
+            filetype = "",                                                            -- file type set for buffer with logs
+            open_command = "silent botright 20split {path}",                          -- command used to open logs panel. You must use {path} variable to load the log file
             logs_formatter = "xcbeautify --disable-colored-output --disable-logging", -- command used to format logs, you can use "" to skip formatting
-            only_summary = false,                                   -- if true logs won't be displayed, just xcodebuild.nvim summary
-            live_logs = false,                                      -- if true logs will be updated in real-time
-            show_warnings = false,                                  -- show warnings in logs summary
-            notify = function(message, severity)                    -- function to show notifications from this module (like "Build Failed")
+            only_summary = false,                                                     -- if true logs won't be displayed, just xcodebuild.nvim summary
+            live_logs = false,                                                        -- if true logs will be updated in real-time
+            show_warnings = false,                                                    -- show warnings in logs summary
+            notify = function(message, severity)                                      -- function to show notifications from this module (like "Build Failed")
                 vim.notify(message, severity)
             end,
             notify_progress = function(message) -- function to show live progress (like during tests)
@@ -117,7 +109,11 @@ local config = function()
 end
 
 
-return {
-    package = package,
+return { {
+    "wojciech-kulik/xcodebuild.nvim",
+    dependencies = {
+        { "nvim-telescope/telescope.nvim" },
+        { "MunifTanjim/nui.nvim" },
+    },
     config = config,
-}
+} }

@@ -1,7 +1,3 @@
-local package = { -- For 'wbthomason/packer.nvim'
-    'simrat39/symbols-outline.nvim',
-}
-
 local config = function()
     require("symbols-outline").setup({
         relative_width = true,
@@ -14,7 +10,7 @@ local config = function()
     })
 end
 
-return {
-    package = package,
+return { {
+    'simrat39/symbols-outline.nvim',
     config = config,
-}
+} }

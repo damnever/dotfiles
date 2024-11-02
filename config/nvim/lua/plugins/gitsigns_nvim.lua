@@ -1,8 +1,3 @@
-local package = { -- For 'wbthomason/packer.nvim'
-    'lewis6991/gitsigns.nvim',
-    event = { "BufReadPost", "BufNewFile" },
-}
-
 local config = function()
     require('gitsigns').setup({
         signcolumn      = true,
@@ -18,7 +13,8 @@ local config = function()
     })
 end
 
-return {
-    package = package,
+return { {
+    'lewis6991/gitsigns.nvim',
+    event = { "BufReadPost", "BufNewFile" },
     config = config,
-}
+} }
