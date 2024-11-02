@@ -1,22 +1,3 @@
-local package = {
-    -- For 'wbthomason/packer.nvim'
-    'hrsh7th/nvim-cmp',
-    -- event = "InsertEnter",
-    requires = {
-        { 'hrsh7th/vim-vsnip', requires = { 'rafamadriz/friendly-snippets' } },
-        { 'hrsh7th/cmp-vsnip', after = 'nvim-cmp' },
-        { 'hrsh7th/cmp-nvim-lsp' },
-        { 'hrsh7th/cmp-buffer', after = 'nvim-cmp' },
-        { 'hrsh7th/cmp-path', after = 'nvim-cmp' },
-        { 'hrsh7th/cmp-cmdline', after = 'nvim-cmp' },
-        { 'uga-rosa/cmp-dictionary' },
-        { 'hrsh7th/cmp-nvim-lsp-signature-help' },
-        { 'hrsh7th/cmp-nvim-lsp-document-symbol' },
-        -- { 'f3fora/cmp-spell' },
-        { 'lukas-reineke/cmp-under-comparator' },
-    },
-}
-
 local config = function()
     local vim = vim
 
@@ -265,7 +246,21 @@ local config = function()
     vim.api.nvim_set_hl(0, 'CmpItemKindUnit', { link = 'CmpItemKindKeyword' })
 end
 
-return {
-    package = package,
+return { {
+    'hrsh7th/nvim-cmp',
+    -- event = "InsertEnter",
+    dependencies = {
+        { 'hrsh7th/vim-vsnip', dependencies = { 'rafamadriz/friendly-snippets' } },
+        { 'hrsh7th/cmp-vsnip' },
+        { 'hrsh7th/cmp-nvim-lsp' },
+        { 'hrsh7th/cmp-buffer' },
+        { 'hrsh7th/cmp-path' },
+        { 'hrsh7th/cmp-cmdline' },
+        { 'uga-rosa/cmp-dictionary' },
+        { 'hrsh7th/cmp-nvim-lsp-signature-help' },
+        { 'hrsh7th/cmp-nvim-lsp-document-symbol' },
+        -- { 'f3fora/cmp-spell' },
+        { 'lukas-reineke/cmp-under-comparator' },
+    },
     config = config,
-}
+} }

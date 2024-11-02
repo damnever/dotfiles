@@ -1,13 +1,3 @@
-local package = { -- For 'wbthomason/packer.nvim'
-    'olexsmir/gopher.nvim', ft = { 'go' },
-    cmd = { 'GoInstallDeps', 'GoTagAdd', 'GoTagRm', 'GoTestAdd', 'GoGet', 'GoTestsExp' },
-    event = { "BufReadPost", "BufNewFile" },
-    requires = {
-        "nvim-lua/plenary.nvim",
-        "nvim-treesitter/nvim-treesitter",
-    },
-}
-
 local config = function()
     require("gopher").setup {
         commands = {
@@ -20,7 +10,14 @@ local config = function()
     }
 end
 
-return {
-    package = package,
+return { {
+    'olexsmir/gopher.nvim',
+    ft = { 'go' },
+    cmd = { 'GoInstallDeps', 'GoTagAdd', 'GoTagRm', 'GoTestAdd', 'GoGet', 'GoTestsExp' },
+    event = { "BufReadPost", "BufNewFile" },
+    dependencies = {
+        "nvim-lua/plenary.nvim",
+        "nvim-treesitter/nvim-treesitter",
+    },
     config = config,
-}
+} }

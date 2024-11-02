@@ -1,17 +1,3 @@
--- For 'wbthomason/packer.nvim'
-local package = {
-    'nvim-telescope/telescope.nvim',
-    tag = '0.1.8',
-    requires = {
-        { 'nvim-lua/plenary.nvim' },
-        { 'nvim-lua/popup.nvim' },
-        { 'nvim-telescope/telescope-frecency.nvim', requires = { "tami5/sqlite.lua" } },
-        { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' },
-        { 'AckslD/nvim-neoclip.lua' },
-        { 'folke/trouble.nvim' },
-    }
-}
-
 local config = function()
     local vim = vim
     local telescope = require("telescope")
@@ -198,7 +184,16 @@ local config = function()
     })
 end
 
-return {
-    package = package,
+return { {
+    'nvim-telescope/telescope.nvim',
+    version = '0.1.8',
+    dependencies = {
+        { 'nvim-lua/plenary.nvim' },
+        { 'nvim-lua/popup.nvim' },
+        { 'nvim-telescope/telescope-frecency.nvim', dependencies = { "tami5/sqlite.lua" } },
+        { 'nvim-telescope/telescope-fzf-native.nvim', build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release' },
+        { 'AckslD/nvim-neoclip.lua' },
+        { 'folke/trouble.nvim' },
+    },
     config = config,
-}
+} }

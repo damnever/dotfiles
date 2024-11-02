@@ -1,9 +1,3 @@
-local package = { -- For 'wbthomason/packer.nvim'
-    'lukas-reineke/indent-blankline.nvim',
-    event = "BufReadPost",
-}
-
-
 local config = function()
     vim.opt.list = true
     vim.opt.listchars:remove('eol') -- Disable end of line char.
@@ -18,7 +12,8 @@ local config = function()
 end
 
 
-return {
-    package = package,
+return { {
+    'lukas-reineke/indent-blankline.nvim',
+    event = "BufReadPost",
     config = config,
-}
+} }

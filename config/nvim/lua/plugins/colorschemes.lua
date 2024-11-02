@@ -1,13 +1,3 @@
-local package = { -- For 'wbthomason/packer.nvim'
-    "EdenEast/nightfox.nvim",
-    requires = {
-        -- { 'folke/tokyonight.nvim' },
-        -- { "catppuccin/nvim", as = "catppuccin" },
-        -- { "svrana/neosolarized.nvim", requires = { "tjdevries/colorbuddy.nvim" } },
-        -- { 'tomasr/molokai' },
-    }
-}
-
 local config = function()
     local vim = vim
 
@@ -65,7 +55,7 @@ local config = function()
     vim.cmd([[colorscheme carbonfox]])
 end
 
-return {
-    package = package,
+return { {
+    "EdenEast/nightfox.nvim",
     config = config,
-}
+} }

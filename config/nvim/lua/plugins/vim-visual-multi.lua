@@ -1,9 +1,4 @@
-local package = { -- For 'wbthomason/packer.nvim'
-    'mg979/vim-visual-multi', branch = 'master',
+return { {
+    'mg979/vim-visual-multi',
     event = { "BufReadPost" },
-}
-
-return {
-    package = package,
-    config = config,
-}
+} }

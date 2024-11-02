@@ -1,8 +1,3 @@
-local package = { -- For 'wbthomason/packer.nvim'
-    'numToStr/Comment.nvim',
-    event = { "BufReadPost" },
-}
-
 local config = function()
     require('Comment').setup({
         toggler = {
@@ -37,7 +32,8 @@ local config = function()
     })
 end
 
-return {
-    package = package,
+return { {
+    'numToStr/Comment.nvim',
+    event = { "BufReadPost" },
     config = config,
-}
+} }

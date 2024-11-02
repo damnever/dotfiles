@@ -11,7 +11,7 @@ local function set_global_variables()
     -- else
     -- vim.g.python_host_prog = python_bin
     -- end
-    vim.g.python3_host_prog = '/Users/xiaochaodong/.pyenv/shims/python'
+    vim.g.python3_host_prog = vim.fn.expand('$HOME/.pyenv/shims/python')
 
     -- Disable builtin plugins.
     local builtin_plugins = {
@@ -284,8 +284,6 @@ local function setup()
     set_options()
     set_cursor_line()
     set_misc_autocmds()
-
-    require('pluginloader')
 
     -- local colorscheme = opts.colorscheme or {}
     -- set_colorscheme(colorscheme.name, colorscheme.background)

@@ -1,8 +1,3 @@
-local package = {             -- For 'wbthomason/packer.nvim'
-    'nvimtools/none-ls.nvim', -- a community-maintained version of jose-elias-alvarez/null-ls.nvim
-    requires = { { 'nvim-lua/plenary.nvim' }, { 'folke/trouble.nvim' }, }
-}
-
 local config = function()
     local vim = vim
     local lspformat_augroup = vim.api.nvim_create_augroup("NULLLSFormatting", {})
@@ -21,9 +16,14 @@ local config = function()
 
     local null_ls = require("null-ls")
     null_ls.setup({
+        debug = true,
         debounce = 500,
         on_attach = format_on_save,
         update_in_insert = false,
+        should_attach = function(bufnr)
+            local filetype = vim.api.nvim_get_option_value("filetype", { buf = bufnr })
+            return filetype == "swift" or filetype == "python"
+        end,
         sources = {
             -- Example: https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTIN_CONFIG.md
             -- null_ls.builtins.x.y.with({}),
@@ -46,7 +46,13 @@ local config = function()
             null_ls.builtins.formatting.yapf,
             -- Swift
             null_ls.builtins.formatting.swiftformat.with({
-                extra_args = { "--disable", "redundantSelf,redundantStaticSelf", "--maxwidth", "120", "--stripunusedargs", "unnamed-only" },
+                extra_args = {
+                    "--disable",
+                    "redundantSelf,redundantStaticSelf,wrapMultilineConditionalAssignment,wrapMultilineStatementBraces,wrapSingleLineComments,wrapSwitchCases",
+                    "--maxwidth", "180", "--nowrapoperators", "=",
+                    "--wraparguments", "preserve", "--wrapconditions", "preserve",
+                    "--stripunusedargs", "unnamed-only"
+                },
             }),
             -- sql
             -- null_ls.builtins.formatting.sqlformat,
@@ -60,7 +66,8 @@ local config = function()
     })
 end
 
-return {
-    package = package,
+return { {
+    'nvimtools/none-ls.nvim', -- a community-maintained version of jose-elias-alvarez/null-ls.nvim
+    dependencies = { { 'nvim-lua/plenary.nvim' }, { 'folke/trouble.nvim' }, },
     config = config,
-}
+} }

@@ -1,9 +1,3 @@
-local package = {
-    -- For 'wbthomason/packer.nvim'
-    'nvim-tree/nvim-tree.lua',
-    requires = { { 'kyazdani42/nvim-web-devicons' }, },
-}
-
 local config = function()
     local function on_attach(bufnr)
         local api = require('nvim-tree.api')
@@ -195,7 +189,8 @@ local config = function()
 end
 
 
-return {
-    package = package,
-    config = config,
-}
+return { {
+    'nvim-tree/nvim-tree.lua',
+    dependencies = { { 'kyazdani42/nvim-web-devicons' }, },
+    config       = config,
+} }

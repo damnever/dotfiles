@@ -1,7 +1,3 @@
-local package = { -- For 'wbthomason/packer.nvim'
-    'rcarriga/nvim-notify',
-}
-
 local config = function()
     local notify = require("notify")
     notify.setup({
@@ -28,7 +24,7 @@ local config = function()
     vim.notify = notify
 end
 
-return {
-    package = package,
+return { {
+    'rcarriga/nvim-notify',
     config = config,
-}
+} }
