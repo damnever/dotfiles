@@ -114,6 +114,39 @@ local config = function()
         },
         renderer = {
             group_empty = true,
+            hidden_display = function(hidden_stats) -- or "simple", "all"
+                local total_count = 0
+                local status = ""
+                for reason, count in pairs(hidden_stats) do
+                    if count > 0 then
+                        status = status .. (total_count > 0 and ", " or "") .. reason .. ":" .. tostring(count)
+                    end
+                    total_count = total_count + count
+                end
+
+                if total_count > 0 then
+                    return " " .. tostring(total_count) .. " hidden (" .. status .. ")"
+                end
+                return nil
+            end,
+            icons = {
+                git_placement = "before", -- right_align
+                modified_placement = "after",
+                hidden_placement = "after",
+                diagnostics_placement = "signcolumn",
+                bookmarks_placement = "signcolumn",
+                glyphs = {
+                    git = {
+                        unstaged = "✗",
+                        staged = "✓",
+                        unmerged = "",
+                        renamed = "➜",
+                        untracked = "★",
+                        deleted = "",
+                        ignored = "",
+                    },
+                },
+            },
         },
         update_focused_file = {
             enable = true,
@@ -132,9 +165,13 @@ local config = function()
             },
         },
         git = {
-            enable = false,
+            enable = true,
+            show_on_dirs = true,
+            show_on_open_dirs = true,
             ignore = false,
-            show_on_dirs = false,
+        },
+        modified = {
+            enable = false,
         },
         view = {
             adaptive_size = false,
