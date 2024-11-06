@@ -142,7 +142,9 @@ local config = function()
             flags = { debounce_text_changes = 150, },
             settings = {
                 yaml = {
-                    keyOrdering = false
+                    keyOrdering = false,
+                    -- # yaml-language-server: $schema=<http or file>
+                    schemas = {},
                 }
             }
         },
