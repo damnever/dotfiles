@@ -1,4 +1,4 @@
-local config = function()
+local nightfox_config = function()
     local vim = vim
 
     require('lib').vimbatch.global_vars({
@@ -55,7 +55,48 @@ local config = function()
     vim.cmd([[colorscheme carbonfox]])
 end
 
-return { {
-    "EdenEast/nightfox.nvim",
-    config = config,
-} }
+local tokyonight_config = function()
+    require("tokyonight").setup({
+        style = "moon", -- storm
+        light_style = "day",
+        day_brightness = 0.4,
+    })
+    vim.o.background = 'dark'
+    vim.cmd([[colorscheme tokyonight-storm]])
+end
+
+local github_config = function()
+    require('github-theme').setup({
+        compile_path = vim.fn.stdpath('cache') .. '/github-theme',
+        options = {
+            transparent = false,
+        },
+    })
+
+    -- github_dark_dimmed
+    vim.cmd('colorscheme github_dark')
+end
+
+return {
+    {
+        "EdenEast/nightfox.nvim",
+        priority = 1000,
+        config = nightfox_config,
+        enabled = false,
+    },
+    {
+        "folke/tokyonight.nvim",
+        lazy = false,
+        priority = 1000,
+        config = tokyonight_config,
+        enabled = false,
+    },
+    {
+        'projekt0n/github-nvim-theme',
+        name = 'github-theme',
+        lazy = false,
+        priority = 1000,
+        config = github_config,
+        enabled = true,
+    },
+}
