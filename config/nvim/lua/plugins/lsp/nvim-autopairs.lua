@@ -17,11 +17,38 @@ local config = function()
         map_c_w = false, -- map <c-w> to delete a pair if possible
     })
 
+    require("nvim-autopairs").get_rule("'")[1].not_filetypes = { "scheme", "lisp" }
+
     local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+    local handlers = require('nvim-autopairs.completion.handlers')
+    local utils = require('nvim-autopairs.utils')
     local cmp = require('cmp')
+    local Kind = cmp.lsp.CompletionItemKind
+    -- cmp.event:on( 'confirm_done', cmp_autopairs.on_confirm_done())
     cmp.event:on(
         'confirm_done',
-        cmp_autopairs.on_confirm_done()
+        cmp_autopairs.on_confirm_done({
+            filetypes = {
+                lisp = {
+                    ["("] = {
+                        kind = { Kind.Function, Kind.Method },
+                        handler = handlers.lisp
+                    }
+                },
+                scheme = {
+                    ["("] = {
+                        kind = { Kind.Function, Kind.Method },
+                        handler = handlers.lisp
+                    }
+                },
+                go = {
+                    ["("] = {
+                        kind = { Kind.Function, Kind.Method },
+                        handler = handlers["*"]
+                    }
+                },
+            }
+        })
     )
 end
 
