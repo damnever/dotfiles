@@ -85651,6 +85651,8 @@
 	<false/>
 	<key>TmuxWarnBeforePausing</key>
 	<true/>
+	<key>UseLionStyleFullscreen</key>
+	<false/>
 	<key>UseTmuxStatusBar</key>
 	<true/>
 	<key>VisualIndicatorForEsc</key>
