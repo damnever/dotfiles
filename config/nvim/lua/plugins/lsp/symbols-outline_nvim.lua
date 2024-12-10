@@ -6,7 +6,7 @@ local config = function()
 
     local vimbatch = require('lib').vimbatch
     vimbatch.keymaps({
-        { mode = 'n', lhs = '<leader>b', rhs = ':SymbolsOutline<CR>', opts = { remap = true } },
+        { mode = 'n', lhs = '<leader>s', rhs = ':SymbolsOutline<CR>', opts = { remap = true } },
     })
 end
 
