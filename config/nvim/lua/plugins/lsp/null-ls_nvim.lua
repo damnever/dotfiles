@@ -43,7 +43,8 @@ local config = function()
             -- require('null-ls').builtins.diagnostics.pylint,
             -- null_ls.builtins.diagnostics.flake8,
             -- null_ls.builtins.formatting.autopep8,
-            null_ls.builtins.formatting.yapf,
+            -- null_ls.builtins.formatting.yapf,
+            null_ls.builtins.formatting.black,
             -- Swift
             null_ls.builtins.formatting.swiftformat.with({
                 extra_args = {
