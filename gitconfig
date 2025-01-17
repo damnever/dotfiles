@@ -6,6 +6,8 @@
 [alias]
     diffne = "diff --no-ext-diff"
     showe = "show --ext-diff"
+    brecent = "for-each-ref --sort=-committerdate refs/heads/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) %(color:magenta)%(objectname:short)%(color:reset) %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))' --color=always"
+    brecent14 = "for-each-ref --sort=-committerdate refs/heads/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) %(color:magenta)%(objectname:short)%(color:reset) %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))' --color=always" --count=14
 
 [user]
     name = Xiaochao Dong (@damnever)
