@@ -113,7 +113,7 @@ local function set_options()
     vim.o.wildignore = '*.o,*.out,*.swp,*.bak,*.pyc,*.pyo,__pycache__,*.class,*.beam,.git,.hg,.svn,*.DS_Store'
     vim.o.wildoptions = "pum"
 
-    vim.o.mouse = nil -- 'a'
+    vim.o.mouse = '' -- 'a'
     vim.o.visualbell = true
     vim.o.errorbells = true
     -- vim.o.selection = 'inclusive'
