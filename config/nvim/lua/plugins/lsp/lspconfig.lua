@@ -294,7 +294,19 @@ local config = function()
         vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
         vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
         vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
-        vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
+        vim.keymap.set('n', '<space>q', function()
+            local ok, trouble = pcall(require, "trouble")
+            if ok then
+                return trouble.open({ mode = "diagnostics", focus = true, refresh = true, new = false, filter = { buf = 0 } })
+            end
+
+            local ok, telescope_builtin = pcall(require, "telescope.builtin")
+            if ok then
+                return telescope_builtin.diagnostics({ bufnr = 0 })
+            else
+                return vim.diagnostic.setloclist()
+            end
+        end, opts)
         -- Use an on_attach function to only map the following keys
         -- after the language server attaches to the current buffer
         -- Enable completion triggered by <c-x><c-o>
@@ -303,18 +315,43 @@ local config = function()
         -- Mappings.
         -- See `:help vim.lsp.*` for documentation on any of the below functions
         local bufopts = { noremap = true, silent = true, buffer = bufnr }
-        vim.keymap.set('n', '<leader>jd', vim.lsp.buf.definition, bufopts)
         vim.keymap.set('n', '<leader>jD', vim.lsp.buf.declaration, bufopts)
-        vim.keymap.set('n', '<leader>jt', vim.lsp.buf.type_definition, bufopts)
+        vim.keymap.set('n', '<leader>jd', function()
+            local ok, telescope_builtin = pcall(require, "telescope.builtin")
+            if ok then
+                return telescope_builtin.lsp_definitions({ jump_type = "split" })
+            else
+                return vim.lsp.buf.definition()
+            end
+        end, bufopts)
+        vim.keymap.set('n', '<leader>jt', function()
+            local ok, telescope_builtin = pcall(require, "telescope.builtin")
+            if ok then
+                return telescope_builtin.lsp_type_definitions({ jump_type = "split" })
+            else
+                return vim.lsp.buf.type_definition()
+            end
+        end, bufopts)
         vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
-        vim.keymap.set('n', '<leader>ji', vim.lsp.buf.implementation, bufopts)
-        vim.keymap.set('n', '<leader>jr', vim.lsp.buf.references, bufopts)
+        vim.keymap.set('n', '<leader>ji', function()
+            local ok, telescope_builtin = pcall(require, "telescope.builtin")
+            if ok then
+                return telescope_builtin.lsp_implementations({ jump_type = "split" })
+            else
+                return vim.lsp.buf.implementation()
+            end
+        end, bufopts)
+        vim.keymap.set('n', '<leader>jr', function()
+            local ok, telescope_builtin = pcall(require, "telescope.builtin")
+            if ok then
+                return telescope_builtin.lsp_references({ jump_type = "split" })
+            else
+                return vim.lsp.buf.references()
+            end
+        end, bufopts)
         vim.keymap.set('n', '<leader>jk', vim.lsp.buf.signature_help, bufopts)
         vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
         vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
-        vim.keymap.set('n', '<space>wl', function()
-            print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-        end, bufopts)
         vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
         vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
         vim.keymap.set('n', '<space>f', function()

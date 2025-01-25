@@ -22,62 +22,29 @@ local config = function()
         }
     end
 
-    local kind_icons = {
-        Text = "",
-        Method = "",
-        Function = "",
-        Constructor = "",
-        Field = "ﰠ",
-        -- Variable = "",
-        Variable = "",
-        Class = "ﴯ",
-        Interface = "",
-        Module = "",
-        Property = "ﰠ",
-        -- Unit = "",
-        Unit = "塞",
-        Value = "",
-        Enum = "",
-        Keyword = "",
-        Snippet = "",
-        Color = "",
-        File = "",
-        -- Reference = "",
-        Reference = "",
-        Folder = "",
-        EnumMember = "",
-        Constant = "",
-        -- Struct = "",
-        Struct = "פּ",
-        -- Event = "",
-        Event = "",
-        Operator = "",
-        TypeParameter = ""
-    }
-
-
     local cmp = require('cmp')
+    local lspkind = require('lspkind')
     cmp.setup({
         view = {
             -- https://github.com/hrsh7th/nvim-cmp/wiki/Menu-Appearance#custom-menu-direction
             entries = { name = 'custom', selection_order = 'top_down', }
         },
         formatting = {
-            format = function(entry, vim_item)
-                -- Kind icons
-                vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind) -- This concatonates the icons with the name of the item kind
-                -- Source
-                vim_item.menu = ({
-                    buffer = "[Buffer]",
-                    nvim_lsp = "[LSP]",
-                    vsnip = "[VSnip]",
-                    luasnip = "[LuaSnip]",
-                    nvim_lua = "[Lua]",
-                    latex_symbols = "[LaTeX]",
-                    dictionary = "[Dict]",
-                })[entry.source.name]
-                return vim_item
-            end
+            format = lspkind.cmp_format({
+                mode = 'symbol_text', -- show only symbol annotations
+                maxwidth = {
+                    -- menu = function() return math.floor(0.45 * vim.o.columns) end,
+                    menu = 50,            -- leading text (labelDetails)
+                    abbr = 50,            -- actual suggestion item
+                },
+                ellipsis_char = '...',    -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
+                show_labelDetails = true, -- show labelDetails in menu. Disabled by default
+
+                -- https://github.com/onsails/lspkind-nvim/pull/30
+                before = function(entry, vim_item)
+                    return vim_item
+                end
+            })
         },
         completion = {
             completeopt = 'menu,menuone,noselect',
@@ -155,7 +122,7 @@ local config = function()
         }),
         sources = cmp.config.sources({
             { name = 'nvim_lsp' },
-            { name = 'nvim_lsp_signature_help' },
+            -- { name = 'nvim_lsp_signature_help' },
             -- { name = 'spell' },
             { name = 'vsnip' }, -- For vsnip users.
             -- { name = 'luasnip' }, -- For luasnip users.
@@ -257,10 +224,11 @@ return { {
         { 'hrsh7th/cmp-path' },
         { 'hrsh7th/cmp-cmdline' },
         { 'uga-rosa/cmp-dictionary' },
-        { 'hrsh7th/cmp-nvim-lsp-signature-help' },
+        -- { 'hrsh7th/cmp-nvim-lsp-signature-help' },
         { 'hrsh7th/cmp-nvim-lsp-document-symbol' },
         -- { 'f3fora/cmp-spell' },
         { 'lukas-reineke/cmp-under-comparator' },
+        { 'onsails/lspkind.nvim' },
     },
     config = config,
 } }

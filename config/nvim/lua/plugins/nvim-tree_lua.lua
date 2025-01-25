@@ -109,7 +109,8 @@ local config = function()
             enable = true,
             debounce_delay = 1234, -- ms
             ignore_dirs = {
-                "node_modules"
+                'node_modules',
+                'vendor',
             },
         },
         renderer = {
