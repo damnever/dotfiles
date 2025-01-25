@@ -133,3 +133,6 @@ unset __conda_setup
 
 # See the first line.
 # zprof
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:$HOME/.lmstudio/bin"
