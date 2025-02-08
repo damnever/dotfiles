@@ -99,12 +99,16 @@ local config = function()
                 show_unindexed = true,
                 ignore_patterns = { "*.git/*", "*/tmp/*" },
             },
+            ["ui-select"] = {
+                require("telescope.themes").get_dropdown({})
+            },
         },
     }
 
     require("telescope").load_extension("fzf")
     require("telescope").load_extension("frecency")
     require('telescope').load_extension('neoclip')
+    require("telescope").load_extension("ui-select")
 
     require('neoclip').setup({
         history = 1000,
@@ -192,6 +196,7 @@ return { {
         { 'nvim-lua/popup.nvim' },
         { 'nvim-telescope/telescope-frecency.nvim', dependencies = { "tami5/sqlite.lua" } },
         { 'nvim-telescope/telescope-fzf-native.nvim', build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release' },
+        { 'nvim-telescope/telescope-ui-select.nvim' },
         { 'AckslD/nvim-neoclip.lua' },
         { 'folke/trouble.nvim' },
     },
