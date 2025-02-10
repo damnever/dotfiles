@@ -21,6 +21,9 @@ require("lazy").setup({
         { import = "plugins" },
         { import = "plugins.lsp" }
     },
+    git = {
+        timeout = 360, -- process timeout, including the build step..
+    },
     defaults = {},
     install = {
         missing = true,
