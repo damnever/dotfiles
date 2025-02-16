@@ -4,7 +4,7 @@ local config = function()
     local lsp_servers = {
         -- Bash
         bashls = {
-            filetypes = { "sh" },
+            filetypes = { "sh", "bash" },
             flags = { debounce_text_changes = 150, },
         },
         -- C/C++

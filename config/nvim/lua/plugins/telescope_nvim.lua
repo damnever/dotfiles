@@ -195,7 +195,7 @@ return { {
         { 'nvim-lua/plenary.nvim' },
         { 'nvim-lua/popup.nvim' },
         { 'nvim-telescope/telescope-frecency.nvim', dependencies = { "tami5/sqlite.lua" } },
-        { 'nvim-telescope/telescope-fzf-native.nvim', build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release' },
+        { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
         { 'nvim-telescope/telescope-ui-select.nvim' },
         { 'AckslD/nvim-neoclip.lua' },
         { 'folke/trouble.nvim' },

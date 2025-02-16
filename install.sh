@@ -115,6 +115,8 @@ setup_vim() {
     brew install luajit
     brew install neovim
 
+    # lint for bash_ls
+    brew install shellcheck
     # https://github.com/wojciech-kulik/xcodebuild.nvim
     brew install xcode-build-server
     brew install xcbeautify

@@ -23,6 +23,7 @@ require("lazy").setup({
     },
     git = {
         timeout = 360, -- process timeout, including the build step..
+        url_format = "git@github.com:%s.git",
     },
     defaults = {},
     install = {
