@@ -46,7 +46,6 @@ install_command_line_tools() {
     brew install node yarn  # Nodejs and..
     brew install watch
     brew install go  # Golang
-    brew install swiftformat
     brew install --cask swiftformat-for-xcode
     brew install roswell # Common Lisp(sbcl) version manager
     brew install difftastic
@@ -117,13 +116,15 @@ setup_vim() {
 
     # lint for bash_ls
     brew install shellcheck
+    # Swift
+    brew install swiftformat
     # https://github.com/wojciech-kulik/xcodebuild.nvim
     brew install xcode-build-server
     brew install xcbeautify
     brew install ruby
     gem install xcodeproj
     # Python
-    pip install pynvim yapf
+    pip install pynvim black
     # go install github.com/client9/misspell/cmd/misspell@latest
 }
 

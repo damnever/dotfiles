@@ -1,0 +1,8 @@
+python-preference = "managed"
+
+[[index]]
+url = "https://pypi.org/simple"
+default = true
+
+[[index]]
+url = "https://pypi.doubanio.com/simple/"

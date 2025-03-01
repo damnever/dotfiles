@@ -11,27 +11,26 @@ local config = function()
             lsp_timeout = 200,                 -- LSP timeout in milliseconds
         },
         commands = {
-            cache_devices = true,                                                     -- cache recently loaded devices. Restart Neovim to clean cache.
             extra_build_args = { "-parallelizeTargets" },                             -- extra arguments for `xcodebuild build`
             extra_test_args = { "-parallelizeTargets" },                              -- extra arguments for `xcodebuild test`
             project_search_max_depth = 3,                                             -- maxdepth of xcodeproj/xcworkspace search while using configuration wizard
-            remote_debugger = nil,                                                    -- optional path to local copy of remote_debugger (check out README for details)
-            remote_debugger_port = 65123,                                             -- port used by remote debugger (passed to pymobiledevice3)
+            focus_simulator_on_app_launch = true,                                     -- focus simulator window when app is launched
+            keep_device_cache = false,                                                -- keep device cache even if scheme or project file changes
         },
         logs = {                                                                      -- build & test logs
             auto_open_on_success_tests = false,                                       -- open logs when tests succeeded
             auto_open_on_failed_tests = false,                                        -- open logs when tests failed
             auto_open_on_success_build = false,                                       -- open logs when build succeeded
-            auto_open_on_failed_build = false,                                        -- open logs when build failed
+            auto_open_on_failed_build = true,                                         -- open logs when build failed
             auto_close_on_app_launch = false,                                         -- close logs when app is launched
             auto_close_on_success_build = false,                                      -- close logs when build succeeded (only if auto_open_on_success_build=false)
-            auto_focus = false,                                                       -- focus logs buffer when opened
+            auto_focus = true,                                                        -- focus logs buffer when opened
             filetype = "",                                                            -- file type set for buffer with logs
             open_command = "silent botright 20split {path}",                          -- command used to open logs panel. You must use {path} variable to load the log file
             logs_formatter = "xcbeautify --disable-colored-output --disable-logging", -- command used to format logs, you can use "" to skip formatting
             only_summary = false,                                                     -- if true logs won't be displayed, just xcodebuild.nvim summary
-            live_logs = false,                                                        -- if true logs will be updated in real-time
-            show_warnings = false,                                                    -- show warnings in logs summary
+            live_logs = true,                                                         -- if true logs will be updated in real-time
+            show_warnings = true,                                                     -- show warnings in logs summary
             notify = function(message, severity)                                      -- function to show notifications from this module (like "Build Failed")
                 vim.notify(message, severity)
             end,
@@ -40,7 +39,13 @@ local config = function()
             end,
         },
         console_logs = {
-            enabled = false, -- enable console logs in dap-ui
+            enabled = true,              -- enable console logs in dap-ui
+            format_line = function(line) -- format each line of logs
+                return line
+            end,
+            filter_line = function(line) -- filter each line of logs
+                return true
+            end,
         },
         marks = {
             show_signs = true, -- show each test result on the side bar
@@ -83,17 +88,52 @@ local config = function()
             error_coverage_level = 30,
             open_expanded = false,
         },
+        project_manager = {
+            guess_target = true,                   -- guess target for the new file based on the file path
+            find_xcodeproj = false,                -- instead of using configured xcodeproj search for xcodeproj closest to targeted file
+            should_update_project = function(path) -- path can lead to directory or file
+                -- it could be useful if you mix Xcode project with SPM for example
+                return true
+            end,
+            project_for_path = function(path)
+                -- you can return a different project for the given {path} (could be directory or file)
+                -- ex.: return "/your/path/to/project.xcodeproj"
+                return nil
+            end,
+        },
+        previews = {
+            open_command = "vertical botright split +vertical\\ resize\\ 42 %s | wincmd p", -- command used to open preview window
+            show_notifications = true,                                                      -- show preview-related notifications
+        },
+        device_picker = {
+            mappings = {
+                move_up_device = "<M-y>",   -- move device up in the list
+                move_down_device = "<M-e>", -- move device down in the list
+                add_device = "<M-a>",       -- add device to cache
+                delete_device = "<M-d>",    -- delete device from cache
+                refresh_devices = "<C-r>",  -- refresh devices list
+            },
+        },
         integrations = {
+            pymobiledevice = {
+                enabled = true,               -- enable pymobiledevice integration (requires configuration, see: `:h xcodebuild.remote-debugger`)
+                remote_debugger_port = 65123, -- port used by remote debugger (passed to pymobiledevice3)
+            },
+            xcodebuild_offline = {
+                enabled = false, -- improves build time (requires configuration, see `:h xcodebuild.xcodebuild-offline`)
+            },
             xcode_build_server = {
-                enabled = true, -- run "xcode-build-server config" when scheme changes
+                enabled = true,       -- enable calling "xcode-build-server config" when project config changes
+                guess_scheme = false, -- run "xcode-build-server config" with the scheme matching the current file's target
             },
             nvim_tree = {
-                enabled = true,                        -- enable updating Xcode project files when using nvim-tree
-                guess_target = true,                   -- guess target for the new file based on the file path
-                should_update_project = function(path) -- path can lead to directory or file
-                    -- it could be useful if you mix Xcode project with SPM for example
-                    return true
-                end,
+                enabled = true, -- enable updating Xcode project files when using nvim-tree
+            },
+            neo_tree = {
+                enabled = true, -- enable updating Xcode project files when using neo-tree.nvim
+            },
+            oil_nvim = {
+                enabled = true, -- enable updating Xcode project files when using oil.nvim
             },
             quick = {           -- integration with Swift test framework: github.com/Quick/Quick
                 enabled = true, -- enable Quick tests support (requires Swift parser for nvim-treesitter)

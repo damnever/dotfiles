@@ -2,6 +2,8 @@
 	defaultBranch = main
 [branch]
     sort = -committerdate
+[tag]
+    sort = version:refname
 
 [alias]
     diffne = "diff --no-ext-diff"
@@ -53,5 +55,6 @@
     conflictstyle = zdiff3
 [rerere]
     enabled = true
+    autoupdate = true
 [mergetool]
     keepBackup = false
