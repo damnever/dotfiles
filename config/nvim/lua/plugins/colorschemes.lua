@@ -73,8 +73,8 @@ local github_config = function()
         },
     })
 
-    -- github_dark_dimmed
-    vim.cmd('colorscheme github_dark')
+    -- github_dark_dimmed github_dark_default github_dark github_dark_high_contrast github_dark_colorblind
+    vim.cmd('colorscheme github_dark_high_contrast')
 end
 
 return {
