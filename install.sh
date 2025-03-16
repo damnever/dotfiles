@@ -57,6 +57,7 @@ install_command_line_tools() {
     brew install direnv
     brew install zoxide
     brew install wireguard-tools
+    brew install colima docker # colima start --cpu 4 --memory 8
     # fonts
     # brew tap homebrew/cask-fonts
     # brew install font-ibm-plex --cask
