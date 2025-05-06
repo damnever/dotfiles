@@ -53,7 +53,7 @@ end
 
 
 return { {
-    'phaazon/hop.nvim',
+    'smoka7/hop.nvim',
     event = "BufReadPost",
     config = config,
 } }
