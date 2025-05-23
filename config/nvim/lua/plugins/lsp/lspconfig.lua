@@ -27,7 +27,6 @@ local config = function()
             },
             single_file_support = true,
             cmd = { "gopls", "serve" },
-            root_dir = require("lspconfig/util").root_pattern("go.work", "go.mod", ".git"),
             settings = {
                 gopls = {
                     ["local"] = require('lib').parse_golang_module_name(),
@@ -35,12 +34,7 @@ local config = function()
                     diagnosticsDelay = "300ms",
                     analyses = {
                         fieldalignment = false,
-                        nilness = false,
                         shadow = true,
-                        unusedparams = true,
-                        unusedwrite = true,
-                        useany = false,
-                        unusedvariable = true,
                     },
                     codelenses = {
                         generate = true,
@@ -173,17 +167,8 @@ local config = function()
             end
         end
         require("mason-lspconfig").setup({
-            -- A list of servers to automatically install if they're not already installed. Example: { "rust_analyzer@nightly", "sumneko_lua" }
-            -- This setting has no relation with the `automatic_installation` setting.
             ensure_installed = lsp_server_names,
-            -- Whether servers that are set up (via lspconfig) should be automatically installed if they're not already installed.
-            -- This setting has no relation with the `ensure_installed` setting.
-            -- Can either be:
-            --   - false: Servers are not automatically installed.
-            --   - true: All servers set up via lspconfig are automatically installed.
-            --   - { exclude: string[] }: All servers set up via lspconfig, except the ones provided in the list, are automatically installed.
-            --       Example: automatic_installation = { exclude = { "rust_analyzer", "solargraph" } }
-            automatic_installation = false,
+            automatic_enable = true,
         })
     end
 
@@ -237,12 +222,13 @@ local config = function()
         end
     end
 
+    -- Ref: https://github.com/golang/tools/blob/master/gopls/doc/vim.md
     local gopls_organize_imports_on_save_augroup = vim.api.nvim_create_augroup("LspGoplsOrganizeImportsOnSave", {})
     local function go_organize_imports_on_save()
-        local function go_organize_imports(wait_ms)
-            local params = vim.lsp.util.make_range_params()
+        local function go_organize_imports(buf, wait_ms)
+            local params = vim.lsp.util.make_range_params(0, vim.lsp.util._get_offset_encoding(buf))
             params.context = { only = { "source.organizeImports" } }
-            local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, wait_ms)
+            local result = vim.lsp.buf_request_sync(buf, "textDocument/codeAction", params, wait_ms)
             for cid, res in pairs(result or {}) do
                 for _, r in pairs(res.result or {}) do
                     if r.edit then
@@ -257,8 +243,8 @@ local config = function()
         vim.api.nvim_create_autocmd("BufWritePre", {
             group = gopls_organize_imports_on_save_augroup,
             pattern = { "*.go" },
-            callback = function()
-                go_organize_imports(3000)
+            callback = function(env)
+                go_organize_imports(env.buf, 3000)
             end,
         })
     end
@@ -270,7 +256,7 @@ local config = function()
             -- Prefer SwiftFormat from null-ls/none-ls rather than swift-format from sourcekit-lsp, as they conflict with each other.
             return
         end
-        if client.supports_method("textDocument/formatting") then
+        if client:supports_method("textDocument/formatting", bufnr) then
             vim.api.nvim_clear_autocmds({ group = lspformat_augroup, buffer = bufnr })
             vim.api.nvim_create_autocmd("BufWritePre", {
                 group = lspformat_augroup,
@@ -292,8 +278,8 @@ local config = function()
         -- See `:help vim.diagnostic.*` for documentation on any of the below functions
         local opts = { noremap = true, silent = true }
         vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
-        vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
-        vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
+        vim.keymap.set('n', '[d', function() vim.diagnostic.jump({ count = -1, float = true }) end, opts)
+        vim.keymap.set('n', ']d', function() vim.diagnostic.jump({ count = 1, float = true }) end, opts)
         vim.keymap.set('n', '<space>q', function()
             local ok, trouble = pcall(require, "trouble")
             if ok then
@@ -360,9 +346,7 @@ local config = function()
     end
 
     local function goto_definition(split_cmd)
-        local util = vim.lsp.util
         local log = require("vim.lsp.log")
-        local api = vim.api
 
         local function maybe_split_buffer(uri)
             local filename = string.gsub(uri, "^file://", "") -- Trim prefix.
@@ -382,17 +366,17 @@ local config = function()
             local offset_encoding = vim.lsp.get_client_by_id(ctx.client_id).offset_encoding
             if vim.islist(result) then
                 maybe_split_buffer(result[1].uri)
-                util.jump_to_location(result[1], offset_encoding)
+                vim.lsp.util.show_document(result[1], offset_encoding, { focus = true })
 
                 if #result > 1 then
                     -- Use setqflist() instead?
-                    util.set_qflist(util.locations_to_items(result, offset_encoding))
-                    api.nvim_command("copen")
-                    api.nvim_command("wincmd p")
+                    vim.lsp.util.set_qflist(vim.lsp.util.locations_to_items(result, offset_encoding))
+                    vim.api.nvim_command("copen")
+                    vim.api.nvim_command("wincmd p")
                 end
             else
                 maybe_split_buffer(result.uri)
-                util.jump_to_location(result, offset_encoding)
+                vim.lsp.util.show_document(result, offset_encoding, { focus = true })
             end
         end
     end
@@ -420,7 +404,6 @@ local config = function()
         -- Ref: https://github.com/hrsh7th/cmp-nvim-lsp/issues/38
         -- local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
         local capabilities = require("cmp_nvim_lsp").default_capabilities()
-        local lspconfig = require('lspconfig')
         local must_opts = {
             capabilities = capabilities,
             on_attach = lspconfig_on_attach,
@@ -431,7 +414,8 @@ local config = function()
             for k, v in pairs(must_opts) do
                 opts[k] = v
             end
-            lspconfig[name].setup(opts)
+            vim.lsp.enable(name)
+            vim.lsp.config(name, opts)
         end
 
         vim.lsp.handlers["textDocument/definition"] = goto_definition('split')

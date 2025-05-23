@@ -9,5 +9,5 @@ return {
     { 'solarnz/thrift.vim', ft = { 'thrift' } },
     { 'fatih/vim-nginx', ft = { 'nginx' } },
     -- { 'plasticboy/vim-markdown', ft = { 'markdown' }, config = config, },
-    { 'Vimjas/vim-python-pep8-indent', ft = { 'python' } },
+    -- { 'Vimjas/vim-python-pep8-indent', ft = { 'python' } },
 }

@@ -1,5 +1,3 @@
--- FIXME: rainbow: https://github.com/p00f/nvim-ts-rainbow/issues/110
-
 local config = function()
     require('nvim-treesitter.configs').setup({
         -- A list of parser names, or "all"
@@ -44,7 +42,7 @@ local config = function()
         },
         indent = {
             enable = true,
-            disable = { "python" }, -- hynek/vim-python-pep8-indent
+            disable = {},
         },
         autopairs = {
             disable = {},
@@ -72,15 +70,7 @@ local config = function()
         -- -- colors = {}, -- table of hex strings
         -- -- termcolors = {} -- table of colour name strings
         -- },
-    })
-
-    require('ts_context_commentstring').setup({
-        enable_autocmd = false,
-        languages = {
-            go = '// %s',
-            python = '# %s',
-            swift = '// %s',
-        },
+        modules = {}
     })
 
     require('treesitter-context').setup({
@@ -101,6 +91,43 @@ local config = function()
 
     vim.api.nvim_set_hl(0, 'TreesitterContextBottom', { bg = 'NONE', fg = '#F2FAFA' })
     vim.api.nvim_set_hl(0, 'TreesitterContextLineNumberBottom', { bg = 'NONE', fg = '#F2FAFA' })
+
+    require('rainbow-delimiters.setup').setup {
+        strategy = {
+            [''] = require("rainbow-delimiters.strategy.global"),
+            vim = require("rainbow-delimiters.strategy.local"),
+        },
+        query = {
+            [''] = 'rainbow-delimiters',
+            lua = 'rainbow-blocks',
+        },
+        priority = {
+            [''] = 110,
+            lua = 210,
+        },
+        highlight = {
+            'RainbowDelimiterRed',
+            'RainbowDelimiterGreen',
+            'RainbowDelimiterOrange',
+            'RainbowDelimiterCyan',
+            'RainbowDelimiterYellow',
+            'RainbowDelimiterBlue',
+            'RainbowDelimiterViolet',
+        },
+    }
+
+    require('nvim-ts-autotag').setup({
+        opts = {
+            -- Defaults
+            enable_close = true,         -- Auto close tags
+            enable_rename = true,        -- Auto rename pairs of tags
+            enable_close_on_slash = true -- Auto close on trailing </
+        },
+        -- Also override individual filetype configs, these take priority.
+        -- Empty by default, useful if one of the "opts" global settings
+        -- doesn't work well in a specific filetype
+        per_filetype = {}
+    })
 end
 
 
@@ -110,8 +137,8 @@ return { {
     dependencies = {
         { 'nvim-treesitter/nvim-treesitter-textobjects' },
         { 'nvim-treesitter/nvim-treesitter-context' },
-        { 'JoosepAlviste/nvim-ts-context-commentstring' },
-        -- { 'p00f/nvim-ts-rainbow' },
+        { 'HiPhish/rainbow-delimiters.nvim' }, -- { 'p00f/nvim-ts-rainbow' },
+        { 'windwp/nvim-ts-autotag' },
     },
     config = config,
 } }

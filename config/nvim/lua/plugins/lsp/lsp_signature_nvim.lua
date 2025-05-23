@@ -19,6 +19,8 @@ local config = function()
         max_width = 80,
         wrap = true,
         floating_window_above_cur_line = true,
+        -- floating_window_off_x = 1,
+        -- floating_window_off_y = -2,
         close_timeout = 2000,
         hint_enable = false,
         hi_parameter = 'LspSignatureActiveParameter',
@@ -29,6 +31,7 @@ local config = function()
         fix_pos = false,
         padding = '',
         timer_interval = 200,
+        always_trigger = false,
     })
 end
 

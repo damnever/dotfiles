@@ -172,8 +172,8 @@ local config = function()
                 ["<C-f>"] = { "scroll_preview", config = { direction = -10 } },
                 ["<C-b>"] = { "scroll_preview", config = { direction = 10 } },
                 ["l"] = "focus_preview",
-                ["s"] = "split_with_window_picker",
-                ["v"] = "vsplit_with_window_picker",
+                ["S"] = "split_with_window_picker",
+                ["s"] = "vsplit_with_window_picker",
                 ["t"] = "open_tabnew",
                 -- ["t"] = "open_tab_drop",
                 -- ["w"] = "open_with_window_picker",
@@ -189,7 +189,7 @@ local config = function()
                 ["A"] = "add_directory", -- also accepts the config.show_path and config.insert_as options.
                 ["d"] = "delete",
                 ["r"] = "rename",
-                ["y"] = "copy_to_clipboard",
+                ["Y"] = "copy_to_clipboard",
                 ["x"] = "cut_to_clipboard",
                 ["p"] = "paste_from_clipboard",
                 ["c"] = "copy", -- takes text input for destination, also accepts the config.show_path and config.insert_as options
