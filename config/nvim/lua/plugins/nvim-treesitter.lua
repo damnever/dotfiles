@@ -1,4 +1,4 @@
-local config = function()
+local treesitter_config = function()
     require('nvim-treesitter.configs').setup({
         -- A list of parser names, or "all"
         ensure_installed = {
@@ -72,7 +72,9 @@ local config = function()
         -- },
         modules = {}
     })
+end
 
+local treesitter_context_config = function()
     require('treesitter-context').setup({
         enable = true,            -- Enable this plugin (Can be enabled/disabled later via commands)
         multiwindow = false,      -- Enable multiwindow support.
@@ -91,7 +93,9 @@ local config = function()
 
     vim.api.nvim_set_hl(0, 'TreesitterContextBottom', { bg = 'NONE', fg = '#F2FAFA' })
     vim.api.nvim_set_hl(0, 'TreesitterContextLineNumberBottom', { bg = 'NONE', fg = '#F2FAFA' })
+end
 
+local rainbow_delimiters_config = function()
     require('rainbow-delimiters.setup').setup {
         strategy = {
             [''] = require("rainbow-delimiters.strategy.global"),
@@ -115,7 +119,9 @@ local config = function()
             'RainbowDelimiterViolet',
         },
     }
+end
 
+local auto_tag_config = function()
     require('nvim-ts-autotag').setup({
         opts = {
             -- Defaults
@@ -131,14 +137,30 @@ local config = function()
 end
 
 
-return { {
-    'nvim-treesitter/nvim-treesitter',
-    build = ":TSUpdate",
-    dependencies = {
-        { 'nvim-treesitter/nvim-treesitter-textobjects' },
-        { 'nvim-treesitter/nvim-treesitter-context' },
-        { 'HiPhish/rainbow-delimiters.nvim' }, -- { 'p00f/nvim-ts-rainbow' },
-        { 'windwp/nvim-ts-autotag' },
+return {
+    {
+        'nvim-treesitter/nvim-treesitter',
+        version = '*',
+        build = ":TSUpdate",
+        config = treesitter_config,
     },
-    config = config,
-} }
+    {
+        'nvim-treesitter/nvim-treesitter-textobjects',
+        dependencies = { 'nvim-treesitter/nvim-treesitter' }
+    },
+    {
+        'nvim-treesitter/nvim-treesitter-context',
+        config = treesitter_context_config,
+        dependencies = { 'nvim-treesitter/nvim-treesitter' }
+    },
+    {
+        'HiPhish/rainbow-delimiters.nvim',
+        config = rainbow_delimiters_config,
+        dependencies = { 'nvim-treesitter/nvim-treesitter' }
+    },
+    {
+        'windwp/nvim-ts-autotag',
+        config = auto_tag_config,
+        dependencies = { 'nvim-treesitter/nvim-treesitter' }
+    },
+}
