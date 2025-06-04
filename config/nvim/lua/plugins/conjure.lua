@@ -8,5 +8,6 @@ return { {
     "Olical/conjure",
     ft = { "clojure", "janet", "python" }, -- etc
     lazy = true,
+    enabled = false,
     config = config,
 } }
