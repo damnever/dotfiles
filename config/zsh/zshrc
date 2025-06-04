@@ -9,6 +9,11 @@ ZSH_CACHE_DIR=$ZSH_CACHE
 [[ -d "$ZSH_CACHE_DIR/completions" ]] || mkdir -p "$ZSH_CACHE_DIR/completions"
 (( ${fpath[(Ie)"$ZSH_CACHE_DIR/completions"]} )) || fpath=("$ZSH_CACHE_DIR/completions" $fpath)
 
+# Plugin configs
+for plugin_config in ~/.config/zsh/plugin_configs/*; do
+  source $plugin_config
+done
+
 # Plugin manager.
 # This must be done before running compinit.
 # NOTE: should delete ~/.cache/zsh/compdump to make autocompletion plugin work.

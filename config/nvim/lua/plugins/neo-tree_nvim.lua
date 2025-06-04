@@ -217,7 +217,7 @@ local config = function()
                     ["[g"] = "prev_git_modified",
                     ["]g"] = "next_git_modified",
                     ["i"] = "show_file_details", -- see `:h neo-tree-file-actions` for options to customize the window.
-                    ["b"] = "rename_basename",
+                    ["B"] = "rename_basename",
                     ["?"] = { "show_help", nowait = false, config = { title = "Order by", prefix_key = "o" } },
                     ["Oc"] = { "order_by_created", nowait = false },
                     ["Od"] = { "order_by_diagnostics", nowait = false },

@@ -16,3 +16,6 @@ ohmyzsh/ohmyzsh path:plugins/uv kind:zsh
 zsh-users/zsh-completions kind:zsh
 zsh-users/zsh-autosuggestions kind:zsh
 zsh-users/zsh-syntax-highlighting kind:zsh
+
+# ./plugin_configs/zvm_config.zsh
+jeffreytse/zsh-vi-mode
