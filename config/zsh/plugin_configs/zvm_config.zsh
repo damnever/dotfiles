@@ -9,3 +9,9 @@ zvm_config() {
 
     ZVM_VI_SURROUND_BINDKEY=classic
 }
+
+# https://github.com/jeffreytse/zsh-vi-mode/blob/master/README.md#execute-extra-commands
+function _init_some_plugin_again() {
+  source $HOME/Library/Caches/antidote/ohmyzsh/ohmyzsh/plugins/fzf/fzf.plugin.zsh
+}
+zvm_after_init_commands+=(_init_some_plugin_again)
