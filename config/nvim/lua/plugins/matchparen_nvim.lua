@@ -1,12 +1,12 @@
 local config = function()
-    require('matchparen').setup({
-        on_startup = true,           -- Should it be enabled by default
-        hl_group = 'MatchParen',     -- highlight group for matched characters
-        augroup_name = 'matchparen', -- almost no reason to touch this unless there is already augroup with such name
-    })
+  require('matchparen').setup({
+    enabled = true,
+    hl_group = 'MatchParen',
+    debounce_time = 60,
+  })
 end
 
 return { {
-    'monkoose/matchparen.nvim',
-    config = config,
+  'monkoose/matchparen.nvim',
+  config = config,
 } }
