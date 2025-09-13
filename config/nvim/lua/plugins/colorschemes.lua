@@ -50,7 +50,6 @@ local nightfox_config = function()
     ]]
     --
 
-    vim.o.background = 'dark'
     -- nightfox
     vim.cmd([[colorscheme carbonfox]])
 end
@@ -61,7 +60,7 @@ local tokyonight_config = function()
         light_style = "day",
         day_brightness = 0.4,
     })
-    vim.o.background = 'dark'
+
     vim.cmd([[colorscheme tokyonight-storm]])
 end
 

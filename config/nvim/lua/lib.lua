@@ -94,6 +94,15 @@ local vimbatch = {
     end
 }
 
+local function load_colorscheme(names)
+    for _, name in ipairs(names) do
+        if pcall(vim.cmd, "colorscheme " .. name) then
+            return
+        end
+    end
+end
+
+
 return {
     dump_table = dump,
 
@@ -106,4 +115,6 @@ return {
     parse_golang_module_name = parse_golang_module_name,
 
     vimbatch = vimbatch,
+
+    load_colorscheme = load_colorscheme,
 }

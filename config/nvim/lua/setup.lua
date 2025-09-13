@@ -170,15 +170,6 @@ local function set_options()
     }
 end
 
--- TODO: call packer sync manually, ref: ./plugins/colorschemes.lua.
-local function set_colorscheme(name, background)
-    name = name ~= nil and name or 'molokai'
-    background = background ~= nil and background or 'dark'
-    vim.o.background = background
-    -- opt('t_Co', '256')
-    vim.cmd('colorscheme ' .. name)
-end
-
 local function set_cursor_line()
     -- https://github.com/neovim/neovim/wiki/FAQ#how-to-change-cursor-shape-in-the-terminal
     vim.o.guicursor = nil
@@ -284,9 +275,6 @@ local function setup()
     set_options()
     set_cursor_line()
     set_misc_autocmds()
-
-    -- local colorscheme = opts.colorscheme or {}
-    -- set_colorscheme(colorscheme.name, colorscheme.background)
 end
 
 return {
