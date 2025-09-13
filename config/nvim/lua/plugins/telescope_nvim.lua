@@ -40,7 +40,10 @@ local config = function()
             },
             mappings = {
                 i = {
-                    ["<esc>"] = actions.close,
+                    -- ["<esc>"] = actions.close,
+                    ["<C-c>"] = function()
+                        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, false, true), "tn", true)
+                    end,
                     ['<C-g>'] = function(prompt_bufnr)
                         -- Ref: https://github.com/nvim-telescope/telescope.nvim/wiki/Configuration-Recipes#using-nvim-window-picker-to-choose-a-target-window-when-opening-a-file-from-any-picker
                         -- Use nvim-window-picker to choose the window by dynamically attaching a function
