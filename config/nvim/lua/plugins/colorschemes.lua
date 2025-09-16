@@ -51,7 +51,7 @@ local nightfox_config = function()
     --
 
     -- nightfox
-    vim.cmd([[colorscheme carbonfox]])
+    -- vim.cmd([[colorscheme carbonfox]])
 end
 
 local tokyonight_config = function()
@@ -61,7 +61,7 @@ local tokyonight_config = function()
         day_brightness = 0.4,
     })
 
-    vim.cmd([[colorscheme tokyonight-storm]])
+    -- vim.cmd([[colorscheme tokyonight-storm]])
 end
 
 local github_config = function()
@@ -73,7 +73,18 @@ local github_config = function()
     })
 
     -- github_dark_dimmed github_dark_default github_dark github_dark_high_contrast github_dark_colorblind
-    vim.cmd('colorscheme github_dark_high_contrast')
+    -- vim.cmd('colorscheme github_dark_high_contrast')
+end
+
+local sonokai_config = function()
+    -- require("sonokai").setup({})
+    require('lib').vimbatch.global_vars({
+        sonokai_style = 'andromeda', -- 'atlantis', 'shusia', 'maia',
+        sonokai_enable_italic = 1,
+        sonokai_better_performance = 1,
+    })
+
+    -- vim.cmd("colorscheme sonokai")
 end
 
 return {
@@ -81,14 +92,14 @@ return {
         "EdenEast/nightfox.nvim",
         priority = 1000,
         config = nightfox_config,
-        enabled = false,
+        enabled = true,
     },
     {
         "folke/tokyonight.nvim",
         lazy = false,
         priority = 1000,
         config = tokyonight_config,
-        enabled = false,
+        enabled = true,
     },
     {
         'projekt0n/github-nvim-theme',
@@ -96,6 +107,13 @@ return {
         lazy = false,
         priority = 1000,
         config = github_config,
+        enabled = true,
+    },
+    {
+        "sainnhe/sonokai",
+        lazy = false,
+        priority = 1000,
+        config = sonokai_config,
         enabled = true,
     },
 }

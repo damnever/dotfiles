@@ -3,3 +3,5 @@ require('setup').setup()
 
 -- Load lazy.nvim.
 require('lazy_pm')
+
+require('lib').load_colorscheme({ "tokyonight", "carbonfox", "unokai" })
