@@ -61,10 +61,6 @@ install_command_line_tools() {
     brew install docker-buildx
     mkdir -p ~/.docker/cli-plugins && ln -sfn $(which docker-buildx) ~/.docker/cli-plugins/docker-buildx
     docker buildx install
-    # fonts
-    # brew tap homebrew/cask-fonts
-    # brew install font-ibm-plex --cask
-    # brew install --cask font-jetbrains-mono-nerd-font # https://www.nerdfonts.com/
 
     go install golang.org/x/perf/cmd/benchstat@latest
 
@@ -132,13 +128,30 @@ setup_vim() {
     # go install github.com/client9/misspell/cmd/misspell@latest
 }
 
+install_nerd_font() {
+  local name="$1"
+  local url="https://github.com/ryanoasis/nerd-fonts/releases/latest/download/${name}.zip"
+  local tmpdir
+  tmpdir=$(mktemp -d)
+  local zip="$tmpdir/${name}.zip"
+  local fontdir="$HOME/Library/Fonts"
+
+  curl -L -o "$zip" "$url"
+  unzip -q "$zip" -d "$tmpdir"
+  cp -f "${tmpdir}"/"${name}"NerdFont-*.ttf "${fontdir}/"
+  cp -f "${tmpdir}"/"${name}"NerdFontMono-*.ttf "${fontdir}/"
+}
 
 install_fonts() {
     echo "-> install fonts .."
     unzip config/_asserts/fonts.zip -d /tmp/dotfiles-fonts
     mv "/tmp/dotfiles-fonts/fonts/Monaco Nerd Font Complete.ttf" "$HOME/Library/Fonts/"
     rm -rf /tmp/dotfiles-fonts
+
+    install_nerd_font "JetBrainsMono"
 }
+
+
 
 init_mac(){
     if [[ "$platform" != "Darwin" ]]; then  # Mac
