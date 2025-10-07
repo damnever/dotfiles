@@ -153,9 +153,9 @@ local config = function()
         require("mason").setup({
             ui = {
                 icons = {
-                    package_installed = "✓",
-                    package_pending = "◍",
-                    package_uninstalled = "✗"
+                    package_installed = " ", -- ✓
+                    package_pending = "󱥸 ", -- ◍
+                    package_uninstalled = "" -- ✗
                 }
             }
         })
@@ -181,7 +181,7 @@ local config = function()
             update_in_insert = false,
             severity_sort = false,
         })
-        local diagnostic_signs = { Error = '󰅚 ', Warn = ' ', Hint = ' ', Info = ' ' }
+        local diagnostic_signs = { Error = ' ', Warn = ' ', Hint = ' ', Info = ' ' }
         for type, icon in pairs(diagnostic_signs) do
             local hl = 'DiagnosticSign' .. type
             vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
@@ -437,3 +437,4 @@ return { {
     },
     config = config,
 } }
+

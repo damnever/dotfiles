@@ -8,11 +8,11 @@ local config = function()
         stages = "fade_in_slide_out", -- "fade_in_slide_out", "fade", "slide", "static"
         -- background_colour = "Normal",
         icons = {
-            ERROR = "",
-            WARN = "",
-            INFO = "",
-            DEBUG = "",
-            TRACE = "✎",
+            ERROR = " ",
+            WARN = " ",
+            INFO = " ",
+            DEBUG = " ",
+            TRACE = " ",
         },
         on_open = nil,
         on_close = nil,
