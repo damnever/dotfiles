@@ -17,5 +17,8 @@ zsh-users/zsh-completions kind:zsh
 zsh-users/zsh-autosuggestions kind:zsh
 zsh-users/zsh-syntax-highlighting kind:zsh
 
-# ./plugin_configs/zvm_config.zsh
+# ./plugin_configs/zsh-vi-mode.zsh
 jeffreytse/zsh-vi-mode
+
+# ./plugin_configs/per-directory-history.zsh
+jimhester/per-directory-history

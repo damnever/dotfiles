@@ -41,6 +41,8 @@ local config = function()
             mappings = {
                 i = {
                     -- ["<esc>"] = actions.close,
+                    ["<C-s>"] = actions.select_horizontal, -- your custom horizontal split
+                    ["<C-v>"] = actions.select_vertical,   -- vertical split
                     ["<C-c>"] = function()
                         vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, false, true), "tn", true)
                     end,
@@ -63,6 +65,8 @@ local config = function()
                     end,
                 },
                 n = {
+                    ["s"] = actions.select_horizontal,
+                    ["v"] = actions.select_vertical,
                     ["<esc>"] = actions.close,
                     ["<c-t>"] = function(prompt_bufnr)
                         return require("trouble.sources.telescope").open(prompt_bufnr)

@@ -172,8 +172,10 @@ local config = function()
                 ["<C-f>"] = { "scroll_preview", config = { direction = -10 } },
                 ["<C-b>"] = { "scroll_preview", config = { direction = 10 } },
                 ["l"] = "focus_preview",
-                ["S"] = "split_with_window_picker",
-                ["s"] = "vsplit_with_window_picker",
+                ["s"] = "split_with_window_picker",
+                ["S"] = "vsplit_with_window_picker",
+                ["<C-s>"] = "split_with_window_picker",
+                ["<C-v>"] = "vsplit_with_window_picker",
                 ["t"] = "open_tabnew",
                 -- ["t"] = "open_tab_drop",
                 -- ["w"] = "open_with_window_picker",
@@ -369,3 +371,4 @@ return { {
     config       = config,
     enabled      = true,
 } }
+

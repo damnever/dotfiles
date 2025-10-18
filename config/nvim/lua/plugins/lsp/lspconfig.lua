@@ -222,13 +222,22 @@ local config = function()
         end
     end
 
-    -- Ref: https://github.com/golang/tools/blob/master/gopls/doc/vim.md
-    local gopls_organize_imports_on_save_augroup = vim.api.nvim_create_augroup("LspGoplsOrganizeImportsOnSave", {})
-    local function go_organize_imports_on_save()
-        local function go_organize_imports(buf, wait_ms)
-            local params = vim.lsp.util.make_range_params(0, vim.lsp.util._get_offset_encoding(buf))
+    local lspformat_augroup = vim.api.nvim_create_augroup("LspFormatting", {})
+    local function format_on_save(client, bufnr)
+        vim.api.nvim_clear_autocmds({ group = lspformat_augroup, buffer = bufnr })
+
+        local filetype = vim.api.nvim_get_option_value("filetype", { buf = bufnr })
+        if filetype == "swift" then
+            -- Prefer SwiftFormat from null-ls/none-ls rather than swift-format from sourcekit-lsp, as they conflict with each other.
+            return
+        end
+
+        local function goOrganizeImports()
+            -- vim.lsp.buf.code_action({ async = false, context = { only = { 'source.organizeImports' }, diagnostics = {} }, apply = true })
+            local params = vim.lsp.util.make_range_params()
             params.context = { only = { "source.organizeImports" } }
-            local result = vim.lsp.buf_request_sync(buf, "textDocument/codeAction", params, wait_ms)
+            vim.lsp.buf_request_sync(bufnr, "textDocument/codeAction", params, 3000)
+            local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params)
             for cid, res in pairs(result or {}) do
                 for _, r in pairs(res.result or {}) do
                     if r.edit then
@@ -239,32 +248,57 @@ local config = function()
             end
         end
 
-        vim.api.nvim_clear_autocmds({ group = gopls_organize_imports_on_save_augroup })
-        vim.api.nvim_create_autocmd("BufWritePre", {
-            group = gopls_organize_imports_on_save_augroup,
-            pattern = { "*.go" },
-            callback = function(env)
-                go_organize_imports(env.buf, 3000)
-            end,
-        })
-    end
-
-    local lspformat_augroup = vim.api.nvim_create_augroup("LspFormatting", {})
-    local function format_on_save(client, bufnr)
-        local filetype = vim.api.nvim_get_option_value("filetype", { buf = bufnr })
-        if filetype == "swift" then
-            -- Prefer SwiftFormat from null-ls/none-ls rather than swift-format from sourcekit-lsp, as they conflict with each other.
-            return
-        end
-        if client:supports_method("textDocument/formatting", bufnr) then
-            vim.api.nvim_clear_autocmds({ group = lspformat_augroup, buffer = bufnr })
+        local is_go_file = filetype == "go"
+        local supports_formatting = client:supports_method("textDocument/formatting", bufnr)
+        if is_go_file or supports_formatting then
             vim.api.nvim_create_autocmd("BufWritePre", {
                 group = lspformat_augroup,
                 buffer = bufnr,
                 callback = function()
-                    vim.lsp.buf.format({ async = true, timeout_ms = 5000, bufnr = bufnr, })
+                    if is_go_file then
+                        goOrganizeImports()
+                    end
+                    if supports_formatting then
+                        vim.lsp.buf.format({ async = true, timeout_ms = 5000, bufnr = bufnr, })
+                    end
                 end,
             })
+        end
+    end
+
+    local function goto_definition(split_cmd)
+        local log = require("vim.lsp.log")
+
+        local function maybe_split_buffer(uri)
+            local filename = string.gsub(uri, "^file://", "") -- Trim prefix.
+            local current_buffer_filename = vim.api.nvim_buf_get_name(0)
+            if filename ~= current_buffer_filename and split_cmd then
+                vim.cmd(split_cmd)
+            end
+        end
+
+        -- note, this handler style is for neovim 0.5.1/0.6, if on 0.5, call with function(_, method, result)
+        return function(_, result, ctx) -- :h lsp-handler
+            if result == nil or vim.tbl_isempty(result) then
+                local _ = log.info and log.info(ctx.method, "No location found")
+                return nil
+            end
+
+            local offset_encoding = vim.lsp.get_client_by_id(ctx.client_id).offset_encoding
+            if vim.islist(result) then
+                maybe_split_buffer(result[1].uri)
+                vim.lsp.util.show_document(result[1], offset_encoding, { focus = true })
+
+                if #result > 1 then
+                    -- Use setqflist() instead?
+                    vim.lsp.util.set_qflist(vim.lsp.util.locations_to_items(result, offset_encoding))
+                    vim.api.nvim_command("copen")
+                    vim.api.nvim_command("wincmd p")
+                end
+            else
+                maybe_split_buffer(result.uri)
+                vim.lsp.util.show_document(result, offset_encoding, { focus = true })
+            end
         end
     end
 
@@ -307,7 +341,7 @@ local config = function()
             if ok then
                 return telescope_builtin.lsp_definitions({ jump_type = "split" })
             else
-                return vim.lsp.buf.definition()
+                return goto_definition('split') -- vim.lsp.buf.definition()
             end
         end, bufopts)
         vim.keymap.set('n', '<leader>jt', function()
@@ -318,7 +352,7 @@ local config = function()
                 return vim.lsp.buf.type_definition()
             end
         end, bufopts)
-        vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
+        vim.keymap.set('n', 'K', function() vim.lsp.buf.hover({ border = "rounded", }) end, bufopts)
         vim.keymap.set('n', '<leader>ji', function()
             local ok, telescope_builtin = pcall(require, "telescope.builtin")
             if ok then
@@ -335,69 +369,11 @@ local config = function()
                 return vim.lsp.buf.references()
             end
         end, bufopts)
-        vim.keymap.set('n', '<leader>jk', vim.lsp.buf.signature_help, bufopts)
+        vim.keymap.set('n', '<leader>jk', function() vim.lsp.buf.signature_help({ border = "rounded", }) end, bufopts)
         vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
         vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
         vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
         vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
-        vim.keymap.set('n', '<space>f', function()
-            vim.lsp.buf.format({ async = true })
-        end, bufopts)
-    end
-
-    local function goto_definition(split_cmd)
-        local log = require("vim.lsp.log")
-
-        local function maybe_split_buffer(uri)
-            local filename = string.gsub(uri, "^file://", "") -- Trim prefix.
-            local current_buffer_filename = vim.api.nvim_buf_get_name(0)
-            if filename ~= current_buffer_filename and split_cmd then
-                vim.cmd(split_cmd)
-            end
-        end
-
-        -- note, this handler style is for neovim 0.5.1/0.6, if on 0.5, call with function(_, method, result)
-        return function(err, result, ctx) -- :h lsp-handler
-            if result == nil or vim.tbl_isempty(result) then
-                local _ = log.info and log.info(ctx.method, "No location found")
-                return nil
-            end
-
-            local offset_encoding = vim.lsp.get_client_by_id(ctx.client_id).offset_encoding
-            if vim.islist(result) then
-                maybe_split_buffer(result[1].uri)
-                vim.lsp.util.show_document(result[1], offset_encoding, { focus = true })
-
-                if #result > 1 then
-                    -- Use setqflist() instead?
-                    vim.lsp.util.set_qflist(vim.lsp.util.locations_to_items(result, offset_encoding))
-                    vim.api.nvim_command("copen")
-                    vim.api.nvim_command("wincmd p")
-                end
-            else
-                maybe_split_buffer(result.uri)
-                vim.lsp.util.show_document(result, offset_encoding, { focus = true })
-            end
-        end
-    end
-
-    local function lsp_handlers()
-        -- TODO: https://github.com/neovim/nvim-lspconfig/wiki/UI-Customization#borders
-        --[[ local border = { ]]
-        --[[ { "🭽", "FloatBorder" }, ]]
-        --[[ { "▔", "FloatBorder" }, ]]
-        --[[ { "🭾", "FloatBorder" }, ]]
-        --[[ { "▕", "FloatBorder" }, ]]
-        --[[ { "🭿", "FloatBorder" }, ]]
-        --[[ { "▁", "FloatBorder" }, ]]
-        --[[ { "🭼", "FloatBorder" }, ]]
-        --[[ { "▏", "FloatBorder" }, ]]
-        --[[ } ]]
-        -- LSP settings (for overriding per client)
-        return {
-            ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded", }),
-            ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded", }),
-        }
     end
 
     local function setup_lspconfig()
@@ -407,7 +383,6 @@ local config = function()
         local must_opts = {
             capabilities = capabilities,
             on_attach = lspconfig_on_attach,
-            handlers = lsp_handlers(),
         }
         for name, opts in pairs(lsp_servers) do
             opts["no_install_required"] = nil -- remove it
@@ -418,13 +393,11 @@ local config = function()
             vim.lsp.config(name, opts)
         end
 
-        vim.lsp.handlers["textDocument/definition"] = goto_definition('split')
         setup_diagnostic()
     end
 
     setup_mason()
     setup_lspconfig()
-    go_organize_imports_on_save()
 end
 
 
@@ -432,9 +405,7 @@ return { {
     'williamboman/mason.nvim',
     dependencies = {
         { 'cmp-nvim-lsp' },
-        { 'neovim/nvim-lspconfig' },
         { 'williamboman/mason-lspconfig.nvim' },
     },
     config = config,
 } }
-
