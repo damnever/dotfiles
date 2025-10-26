@@ -30,7 +30,7 @@ adjust-underline-thickness = -25%
 grapheme-width-method = unicode
 
 cursor-style = block
-cursor-style-blink = true
+cursor-style-blink = false
 cursor-opacity = 0.86
 shell-integration-features = no-cursor
 mouse-hide-while-typing = false

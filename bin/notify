@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+# vim: ft=sh
+# macOS alert helper
+# Supports: -d <seconds>, optional message
+# Preserves caller's exit status
+
+set -euo pipefail
+caller_status=$?
+
+duration=5
+message=""
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    -d|--duration)
+      duration="$2"
+      shift 2
+      ;;
+    -*)
+      echo "Unknown option: $1" >&2
+      exit 1
+      ;;
+    *)
+      if [[ -z "${title:-}" ]]; then
+        title="$1"
+      elif [[ -z "$message" ]]; then
+        message="$1"
+      fi
+      shift
+      ;;
+  esac
+done
+
+title=${title:-"Attention"}
+message=${message:-""}
+
+osascript -e "tell application \"Ghostty\" to display alert \"${title}\" message \"${message}\" giving up after ${duration}" >/dev/null 2>&1 || \
+    osascript -e "display alert \"${title}\" message \"${message}\" giving up after ${duration}" >/dev/null 2>&1
+
+exit $caller_status

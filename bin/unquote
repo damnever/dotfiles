@@ -1,0 +1,31 @@
+#!/usr/bin/env python3
+# vim: ft=python
+# Safely unescape and render quoted text
+# author: ChatGPT
+
+import sys, ast
+
+
+def unescape(s: str) -> str:
+    s = s.strip()
+
+    # First layer: literal_eval if quoted
+    if len(s) >= 2 and s[0] == s[-1] and s[0] in "'\"":
+        try:
+            s = ast.literal_eval(s)
+        except Exception:
+            pass
+
+    # Second layer: handle \n, \t, \u escapes
+    try:
+        s = bytes(s, "utf-8").decode("unicode_escape")
+    except Exception:
+        pass
+    return s
+
+
+if __name__ == "__main__":
+    data = (
+        sys.stdin.read().strip() if not sys.stdin.isatty() else " ".join(sys.argv[1:])
+    )
+    print(unescape(data))

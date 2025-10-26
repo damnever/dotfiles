@@ -1,0 +1,54 @@
+#!/usr/bin/env python3
+# vim: ft=python
+# Describe or list HTTP status codes
+# Usage:
+#   httpstatus          → list all
+#   httpstatus 404      → show single
+#   httpstatus 2xx      → show class
+
+import sys
+from http import HTTPStatus
+
+
+def _print(status: HTTPStatus):
+    print(f"{status.value:<3}  {status.phrase} — {status.description or status.phrase}")
+
+
+def list_all():
+    for status in sorted(HTTPStatus):
+        _print(status)
+
+
+def list_class(prefix: int):
+    for status in sorted(HTTPStatus):
+        if status.value // 100 == prefix:
+            _print(status)
+
+
+def describe(code: int):
+    try:
+        status = HTTPStatus(code)
+        _print(status)
+    except ValueError:
+        print(f"Unknown HTTP status code: {code}")
+
+
+def main():
+    if len(sys.argv) == 1:
+        list_all()
+        return
+
+    arg = sys.argv[1]
+    if arg.endswith("xx") and arg[0].isdigit():
+        list_class(int(arg[0]))
+    elif arg.isdigit():
+        describe(int(arg))
+    else:
+        print("Usage: httpstatus [<code>|<class>]")
+        print("Examples:")
+        print("  httpstatus 404")
+        print("  httpstatus 2xx")
+
+
+if __name__ == "__main__":
+    main()

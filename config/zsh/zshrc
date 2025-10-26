@@ -55,6 +55,7 @@ bindkey -e  # https://stackoverflow.com/questions/23128353/zsh-shortcut-ctrl-a-n
 bindkey '^j' backward-word
 bindkey '^k' forward-word
 
+export PATH="$PATH:${HOME}/.bin"  # Custom scripts
 
 export PATH="$PATH:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin"
 # export MANPATH="/usr/local/man:$MANPATH"

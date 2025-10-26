@@ -1,0 +1,50 @@
+#!/usr/bin/env python3
+# vim: ft=python
+# Encode or decode URL components
+
+import sys
+import argparse
+from urllib.parse import quote, unquote, quote_plus, unquote_plus
+
+
+def main():
+    p = argparse.ArgumentParser(add_help=False)
+    g = p.add_mutually_exclusive_group(required=True)
+    g.add_argument("-e", "--encode", action="store_true")
+    g.add_argument("-d", "--decode", action="store_true")
+    p.add_argument(
+        "--plus", action="store_true", help="use + for spaces (quote_plus/unquote_plus)"
+    )
+    p.add_argument(
+        "--all",
+        action="store_true",
+        help="encode everything except ASCII letters/digits (safe='')",
+    )
+    p.add_argument("-h", "--help", action="help", help="show this help and exit")
+    p.add_argument("text", nargs="*", help="text to process; if omitted, read stdin")
+
+    args = p.parse_args()
+
+    if args.encode:
+        safe = "" if args.all else "-_.~"
+        fn = (
+            (lambda s: quote_plus(s, safe=safe))
+            if args.plus
+            else (lambda s: quote(s, safe=safe))
+        )
+    else:
+        fn = unquote_plus if args.plus else unquote
+
+    if args.text:
+        inputs = args.text
+    else:
+        inputs = sys.stdin.read()
+
+    out = []
+    for chunk in inputs:
+        out.append(fn(chunk))
+    sys.stdout.write("".join(out))
+
+
+if __name__ == "__main__":
+    main()

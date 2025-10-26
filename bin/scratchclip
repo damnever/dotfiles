@@ -1,0 +1,85 @@
+#!/usr/bin/env bash
+# vim: ft=sh
+# Edit clipboard text in your editor
+# Default: temporary edit under /tmp
+# -s/--autosave or -o explicitly saves under ~/.local/tmp/scratchclip or custom file
+
+set -euo pipefail
+
+# detect clipboard command
+if command -v pbpaste >/dev/null 2>&1; then
+    CLIP_READ="pbpaste"
+elif command -v xclip >/dev/null 2>&1; then
+    CLIP_READ="xclip -o -selection clipboard"
+elif command -v wl-paste >/dev/null 2>&1; then
+    CLIP_READ="wl-paste"
+else
+    echo "❌ No clipboard command found (pbpaste, xclip, or wl-paste)." >&2
+    exit 1
+fi
+
+# defaults
+OUTFILE=""
+AUTOSAVE=false
+PERSIST_DIR="$HOME/.local/tmp/scratchclip"
+mkdir -p "$PERSIST_DIR"
+
+# parse args
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        -o|--out)
+            OUTFILE="$2"
+            shift 2
+            ;;
+        -s|--save|--autosave)
+            AUTOSAVE=true
+            shift
+            ;;
+        -h|--help)
+            cat <<'EOF'
+Usage: scratchclip [options]
+
+Edit clipboard text in your editor (default: temporary /tmp file).
+
+Options:
+    -o, --out <file>   Save edited text to this file.
+    -s, --save         Auto-save to ~/.local/tmp/scratchclip/<timestamp>.txt
+    -h, --help         Show this help message.
+EOF
+            exit 0
+            ;;
+        *)
+            echo "❌ Unknown argument: $1" >&2
+            exit 1
+            ;;
+    esac
+done
+
+# choose temp location
+if $AUTOSAVE; then
+    # persistent scratch dir
+    TMP=$(mktemp -p "$PERSIST_DIR" "scratchclip.XXXXXX")
+else
+    # pure temp dir
+    TMP=$(mktemp /tmp/scratchclip.XXXXXX)
+fi
+
+# pull clipboard
+$CLIP_READ > "$TMP"
+
+# open in editor
+"${EDITOR:-vi}" "$TMP"
+
+# save or not
+if [[ -n "$OUTFILE" ]]; then
+    cp "$TMP" "$OUTFILE"
+    echo "💾 Saved to: $OUTFILE"
+elif $AUTOSAVE; then
+    TS=$(date +"%Y-%m-%d-%H%M%S")
+    OUTFILE="$PERSIST_DIR/clip-$TS.txt"
+    mv "$TMP" "$OUTFILE"
+    echo "💾 Auto-saved to: $OUTFILE"
+else
+    echo "📝 Edited temporary file: $TMP"
+    echo "   (will vanish after reboot or tmp cleanup)"
+fi

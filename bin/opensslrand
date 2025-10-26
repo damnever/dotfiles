@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+# vim: ft=sh
+# Generate cryptographically secure random data using OpenSSL
+
+format="base64"
+newline=true
+length=32
+
+# Parse args
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        -h|--help)
+            cat <<'EOF'
+Usage: opensslrand [options] [length]
+Generate cryptographically secure random data.
+
+Options:
+--hex          Output in hexadecimal (default is Base64)
+--base64       Output in Base64 (default)
+-n             Suppress trailing newline
+-h, --help     Show this help
+EOF
+            return 0
+            ;;
+        --hex)    format="hex"; shift ;;
+        --base64) format="base64"; shift ;;
+        -n)       newline=false; shift ;;
+        *)
+            length="$1"
+            shift
+            ;;
+    esac
+done
+
+if $newline; then
+    openssl rand -"${format}" "$length"
+else
+    openssl rand -"${format}" "$length" | tr -d '\n'
+fi

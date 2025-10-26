@@ -82,10 +82,11 @@ install_command_line_tools() {
 }
 
 
-sync_configuration_files() {
-    echo "-> sync configuration files .."
+link_configuration_files() {
+    echo "-> link configuration files .."
 
     files=(\
+        bin \
         gitconfig \
         tmux.conf \
         zshrc \
@@ -165,7 +166,7 @@ init_mac(){
     set -e
     change_settings_for_mac
     install_fonts
-    sync_configuration_files
+    link_configuration_files
 
     # https://docs.brew.sh/Installation
     if ! command -v brew &> /dev/null; then
@@ -193,16 +194,16 @@ init_mac(){
 
 
 usage() {
-    echo "Usage: $0 [-i] [-t] [-c] [-v]" >&2
+    echo "Usage: $0 [-i] [-t] [-l] [-v]" >&2
     echo "       -i initialize a new mac" >&2
     echo "       -t install command line tools" >&2
-    echo "       -c synchronize configuration files" >&2
+    echo "       -l link configuration files" >&2
     echo "       -v setup vim" >&2
     echo "       -f install patched https://www.nerdfonts.com/" >&2
     exit 1
 }
 
-while getopts ":itcvf" opt; do
+while getopts ":itlvf" opt; do
     case "${opt}" in
         i )
             noargs=1
@@ -212,9 +213,9 @@ while getopts ":itcvf" opt; do
             noargs=1
             install_command_line_tools
             ;;
-        c )
+        l )
             noargs=1
-            sync_configuration_files
+            link_configuration_files
             ;;
         v )
             noargs=1

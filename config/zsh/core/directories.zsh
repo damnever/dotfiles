@@ -33,6 +33,12 @@ function d () {
 }
 compdef _dirs d
 
+# mkdir and cd into it
+function mkcd() {
+    mkdir -p -- "$1" && cd -- "$1"
+}
+compdef _directories mkcd
+
 # List directory contents
 alias lsa='ls -lah'
 alias l='ls -lah'

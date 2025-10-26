@@ -172,6 +172,34 @@ local config = function()
         })
     end
 
+    local function setup_codesettings()
+        local codesettings = require('codesettings')
+        codesettings.setup({
+            ---Look for these config files
+            config_file_paths = {
+                '.vscode/settings.json',
+                'codesettings.json',
+                'lspsettings.json',
+                '.codesettings.json',
+                '.lspsettings.json',
+                '.nvim/codesettings.json',
+                '.nvim/lspsettings.json',
+            },
+            ---Integrate with jsonls to provide LSP completion for LSP settings based on schemas
+            jsonls_integration = true,
+            default_merge_opts = {
+                --- How to merge lists; 'replace' (default), 'append', or 'prepend'
+                list_behavior = 'prepend',
+            },
+        })
+
+        vim.lsp.config('*', {
+            before_init = function(_, config)
+                codesettings.with_local_settings(config.name, config)
+            end,
+        })
+    end
+
     local function setup_diagnostic()
         vim.diagnostic.config({
             underline = true,
@@ -227,7 +255,7 @@ local config = function()
         vim.api.nvim_clear_autocmds({ group = lspformat_augroup, buffer = bufnr })
 
         local filetype = vim.api.nvim_get_option_value("filetype", { buf = bufnr })
-        if filetype == "swift" then
+        if filetype == "swift" or filetype == "python" then
             -- Prefer SwiftFormat from null-ls/none-ls rather than swift-format from sourcekit-lsp, as they conflict with each other.
             return
         end
@@ -259,7 +287,7 @@ local config = function()
                         goOrganizeImports()
                     end
                     if supports_formatting then
-                        vim.lsp.buf.format({ async = true, timeout_ms = 5000, bufnr = bufnr, })
+                        vim.lsp.buf.format({ async = true, timeout_ms = 5000, bufnr = bufnr })
                     end
                 end,
             })
@@ -392,12 +420,12 @@ local config = function()
             vim.lsp.enable(name)
             vim.lsp.config(name, opts)
         end
-
-        setup_diagnostic()
     end
 
     setup_mason()
+    setup_codesettings()
     setup_lspconfig()
+    setup_diagnostic()
 end
 
 
@@ -405,7 +433,12 @@ return { {
     'williamboman/mason.nvim',
     dependencies = {
         { 'cmp-nvim-lsp' },
+        { 'neovim/nvim-lspconfig' }, -- Provide default configs.
         { 'williamboman/mason-lspconfig.nvim' },
+        {
+            'mrjones2014/codesettings.nvim', -- Merge local lsp configs.
+            ft = { 'json', 'jsonc' },
+        }
     },
     config = config,
 } }

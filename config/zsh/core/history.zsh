@@ -1,6 +1,6 @@
 [ -z "$HISTFILE" ] && HISTFILE="$HOME/.zsh_history"
-HISTSIZE=56789
-SAVEHIST=12345
+[ "$HISTSIZE" -lt 50000 ] && HISTSIZE=55000
+[ "$SAVEHIST" -lt 10000 ] && SAVEHIST=14000
 
 # setopt extended_history       # record timestamp of command in HISTFILE
 # setopt appendhistory

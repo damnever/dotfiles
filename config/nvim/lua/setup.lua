@@ -84,6 +84,10 @@ end
 -- vim.api.nvim_win_set_option(0, k, v) -- vim.wo -- window
 -- vim.api.nvim_buf_set_option(0, k, v) -- vim.bo -- bufffer
 local function set_options()
+    vim.o.syntax = 'on'
+    vim.o.modeline = true
+    vim.o.modelines = 5
+
     vim.o.spelllang = 'en'
 
     vim.o.smartindent = true

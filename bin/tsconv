@@ -1,0 +1,39 @@
+#!/usr/bin/env python3
+# vim: ft=python
+# Convert and display UNIX timestamps in local and UTC time
+
+import sys
+from datetime import datetime, timezone
+
+
+def main():
+    if len(sys.argv) < 2:
+        print("Usage: tsconv <timestamp>", file=sys.stderr)
+        sys.exit(1)
+
+    ts_str = sys.argv[1]
+    try:
+        ts = float(ts_str)
+    except ValueError:
+        print("Invalid timestamp.", file=sys.stderr)
+        sys.exit(1)
+
+    if ts > 1e14:  # microseconds
+        ts /= 1e6
+        unit = "microseconds"
+    elif ts > 1e11:  # milliseconds
+        ts /= 1e3
+        unit = "milliseconds"
+    else:
+        unit = "seconds"
+
+    dt_utc = datetime.fromtimestamp(ts, tz=timezone.utc)
+    dt_local = datetime.fromtimestamp(ts)
+
+    print(f"Timestamp: {ts:.3f} ({ts_str} parsed as {unit})")
+    print(f"Local:     {dt_local.strftime('%Y-%m-%d %H:%M:%S.%f %Z')}")
+    print(f"UTC:       {dt_utc.strftime('%Y-%m-%d %H:%M:%S.%f %Z')}")
+
+
+if __name__ == "__main__":
+    main()
