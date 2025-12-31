@@ -1,5 +1,5 @@
 return { {
-    'tpope/vim-repeat',
-    event = { "BufReadPost", "BufNewFile" },
-    config = config,
+	"tpope/vim-repeat",
+	event = { "BufReadPost", "BufNewFile" },
+	config = config,
 } }

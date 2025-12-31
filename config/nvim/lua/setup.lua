@@ -1,5 +1,4 @@
-local vim = vim
-local lib = require('lib')
+local lib = require("lib")
 
 local function set_global_variables()
     vim.g.mapleader = [[,]]
@@ -11,68 +10,75 @@ local function set_global_variables()
     -- else
     -- vim.g.python_host_prog = python_bin
     -- end
-    vim.g.python3_host_prog = vim.fn.expand('$HOME/.pyenv/shims/python')
+    vim.g.python3_host_prog = vim.fn.expand("$HOME/.pyenv/shims/python")
 
     -- Disable builtin plugins.
     local builtin_plugins = {
-        'gzip', 'man', 'matchparen', 'matchit', 'netrwPlugin',
-        'shada', 'tarPlugin', 'tohtml',
-        'tutor', 'zipPlugin',
+        "gzip",
+        "man",
+        "matchparen",
+        "matchit",
+        "netrwPlugin",
+        "shada",
+        "tarPlugin",
+        "tohtml",
+        "tutor",
+        "zipPlugin",
     }
     for _, plugin in ipairs(builtin_plugins) do
-        vim.g['loaded_' .. plugin] = 1
+        vim.g["loaded_" .. plugin] = 1
     end
 end
 
 local function set_common_keymaps()
-    vim.keymap.set('i', '<C-c>', '<ESC>')
-    vim.keymap.set('n', '<leader>q', ':q<CR>')
-    vim.keymap.set('n', '<leader>w', ':w<CR>')
-    vim.keymap.set('n', '<leader>x', ':wq<CR>') -- Tip: Shift + Z Z
+    vim.keymap.set("i", "<C-c>", "<ESC>")
+    vim.keymap.set("n", "<leader>q", ":q<CR>")
+    vim.keymap.set("n", "<leader>w", ":w<CR>")
+    vim.keymap.set("n", "<leader>x", ":wq<CR>") -- Tip: Shift + Z Z
 
     -- Disable direction keys.
-    vim.keymap.set('', '<Left>', '<Nop>', { remap = true })
-    vim.keymap.set('', '<Right>', '<Nop>', { remap = true })
-    vim.keymap.set('', '<Up>', '<Nop>', { remap = true })
-    vim.keymap.set('', '<Down>', '<Nop>', { remap = true })
+    vim.keymap.set("", "<Left>", "<Nop>", { remap = true })
+    vim.keymap.set("", "<Right>", "<Nop>", { remap = true })
+    vim.keymap.set("", "<Up>", "<Nop>", { remap = true })
+    vim.keymap.set("", "<Down>", "<Nop>", { remap = true })
 
     -- Window movement.
-    vim.keymap.set('', '<C-j>', '<C-W>j', { remap = true })
-    vim.keymap.set('', '<C-k>', '<C-W>k', { remap = true })
-    vim.keymap.set('', '<C-h>', '<C-W>h', { remap = true })
-    vim.keymap.set('', '<C-l>', '<C-W>l', { remap = true })
+    vim.keymap.set("", "<C-j>", "<C-W>j", { remap = true })
+    vim.keymap.set("", "<C-k>", "<C-W>k", { remap = true })
+    vim.keymap.set("", "<C-h>", "<C-W>h", { remap = true })
+    vim.keymap.set("", "<C-l>", "<C-W>l", { remap = true })
 
     -- Jump to line start/end.
-    vim.keymap.set('', 'H', '^')
-    vim.keymap.set('', 'L', '$')
+    vim.keymap.set("", "H", "^")
+    vim.keymap.set("", "L", "$")
 
     -- Increase/Decrease number.
-    vim.keymap.set('n', '+', '<C-a>')
-    vim.keymap.set('n', '-', '<C-x>')
+    vim.keymap.set("n", "+", "<C-a>")
+    vim.keymap.set("n", "-", "<C-x>")
 
     -- Copy.
-    vim.keymap.set('', 'Y', 'y$', { remap = true })
-    vim.keymap.set('v', '<leader>y', '"+y')
+    vim.keymap.set("", "Y", "y$", { remap = true })
+    vim.keymap.set("v", "<leader>y", '"+y')
 
     -- Search.
-    vim.keymap.set({ 'n', 'v' }, '/', '/\\v')
-    vim.keymap.set('', '<leader>/', ':nohls<CR>', { silent = true })
+    vim.keymap.set({ "n", "v" }, "/", "/\\v")
+    vim.keymap.set("", "<leader>/", ":nohls<CR>", { silent = true })
 
     -- Tab related
-    vim.keymap.set('n', '<C-t>', ':tabnew<CR>')
-    vim.keymap.set('n', '<leader>1', '1gt')
-    vim.keymap.set('n', '<leader>2', '2gt')
-    vim.keymap.set('n', '<leader>3', '3gt')
-    vim.keymap.set('n', '<leader>4', '4gt')
-    vim.keymap.set('n', '<leader>5', '5gt')
-    vim.keymap.set('n', '<leader>6', '6gt')
-    vim.keymap.set('n', '<leader>7', '7gt')
-    vim.keymap.set('n', '<leader>8', '8gt')
-    vim.keymap.set('n', '<leader>9', '9gt')
-    vim.keymap.set('n', '<leader>0', ':tablast<CR>')
-    vim.keymap.set('n', '<leader>tt', [[:execute 'tabnext ' . g:last_active_tab<cr>]])
+    vim.keymap.set("n", "<C-t>", ":tabnew<CR>")
+    vim.keymap.set("n", "<leader>1", "1gt")
+    vim.keymap.set("n", "<leader>2", "2gt")
+    vim.keymap.set("n", "<leader>3", "3gt")
+    vim.keymap.set("n", "<leader>4", "4gt")
+    vim.keymap.set("n", "<leader>5", "5gt")
+    vim.keymap.set("n", "<leader>6", "6gt")
+    vim.keymap.set("n", "<leader>7", "7gt")
+    vim.keymap.set("n", "<leader>8", "8gt")
+    vim.keymap.set("n", "<leader>9", "9gt")
+    vim.keymap.set("n", "<leader>0", ":tablast<CR>")
+    vim.keymap.set("n", "<leader>tt", [[:execute 'tabnext ' . g:last_active_tab<cr>]])
     vim.api.nvim_create_autocmd("TabLeave", {
-        pattern = '*',
+        pattern = "*",
         callback = function()
             vim.g.last_active_tab = vim.fn.tabpagenr()
         end,
@@ -84,11 +90,11 @@ end
 -- vim.api.nvim_win_set_option(0, k, v) -- vim.wo -- window
 -- vim.api.nvim_buf_set_option(0, k, v) -- vim.bo -- bufffer
 local function set_options()
-    vim.o.syntax = 'on'
+    vim.o.syntax = "on"
     vim.o.modeline = true
     vim.o.modelines = 5
 
-    vim.o.spelllang = 'en'
+    vim.o.spelllang = "en"
 
     vim.o.smartindent = true
     vim.o.autoindent = true
@@ -100,24 +106,24 @@ local function set_options()
     vim.o.shiftround = true
 
     vim.o.updatetime = 200 -- Smaller updatetime for CursorHold & CursorHoldI
-    vim.o.shortmess = vim.o.shortmess .. 'c'
-    vim.o.signcolumn = 'yes'
-    vim.o.completeopt = 'menuone,noselect'
+    vim.o.shortmess = vim.o.shortmess .. "c"
+    vim.o.signcolumn = "yes"
+    vim.o.completeopt = "menuone,noselect"
     vim.o.list = true
-    vim.o.listchars = 'tab:  ,trail:∙,extends:❯,precedes:❮,nbsp:•'
-    vim.o.fillchars = vim.o.fillchars .. 'vert:│'
+    vim.o.listchars = "tab:  ,trail:∙,extends:❯,precedes:❮,nbsp:•"
+    vim.o.fillchars = vim.o.fillchars .. "vert:│"
 
     vim.o.undofile = true
-    vim.o.undodir = lib.ensure_data_cache_dir('undo')
+    vim.o.undodir = lib.ensure_data_cache_dir("undo")
     vim.o.history = 2000
     vim.o.autoread = true
     vim.o.backup = false
     vim.o.swapfile = false
     vim.o.wildignorecase = false
-    vim.o.wildignore = '*.o,*.out,*.swp,*.bak,*.pyc,*.pyo,__pycache__,*.class,*.beam,.git,.hg,.svn,*.DS_Store'
+    vim.o.wildignore = "*.o,*.out,*.swp,*.bak,*.pyc,*.pyo,__pycache__,*.class,*.beam,.git,.hg,.svn,*.DS_Store"
     vim.o.wildoptions = "pum"
 
-    vim.o.mouse = '' -- 'a'
+    vim.o.mouse = "" -- 'a'
     vim.o.visualbell = true
     vim.o.errorbells = true
     -- vim.o.selection = 'inclusive'
@@ -125,8 +131,8 @@ local function set_options()
     vim.o.title = true
     -- vim.o.viminfo:prepend('%') -- save the buffer
     vim.o.magic = true
-    vim.o.backspace = 'eol,start,indent'
-    vim.o.whichwrap = 'b,s,<,>,h,l'
+    vim.o.backspace = "eol,start,indent"
+    vim.o.whichwrap = "b,s,<,>,h,l"
 
     vim.o.hidden = true
     vim.o.ruler = true
@@ -146,15 +152,15 @@ local function set_options()
     vim.o.incsearch = true
     vim.o.ignorecase = true
     vim.o.smartcase = true
-    vim.o.foldenable = true
+    vim.opt.foldenable = false
     -- opt('foldmethod', 'indent')
     -- opt('foldlevel', 50)
 
-    vim.o.wildmode = 'list:longest'
-    vim.o.encoding = 'utf-8'
+    vim.o.wildmode = "list:longest"
+    vim.o.encoding = "utf-8"
 
-    vim.o.fileformats = 'unix,mac,dos'
-    vim.o.formatoptions = vim.o.formatoptions .. 'mBw'
+    vim.o.fileformats = "unix,mac,dos"
+    vim.o.formatoptions = vim.o.formatoptions .. "mBw"
     -- vim.o.synmaxcol = 2500
     vim.o.wrap = false
 
@@ -164,7 +170,7 @@ local function set_options()
     vim.o.winblend = 0
     vim.o.pumblend = 5
     vim.o.termguicolors = true
-    vim.o.guicursor = 'n-v-i-c:block-Cursor'
+    vim.o.guicursor = "n-v-i-c:block-Cursor"
 
     vim.g.clipboard = {
         name = "macOS-clipboard",
@@ -194,31 +200,30 @@ local function set_misc_autocmds()
 
     -- Auto shebang
     local filetype_shebangs = {
-        sh = 'bash',
+        sh = "bash",
     }
     local function auto_shebang()
         local ext = vim.fn.expand("%:e")
         local shebang = filetype_shebangs[ext]
         if shebang then
-            vim.fn.setline(1, '#!/bin/' .. shebang)
-            vim.fn.append(1, '')
+            vim.fn.setline(1, "#!/bin/" .. shebang)
+            vim.fn.append(1, "")
             vim.fn.cursor(2, 0)
         end
     end
 
     local patterns = {}
     for ft in pairs(filetype_shebangs) do
-        table.insert(patterns, '*.' .. ft)
+        table.insert(patterns, "*." .. ft)
     end
     vim.api.nvim_create_autocmd("BufNewFile", {
         pattern = patterns,
         callback = auto_shebang,
     })
 
-
     -- Wrap lines for documents
     vim.api.nvim_create_autocmd("FileType", {
-        pattern = { 'txt', 'markdown', 'rst', 'asciidoc' },
+        pattern = { "txt", "markdown", "rst", "asciidoc" },
         command = [[
             setlocal wrap
             setlocal linebreak
@@ -232,12 +237,44 @@ local function set_misc_autocmds()
         -- end,
     })
 
+    -- LilyPond filetype
+    local function get_lilypond_runtime()
+        local handle = io.popen("lilypond --version | head -n 1 | awk '{print $3}'")
+        if not handle then
+            vim.notify(
+                "Failed to retrieve LilyPond version. Ensure LilyPond is installed and accessible.",
+                vim.log.levels.ERROR
+            )
+            return nil
+        end
+
+        local version = handle:read("*a")
+        handle:close()
+        if not version or version == "" then
+            vim.notify("LilyPond version command returned no output.", vim.log.levels.ERROR)
+            return nil
+        end
+        version = version:gsub("%s+", "")
+        return "/opt/homebrew/share/lilypond/" .. version .. "/vim"
+    end
+
+    vim.api.nvim_create_autocmd("FileType", {
+        pattern = "lilypond",
+        callback = function()
+            local runtimepath = get_lilypond_runtime()
+            if not runtimepath then
+                return
+            end
+            vim.opt.runtimepath:append(runtimepath)
+            vim.cmd("syntax on")
+        end,
+    })
 
     -- misc
     -- Ref: https://github.com/neovim/neovim/issues/7994
     vim.api.nvim_create_autocmd("InsertLeave", {
-        pattern = '*',
-        command = [[set nopaste]]
+        pattern = "*",
+        command = [[set nopaste]],
     })
 
     vim.cmd([[

@@ -48,6 +48,7 @@ install_command_line_tools() {
     brew install go  # Golang
     brew install --cask swiftformat-for-xcode
     brew install roswell # Common Lisp(sbcl) version manager
+    brew install rlwrap
     brew install difftastic
     brew install git git-lfs
     brew install ripgrep fd bat jq
@@ -113,7 +114,11 @@ link_configuration_files() {
 setup_vim() {
     echo "-> setup vim .."
     brew install luajit
-    brew install neovim
+    # brew install neovim
+    cargo install bob-nvim
+    bob install v0.11.5
+    bob install nightly
+    bob use nightly
 
     # lint for bash_ls
     brew install shellcheck
@@ -126,7 +131,12 @@ setup_vim() {
     gem install xcodeproj
     # Python
     pip install pynvim black
-    # go install github.com/client9/misspell/cmd/misspell@latest
+    # Lua
+    cargo install stylua
+    # Go
+    go install golang.org/x/tools/cmd/goimports@latest
+
+    nvim --headless "+Lazy! sync" +qa
 }
 
 install_nerd_font() {

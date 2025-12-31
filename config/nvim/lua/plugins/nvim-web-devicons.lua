@@ -1,11 +1,11 @@
 local config = function()
-    require('nvim-web-devicons').setup({
-        override = {},
-        default = false,
-    })
+	require("nvim-web-devicons").setup({
+		override = {},
+		default = false,
+	})
 end
 
 return { {
-    'nvim-tree/nvim-web-devicons',
-    config = config,
+	"nvim-tree/nvim-web-devicons",
+	config = config,
 } }

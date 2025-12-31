@@ -1,13 +1,13 @@
-local vim = vim
-
 local function dump(o)
-    if type(o) == 'table' then
-        local s = '{ '
+    if type(o) == "table" then
+        local s = "{ "
         for k, v in pairs(o) do
-            if type(k) ~= 'number' then k = '"' .. k .. '"' end
-            s = s .. '[' .. k .. '] = ' .. dump(v) .. ','
+            if type(k) ~= "number" then
+                k = '"' .. k .. '"'
+            end
+            s = s .. "[" .. k .. "] = " .. dump(v) .. ","
         end
-        return s .. '} '
+        return s .. "} "
     else
         return tostring(o)
     end
@@ -18,7 +18,7 @@ local function split_file_path(path)
 end
 
 local function data_cache_dir(name)
-    return os.getenv("HOME") .. '/.cache/nvim/' .. name
+    return os.getenv("HOME") .. "/.cache/nvim/" .. name
 end
 
 local function ensure_data_cache_dir(name)
@@ -33,7 +33,7 @@ end
 -- the return values: 0 stop, 1 ok, 2 skip directory, subdirctx is related to directory.
 local function walk_directory(dir, fn, dirctx)
     for _, file in pairs(vim.fn.readdir(dir)) do
-        local path = dir .. '/' .. file
+        local path = dir .. "/" .. file
         local isdir = vim.fn.isdirectory(path) ~= 0
         local state, subdirctx = fn(dir, file, isdir, dirctx)
         if state == 0 then
@@ -46,17 +46,17 @@ local function walk_directory(dir, fn, dirctx)
 end
 
 local function list_modules(module_prefix, root_dir, ignores_pattern)
-    ignores_pattern = ignores_pattern or '^$'
+    ignores_pattern = ignores_pattern or "^$"
     local modules = {}
     walk_directory(root_dir, function(dir, file, isdir, dirctx)
-        if string.match(dir .. '/' .. file, ignores_pattern) then
+        if string.match(dir .. "/" .. file, ignores_pattern) then
             return 2, nil
         end
         if isdir then
-            return 1, { module_prefix = dirctx.module_prefix .. '/' .. file }
+            return 1, { module_prefix = dirctx.module_prefix .. "/" .. file }
         end
-        if string.match(file, '.+%.lua$') then -- Only lua files.
-            table.insert(modules, dirctx.module_prefix .. '/' .. string.gsub(file, "%.lua$", ""))
+        if string.match(file, ".+%.lua$") then -- Only lua files.
+            table.insert(modules, dirctx.module_prefix .. "/" .. string.gsub(file, "%.lua$", ""))
         end
         return 1, nil
     end, { module_prefix = module_prefix })
@@ -64,16 +64,17 @@ local function list_modules(module_prefix, root_dir, ignores_pattern)
 end
 
 local function parse_golang_module_name()
-    local mod_file = vim.fn.expand('go.mod')
+    local mod_file = vim.fn.expand("go.mod")
     if vim.fn.filereadable(mod_file) == 0 then
-        return ''
+        return ""
     end
     for _, line in ipairs(vim.fn.readfile(mod_file)) do
-        if string.match(line, '^module%s+.+') then
-            return string.gsub(line, '^module%s+', '')
+        if string.match(line, "^module%s+.+") then
+            local res, _ = string.gsub(line, "^module%s+", "")
+            return res
         end
     end
-    return ''
+    return ""
 end
 
 ------------------------------------
@@ -91,7 +92,7 @@ local vimbatch = {
         for k, v in pairs(vars) do
             vim.g[k] = v
         end
-    end
+    end,
 }
 
 local function load_colorscheme(names)
@@ -102,6 +103,18 @@ local function load_colorscheme(names)
     end
 end
 
+local function border(hl)
+    return {
+        { "╭", hl },
+        { "─", hl },
+        { "╮", hl },
+        { "│", hl },
+        { "╯", hl },
+        { "─", hl },
+        { "╰", hl },
+        { "│", hl },
+    }
+end
 
 return {
     dump_table = dump,
@@ -117,4 +130,6 @@ return {
     vimbatch = vimbatch,
 
     load_colorscheme = load_colorscheme,
+
+    border = border,
 }
