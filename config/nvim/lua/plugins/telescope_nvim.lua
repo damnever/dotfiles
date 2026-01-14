@@ -5,6 +5,7 @@ local config = function()
 	local actions = require("telescope.actions")
 	local action_set = require("telescope.actions.set")
 	local action_state = require("telescope.actions.state")
+	local livegrepargs_actions = require("telescope-live-grep-args.actions")
 
 	-- Clone the default Telescope configuration
 	local vimgrep_arguments = { unpack(telescope_config.values.vimgrep_arguments) }
@@ -40,6 +41,7 @@ local config = function()
 			mappings = {
 				i = {
 					-- ["<esc>"] = actions.close,
+					["<C-u>"] = false,
 					["<C-s>"] = actions.select_horizontal, -- your custom horizontal split
 					["<C-v>"] = actions.select_vertical, -- vertical split
 					["<C-c>"] = function()
@@ -59,7 +61,7 @@ local config = function()
 
 						return action_set.edit(prompt_bufnr, "edit")
 					end,
-					["<c-t>"] = function(prompt_bufnr)
+					["<C-t>"] = function(prompt_bufnr)
 						return require("trouble.sources.telescope").open(prompt_bufnr)
 					end,
 				},
@@ -108,13 +110,25 @@ local config = function()
 			["ui-select"] = {
 				require("telescope.themes").get_dropdown({}),
 			},
+			live_grep_args = {
+				auto_quoting = true, -- enable/disable auto-quoting
+				mappings = {
+					i = {
+						["<C-k>"] = livegrepargs_actions.quote_prompt(),
+						["<C-i>"] = livegrepargs_actions.quote_prompt({ postfix = " --iglob " }),
+						-- freeze the current list and start a fuzzy search in the frozen list
+						["<C-f>"] = livegrepargs_actions.to_fuzzy_refine,
+					},
+				},
+			},
 		},
 	})
 
-	require("telescope").load_extension("fzf")
-	require("telescope").load_extension("frecency")
-	require("telescope").load_extension("neoclip")
-	require("telescope").load_extension("ui-select")
+	telescope.load_extension("fzf")
+	telescope.load_extension("frecency")
+	telescope.load_extension("neoclip")
+	telescope.load_extension("ui-select")
+	telescope.load_extension("live_grep_args")
 
 	require("neoclip").setup({
 		history = 1000,
@@ -174,6 +188,7 @@ local config = function()
 	})
 
 	local builtin = require("telescope.builtin")
+	local extensions = require("telescope").extensions
 	require("lib").vimbatch.keymaps({
 		-- Lists available plugin/user commands and runs them on `<cr>`
 		{ mode = "", lhs = "<leader><space>", rhs = builtin.commands },
@@ -183,7 +198,8 @@ local config = function()
 		-- Searches for the string under your cursor in your current working directory.
 		{ mode = "v", lhs = "<leader>g", rhs = builtin.grep_string },
 		-- Search for a string in your current working directory and get results live as you type (respecting .gitignore)
-		{ mode = "", lhs = "<leader>G", rhs = builtin.live_grep },
+		-- builtin.live_grep
+		{ mode = "", lhs = "<leader>G", rhs = extensions.live_grep_args.live_grep_args },
 		-- Lists commands that were executed recently, and reruns them on <cr>.
 		{ mode = "", lhs = "<leader>h", rhs = builtin.command_history },
 		-- Lists normal mode keymappings.
@@ -203,6 +219,7 @@ return {
 			{ "nvim-telescope/telescope-frecency.nvim", dependencies = { "tami5/sqlite.lua" } },
 			{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
 			{ "nvim-telescope/telescope-ui-select.nvim" },
+			{ "nvim-telescope/telescope-live-grep-args.nvim" },
 			{ "AckslD/nvim-neoclip.lua" },
 			{ "folke/trouble.nvim" },
 		},
