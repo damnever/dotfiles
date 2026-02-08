@@ -20,6 +20,114 @@ install_xcode_command_line_tools() {
 
 HOMEBREW_PREFIX=/opt/homebrew
 
+ensure_sshd_config_option() {
+    local file="$1"
+    local key="$2"
+    local value="$3"
+
+    local desired="${key} ${value}"
+    local tmp
+    tmp="$(mktemp)"
+
+    local root_cmd=""
+    if [ ! -w "$file" ]; then
+        root_cmd="sudo"
+    fi
+
+    # Global section only (before first Match):
+    # - Replace first occurrence of (possibly commented) key with desired
+    # - Remove any other duplicate occurrences of key in global section
+    # - If not found globally, insert desired right before first Match (or EOF)
+    $root_cmd awk -v key="$key" -v desired="$desired" '
+        BEGIN {
+            found = 0
+            in_match = 0
+            keyre = "^[[:space:]]*#?[[:space:]]*" key "([[:space:]]+|$)"
+        }
+
+        /^[[:space:]]*Match([[:space:]]+|$)/ {
+            if (!found) {
+                print desired
+                found = 1
+            }
+            in_match = 1
+            print $0
+            next
+        }
+
+        {
+            if (!in_match && $0 ~ keyre) {
+                if (!found) {
+                    print desired
+                    found = 1
+                }
+                next
+            }
+            print $0
+        }
+
+        END {
+            if (!found) {
+                print desired
+            }
+        }
+    ' "$file" > "$tmp" || { rm -f "$tmp"; return 1; }
+
+    $root_cmd dd if="$tmp" of="$file" bs=4096 conv=fsync status=none || { rm -f "$tmp"; return 1; }
+    rm -f "$tmp"
+}
+
+ensure_sshd_google_auth_settings() {
+    local file="$1"
+
+    ensure_sshd_config_option "$file" "UsePAM" "yes" || return 1
+    ensure_sshd_config_option "$file" "ChallengeResponseAuthentication" "yes" || return 1
+    ensure_sshd_config_option "$file" "PasswordAuthentication" "no" || return 1
+}
+
+ensure_pam_google_authenticator() {
+    local file="$1"
+    local module="/opt/homebrew/opt/google-authenticator-libpam/lib/security/pam_google_authenticator.so"
+    local line="auth required ${module}"
+
+    if [ ! -f "$module" ]; then
+        return 1
+    fi
+
+    if [ ! -f "$file" ]; then
+        return 1
+    fi
+
+    local root_cmd=""
+    if [ ! -w "$file" ]; then
+        root_cmd="sudo"
+    fi
+
+    if $root_cmd grep -Fq "pam_google_authenticator.so" "$file"; then
+        return 0
+    fi
+
+    local tmp
+    tmp="$(mktemp)"
+
+    $root_cmd awk -v newline="$line" '
+        NR == 1 {
+            if ($0 ~ /^#%PAM/) {
+                print $0
+                print newline
+            } else {
+                print newline
+                print $0
+            }
+            next
+        }
+        { print $0 }
+    ' "$file" > "$tmp" || { rm -f "$tmp"; return 1; }
+
+    $root_cmd dd if="$tmp" of="$file" bs=4096 conv=fsync status=none || { rm -f "$tmp"; return 1; }
+    rm -f "$tmp"
+}
+
 change_mac_settings() {
     defaults write -g KeyRepeat -int 2
     defaults write -g InitialKeyRepeat -int 9
@@ -58,6 +166,10 @@ install_command_line_tools() {
     brew install direnv
     brew install zoxide
     brew install wireguard-tools
+    # /etc/ssh/sshd_config (managed by ensure_sshd_google_auth_settings)
+    brew install google-authenticator-libpam
+    ensure_sshd_google_auth_settings "/etc/ssh/sshd_config" || return 1
+    ensure_pam_google_authenticator "/etc/pam.d/sshd" || return 1
     brew install colima docker docker-credential-helper # colima start --cpu 4 --memory 8
     brew install docker-buildx
     mkdir -p ~/.docker/cli-plugins && ln -sfn $(which docker-buildx) ~/.docker/cli-plugins/docker-buildx
@@ -213,37 +325,39 @@ usage() {
     exit 1
 }
 
-while getopts ":itlvf" opt; do
-    case "${opt}" in
-        i )
-            noargs=1
-            init_mac
-            ;;
-        t )
-            noargs=1
-            install_command_line_tools
-            ;;
-        l )
-            noargs=1
-            link_configuration_files
-            ;;
-        v )
-            noargs=1
-            setup_vim
-            ;;
-        f )
-            noargs=1
-            install_fonts
-            ;;
-        * )
-            echo "invalid option -${opt}"
-            usage
-            ;;
-    esac
-done
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+    while getopts ":itlvf" opt; do
+        case "${opt}" in
+            i )
+                noargs=1
+                init_mac
+                ;;
+            t )
+                noargs=1
+                install_command_line_tools
+                ;;
+            l )
+                noargs=1
+                link_configuration_files
+                ;;
+            v )
+                noargs=1
+                setup_vim
+                ;;
+            f )
+                noargs=1
+                install_fonts
+                ;;
+            * )
+                echo "invalid option -${opt}"
+                usage
+                ;;
+        esac
+    done
 
-if [ -z "${noargs}" ]; then
-    usage
-else
-    exec "$SHELL"
+    if [ -z "${noargs}" ]; then
+        usage
+    else
+        exec "$SHELL"
+    fi
 fi
