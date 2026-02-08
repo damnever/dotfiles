@@ -223,6 +223,21 @@ link_configuration_files() {
 }
 
 
+link_llm_agent_rules() {
+    echo "-> link LLM agent rules .."
+
+    local src="$cur_dir/config/opencode/AGENTS.md"
+    if [[ ! -f "$src" ]]; then
+        echo "missing: $src" >&2
+        return 1
+    fi
+
+    mkdir -vp "$HOME/.claude" "$HOME/.codex"
+    ln -vsfn "$src" "$HOME/.claude/CLAUDE.md"
+    ln -vsfn "$src" "$HOME/.codex/AGENTS.md"
+}
+
+
 setup_vim() {
     echo "-> setup vim .."
     brew install luajit
@@ -316,17 +331,18 @@ init_mac(){
 
 
 usage() {
-    echo "Usage: $0 [-i] [-t] [-l] [-v]" >&2
+    echo "Usage: $0 [-i] [-t] [-l] [-v] [-f] [-a]" >&2
     echo "       -i initialize a new mac" >&2
     echo "       -t install command line tools" >&2
     echo "       -l link configuration files" >&2
     echo "       -v setup vim" >&2
     echo "       -f install patched https://www.nerdfonts.com/" >&2
+    echo "       -a link agent rules for Claude/Codex" >&2
     exit 1
 }
 
 if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
-    while getopts ":itlvf" opt; do
+    while getopts ":itlvfa" opt; do
         case "${opt}" in
             i )
                 noargs=1
@@ -347,6 +363,10 @@ if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
             f )
                 noargs=1
                 install_fonts
+                ;;
+            a )
+                noargs=1
+                link_llm_agent_rules
                 ;;
             * )
                 echo "invalid option -${opt}"
