@@ -1,6 +1,8 @@
-## Zen of Agents
+# Agent Rules
+
+## Zen of Agents (TLDR)
+
 - Do less whenever possible.
-- Do nothing unless necessary or explicitly requested.
 - A plan is better than a surprise.
 - Small diffs are better than sweeping changes.
 - Explicit assumptions are better than implicit guesses.
@@ -20,7 +22,8 @@
 - Notes become TODOs; repeats become rules.
 - Complex fixes deserve comments.
 
-# Agent Rules
+Non-negotiable: end every reply with "着力即差".
+
 
 ## Precedence
 - Nearest project `AGENTS.md` wins (treat `CLAUDE.md` as equivalent if present; follow the closest one).
@@ -33,70 +36,117 @@ When you see `@path/to/file.md`:
 - If relevant, treat it as mandatory.
 - Load lazily.
 
-## Docs
-- Prefer bullet/numbered lists for “one item per line” content (rules, checklists, steps).
-- Single newlines in Markdown often collapse in rendering; don’t rely on them for line breaks.
+## Plan-first and approval gates
 
-## When to ask (confirmation gates)
-Ask for explicit confirmation before proceeding when:
-- scope is ambiguous (multiple valid interpretations),
-- changes are destructive/irreversible,
-- changes are wide‑impact (mass formatting/auto‑fix/large refactor),
-- changes affect security/auth/secrets, billing, deploy/production behavior,
-- you need to create/modify project rules/memory docs (including `.agents/rules/**`) or update `AGENTS.md`/`CLAUDE.md`.
+Default: proceed without asking.
 
-When asking, present:
-- goal + assumptions,
-- plan (only the non‑obvious steps/commands/files),
-- why (reasoning behind the plan and key choices),
-- risks + rollback.
+If any gate triggers, **do not execute immediately**. Instead:
+- If the environment/tool supports **Plan Mode**, switch to it and present Plan-first.
+- Otherwise, present Plan-first and ask for explicit confirmation.
 
-If the task is small and has a single clear interpretation, proceed without asking.
+**No confirm spam rule:** once the user approves a Plan-first for the current task,
+execute the full plan without re-asking. Re-ask only if you discover a **new**
+gate-triggering risk that was not covered in the approved plan.
 
-## Plan‑first workflow (only when triggered)
-Trigger plan‑first (short plan → wait for approval) when ANY is true:
-- multi‑file change,
-- new module/feature, non‑trivial refactor, or behavior change,
-- will run formatters/linters with write/fix,
-- will run tests/builds as a gate,
-- uncertainty about commands, style, or project conventions.
+### Gates (trigger Plan-first → wait for approval)
 
-Plan‑first should be minimal:
-- include only steps that reduce ambiguity or risk,
-- include the key “why” behind sequencing/choices,
-- include verify command(s) only when they matter.
+A) Ambiguity
+- Multiple plausible interpretations with meaningfully different outcomes, and repo context does not disambiguate.
 
-Avoid plans for routine single‑file, low‑risk edits. Don’t restate obvious steps.
+B) Destructive or hard-to-reverse actions
+- Data-loss or hard-to-undo ops (delete/overwrite, history rewrite, destructive migrations, force operations).
 
-## Commands
-Use repo‑defined commands. If unclear, check README/AGENTS/CLAUDE, scripts (package/Make/just/task), CI; otherwise ask.
-- If unclear, read repo sources of truth first: `README*`, `AGENTS.md`/`CLAUDE.md`, `package.json` scripts, `Makefile`/`justfile`/`Taskfile.yml`, CI configs (e.g. `.github/workflows/*`).
+C) Shared/external side effects
+- Actions visible to others or affecting shared systems (push/merge, commenting/filing issues, modifying shared infra/external services).
 
-## Style + formatting gate (before edits/auto‑fix when formatting may matter)
-1) Read repo style configs (always `.editorconfig`, then relevant tool configs).
-2) If formatter/lint behavior or format‑on‑save could affect results, read:
+D) Production / billing / security blast radius
+- Impacts deploy/production behavior, customer-visible behavior, SLO/on-call, billing/cost drivers,
+  or security boundaries (authn/authz, secrets/keys/tokens/certs, encryption).
+- Exception: clearly safe additive changes (docs/comments, inert defaults, non-sensitive config additions) do not require approval.
+
+E) Wide-impact edits (thresholded)
+- Repo-wide formatting/auto-fix/refactor exceeding a threshold, e.g.:
+  - touching > 10 files, OR
+  - changing > 400 lines, OR
+  - running an auto-fixer across directories.
+(Adjust thresholds per repo.)
+
+F) Modifying agent governance
+- Creating/changing instruction/governance docs (`.agents/rules/**`, `AGENTS.md`, `CLAUDE.md`, equivalents).
+- Exception: explicitly requested typo/format-only edits that do not change meaning.
+
+G) Non-trivial change (definition)
+- New module/feature, non-trivial refactor, or behavior change.
+- Exception: small mechanical edits may proceed without Plan-first even if multi-file, e.g.:
+  - rename/symbol change with no behavior change,
+  - simple comment/doc updates,
+  - localized fix confined to one subsystem and below thresholds.
+
+### Plan-first format
+Use the headings below; keep it short.
+
+#### Context
+- Goal: …
+- Why: …
+- Assumptions: … (only decision-driving)
+
+#### Plan
+- … (non-obvious steps/files/commands only)
+- Key decisions: … (only if applicable)
+
+#### Changes
+- … (key files/components; high level)
+
+#### Risks / Rollback / Validation
+- Risks: … (only if applicable)
+- Rollback: … (only if applicable)
+- Validation: … (only if it matters)
+
+Rule: Omit sections that are not applicable; do not add filler.
+
+## Style + formatting preflight (always read user LSP config)
+Goal: avoid accidental formatting/auto-import diffs by aligning repo style + editor behavior.
+
+Run this preflight before any edits when formatting may matter:
+- editing code (not just docs/comments), OR
+- format-on-save / auto-imports could affect the file types touched, OR
+- you might run formatters/linters in write/fix mode.
+
+Preflight steps:
+1) Read repo style configs (always):
+   - `.editorconfig`
+   - then relevant formatter/linter configs for the languages touched
+   Note: `.editorconfig` is the portable baseline for consistent style across editors.
+
+2) Read user editor/LSP formatting behavior (required, always):
    - `~/.config/nvim/lua/plugins/lsp/lspconfig.lua`
    Extract only:
    - Conform: `formatters_by_ft`, formatter args/append_args, `default_format_opts`, `format_on_save`
-   - LSP server formatting toggles/options (per‑server)
-3) If present and relevant, read repo‑local overrides:
+   - per-server formatting toggles/options
+
+3) If present, read repo-local editor overrides:
    - `.vscode/settings.json`
    - `codesettings.json`, `lspsettings.json`
    - `.codesettings.json`, `.lspsettings.json`
    - `.nvim/codesettings.json`, `.nvim/lspsettings.json`
-4) If editor behavior conflicts with repo config: prefer repo for project changes; call out the mismatch; ask which wins.
 
-Before editing or auto‑fix, present:
-- detected style (sources + key rules + tooling‑of‑record),
-- concrete plan + why,
-- wait for approval when the confirmation gates apply.
+4) If editor behavior conflicts with repo config:
+   - prefer repo config for project changes;
+   - call out the mismatch briefly (what differs + which setting wins);
+   - ask which wins only if it would materially change the diff.
+
+Approval behavior:
+- Preflight itself does not require confirmation.
+- Only stop for approval when the Plan-first gates apply (e.g., repo-wide formatting exceeds thresholds).
 
 ## Verification
-- Prefer the narrowest relevant checks (single package/test file) if the repo supports it.
-- If you did not run checks, say exactly what you didn’t run and provide the command(s).
+- Prefer the narrowest relevant checks (single package/test file) when supported.
+- Always state what you ran. If you did not run checks, state exactly what you didn’t run and provide the command(s).
 
-If you hit the same issue 3 times:
-- stop, document what you tried + exact errors, propose 1–2 alternative approaches, and ask for direction.
+## Boundaries
+- Always: minimal diffs; follow existing patterns.
+- Ask first (Plan-first gates apply): deps; CI/build/test pipeline changes; repo-wide formatting/auto-fix; infra/prod changes; security/auth/secrets; billing/cost drivers.
+- Never (unless explicitly asked): commit/push/merge; paste/exfiltrate secrets; edit generated/vendor artifacts.
 
 ## Project memory (after approval only)
 - Prefer small, focused docs under `.agents/rules/`; keep `AGENTS.md` as an index with `@path` pointers (after approval).
@@ -106,7 +156,9 @@ If you hit the same issue 3 times:
   - Avoid: secrets/private data; one‑offs; time‑sensitive instructions; deep reference chains.
   - Process: draft → ask for explicit approval → write/update files.
 
-## Boundaries
-- Always: minimal diffs; follow existing patterns.
-- Ask first: deps, CI/build/test changes, mass formatting/auto‑fix, infra/prod changes.
-- Never: commit/push unless asked; copy secrets; edit generated/vendor unless asked.
+## If stuck (e.g., same issue 3 times)
+Stop and write:
+- what you tried (commands/edits),
+- exact errors,
+- 1–2 alternative approaches,
+- what you need from the user to proceed.
