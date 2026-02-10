@@ -38,99 +38,103 @@ When you see `@path/to/file.md`:
 
 ## Plan-first and approval gates
 
-Default: proceed without asking.
+Default: **execute without asking**.
 
-If any gate triggers, **do not execute immediately**. Instead:
-- If the environment/tool supports **Plan Mode**, switch to it and present Plan-first.
-- Otherwise, present Plan-first and ask for explicit confirmation.
+If any gate triggers, **pause before execution**:
+- If the environment/tool supports **Plan Mode**, switch to it and present **Plan-first**.
+- Otherwise, present **Plan-first** and ask for explicit approval.
 
-**No confirm spam rule:** once the user approves a Plan-first for the current task,
-execute the full plan without re-asking. Re-ask only if you discover a **new**
-gate-triggering risk that was not covered in the approved plan.
+**No-confirm-spam rule:** once the user approves the Plan-first for the current task, execute end-to-end without re-asking. Re-ask only if you uncover a **new, gate-triggering risk** not covered in the approved plan.
 
 ### Gates (trigger Plan-first → wait for approval)
 
-A) Ambiguity
+A) **Ambiguity**
 - Multiple plausible interpretations with meaningfully different outcomes, and repo context does not disambiguate.
 
-B) Destructive or hard-to-reverse actions
-- Data-loss or hard-to-undo ops (delete/overwrite, history rewrite, destructive migrations, force operations).
+B) **Destructive / hard-to-reverse**
+- Data loss or hard-to-undo ops (delete/overwrite, history rewrite, destructive migrations, force operations).
 
-C) Shared/external side effects
-- Actions visible to others or affecting shared systems (push/merge, commenting/filing issues, modifying shared infra/external services).
+C) **Shared/external side effects**
+- Visible to others or affects shared systems (push/merge, commenting/filing issues, modifying shared infra or external services).
 
-D) Production / billing / security blast radius
-- Impacts deploy/production behavior, customer-visible behavior, SLO/on-call, billing/cost drivers,
-  or security boundaries (authn/authz, secrets/keys/tokens/certs, encryption).
-- Exception: clearly safe additive changes (docs/comments, inert defaults, non-sensitive config additions) do not require approval.
+D) **Production / billing / security blast radius**
+- Changes deploy/runtime behavior, customer-visible behavior, SLO/on-call risk, cost drivers, or security boundaries (authn/authz, secrets, keys, tokens, certificates, encryption).
+- Exception: clearly safe additive changes (docs/comments, inert defaults, non-sensitive config additions) may proceed.
 
-E) Wide-impact edits (thresholded)
-- Repo-wide formatting/auto-fix/refactor exceeding a threshold, e.g.:
-  - touching > 10 files, OR
-  - changing > 400 lines, OR
-  - running an auto-fixer across directories.
-(Adjust thresholds per repo.)
+E) **Wide-impact edits (thresholded)**
+- Exceeds threshold, e.g. touching **>10 files** OR changing **>400 lines** OR running auto-fix/formatters across directories.
+- (Adjust thresholds per repo; prefer smaller thresholds in high-risk repos.)
 
-F) Modifying agent governance
+F) **Modifying agent governance**
 - Creating/changing instruction/governance docs (`.agents/rules/**`, `AGENTS.md`, `CLAUDE.md`, equivalents).
-- Exception: explicitly requested typo/format-only edits that do not change meaning.
+- Exception: explicitly requested **typo/format-only** edits that do not change meaning.
 
-G) Non-trivial change (definition)
-- New module/feature, non-trivial refactor, or behavior change.
-- Exception: small mechanical edits may proceed without Plan-first even if multi-file, e.g.:
-  - rename/symbol change with no behavior change,
-  - simple comment/doc updates,
-  - localized fix confined to one subsystem and below thresholds.
+G) **Non-trivial behavior change**
+- New module/feature, non-trivial refactor, or any behavior change whose correctness can’t be inferred mechanically.
+- Exception: small mechanical edits may proceed (rename/symbol-only, doc/comment-only, localized fix within one subsystem and below thresholds).
 
-### Plan-first format
-Use the headings below; keep it short.
+### Plan-first format (scaled by change size)
 
-#### Context
+If the change is tiny (e.g., <=1 file AND <=50 LOC AND no behavior change):
 - Goal: …
-- Why: …
+- Patch:
+  - Area/Subsystems/Files: …
+  - Diff: (full unified diff)
+- Validation: … (what you ran; or say not run + exact commands)
+(Omit everything else.)
+
+Otherwise use headings below; keep it short.
+
+#### Context (minimal by default)
+- Background: … (only what’s needed)
+- Goal: … (what “done” means)
 - Assumptions: … (only decision-driving)
 
-#### Plan
-- … (non-obvious steps/files/commands only)
-- Key decisions: … (only if applicable)
+(Add Non-goals / Constraints only when needed.)
 
-#### Changes
-- … (key files/components; high level)
+#### Proposed Approach (high level)
+- Summary: … (strategy)
+- Key decisions: … (if applicable)
+- Alternatives considered: … (if applicable)
+
+#### Patch
+- File-by-file or component-by-component details.
+- Include full code diff blocks.
 
 #### Risks / Rollback / Validation
 - Risks: … (only if applicable)
 - Rollback: … (only if applicable)
-- Validation: … (only if it matters)
+- Validation: … (what you ran; if not run, say so + exact commands)
 
 Rule: Omit sections that are not applicable; do not add filler.
 
-## Style + formatting preflight (always read user LSP config)
-Goal: avoid accidental formatting/auto-import diffs by aligning repo style + editor behavior.
+## Style + formatting preflight
+
+Goal: avoid accidental formatting/auto-import diffs by aligning repo style + (Neovim) editor behavior.
 
 Run this preflight before any edits when formatting may matter:
 - editing code (not just docs/comments), OR
 - format-on-save / auto-imports could affect the file types touched, OR
 - you might run formatters/linters in write/fix mode.
 
-Preflight steps:
-1) Read repo style configs (always):
-   - `.editorconfig`
-   - then relevant formatter/linter configs for the languages touched
-   Note: `.editorconfig` is the portable baseline for consistent style across editors.
-
-2) Read user editor/LSP formatting behavior (required, always):
+Preflight steps (always, in this order):
+1) Read formatting behavior + project-local editor overrides:
    - `~/.config/nvim/lua/plugins/lsp/lspconfig.lua`
+   - repo-local overrides if present (treat as project-scoped inputs):
+     - `.vscode/settings.json`
+     - `codesettings.json`, `lspsettings.json`
+     - `.codesettings.json`, `.lspsettings.json`
+     - `.nvim/codesettings.json`, `.nvim/lspsettings.json`
    Extract only:
    - Conform: `formatters_by_ft`, formatter args/append_args, `default_format_opts`, `format_on_save`
-   - per-server formatting toggles/options
+   - per-server LSP formatting toggles/options
+   - any repo override that changes formatter selection, format-on-save, or code actions on save
 
-3) If present, read repo-local editor overrides:
-   - `.vscode/settings.json`
-   - `codesettings.json`, `lspsettings.json`
-   - `.codesettings.json`, `.lspsettings.json`
-   - `.nvim/codesettings.json`, `.nvim/lspsettings.json`
+2) Read repo style configs (always):
+   - `.editorconfig`
+   - then relevant formatter/linter configs for the languages touched
 
-4) If editor behavior conflicts with repo config:
+3) If editor behavior conflicts with repo config:
    - prefer repo config for project changes;
    - call out the mismatch briefly (what differs + which setting wins);
    - ask which wins only if it would materially change the diff.
