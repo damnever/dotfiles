@@ -97,9 +97,9 @@ Otherwise use headings below; keep it short.
 - Key decisions: … (if applicable)
 - Alternatives considered: … (if applicable)
 
-#### Patch
-- File-by-file or component-by-component details.
-- Include full code diff blocks.
+#### Scoped Changes (scoped, diff-aligned)
+- Step-by-step operations, grouped by **component/file scope** (one scope at a time), in execution order.
+- For each scope: list the steps, then include the **matching unified diff** immediately under that scope (no cross-scope or orphan diffs).
 
 #### Risks / Rollback / Validation
 - Risks: … (only if applicable)
