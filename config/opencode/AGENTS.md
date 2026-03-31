@@ -97,9 +97,55 @@ Otherwise use headings below; keep it short.
 - Key decisions: … (if applicable)
 - Alternatives considered: … (if applicable)
 
-#### Scoped Changes (scoped, diff-aligned)
-- Step-by-step operations, grouped by **component/file scope** (one scope at a time), in execution order.
-- For each scope: list the steps, then include the **matching unified diff** immediately under that scope (no cross-scope or orphan diffs).
+#### Scoped Changes
+Organize the patch into scopes in execution or dependency order, so each later scope can assume earlier scopes already exist.
+
+Include one scope for each independently reviewable patch unit.
+
+For each scope:
+
+1. Name the scope by subsystem or responsibility.
+2. List the exact file or files changed in that scope.
+3. Summarize the concrete edits introduced in those files.
+4. Put the full unified diff for that scope immediately after the bullets.
+
+The bullets in each scope must:
+- describe the actual edits present in the diff
+- be directly verifiable from the diff
+- stay at the edit level: added, removed, renamed, reordered, moved, split, merged, or rewritten
+
+The diff in each scope must:
+- be a full unified diff for the files in that scope
+- include all hunks for those files
+- appear only under the scope that owns those files
+
+Scope boundaries should:
+- group files that are reviewed together as one implementation unit
+- split files into separate scopes when they can be reviewed independently
+- avoid mixing unrelated edits into a single scope
+
+#### Example
+
+**Scope: CLI retry flags**
+
+Files:
+- `cmd/job/main.go`
+
+Changes:
+- Add `--retry-max` flag bound to `cfg.RetryMax`.
+- Add `--retry-backoff` flag bound to `cfg.RetryBackoff`.
+- Set default values for `cfg.RetryMax` and `cfg.RetryBackoff` in CLI wiring.
+
+```diff
+--- a/cmd/job/main.go
++++ b/cmd/job/main.go
+@@ -14,6 +14,8 @@ func bindFlags(fs *flag.FlagSet, cfg *Config) {
+ 	fs.StringVar(&cfg.Endpoint, "endpoint", "", "job endpoint")
+ 	fs.DurationVar(&cfg.Timeout, "timeout", 30*time.Second, "request timeout")
++	fs.IntVar(&cfg.RetryMax, "retry-max", 3, "maximum retry attempts")
++	fs.DurationVar(&cfg.RetryBackoff, "retry-backoff", time.Second, "delay between retry attempts")
+ }
+```
 
 #### Risks / Rollback / Validation
 - Risks: … (only if applicable)
