@@ -226,7 +226,7 @@ link_configuration_files() {
 link_llm_agent_rules() {
     echo "-> link LLM agent rules .."
 
-    local src="$cur_dir/config/opencode/AGENTS.md"
+    local src="$cur_dir/config/agents/AGENTS.md"
     if [[ ! -f "$src" ]]; then
         echo "missing: $src" >&2
         return 1
