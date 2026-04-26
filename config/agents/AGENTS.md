@@ -155,6 +155,20 @@ Omit sections that are not applicable; do not add filler.
 
 ## Coding
 
+### Maintainability
+
+- Prefer the smallest complete change that solves the actual problem. If the right rule or boundary is unclear, preserve existing structure and minimize edit distance.
+- Do not stop at a tiny patch when it leaves obvious design debt, duplicated logic, fragile boundaries, or cleanup work inside the current task's scope. Keep diffs focused, but do the hard work now so later work becomes easier.
+- Readability and maintainability come first. Prefer clear names, explicit control flow, local cohesion, and code shaped around the domain over clever compression.
+- Apply SOLID as a practical review checklist:
+  - Single responsibility principle: each module, type, function, and test fixture should have one clear reason to change.
+  - Open/closed principle: extend behavior through stable extension points or data-driven structure when that reduces churn, without adding speculative abstraction.
+  - Liskov substitution principle: implementations that satisfy the same contract must be safely interchangeable.
+  - Interface segregation principle: keep interfaces narrow; callers should not depend on methods or data they do not use.
+  - Dependency inversion principle: high-level policy should depend on stable abstractions, not concrete low-level details, when the extra boundary earns its cost.
+- Do not add one-off helper functions, especially one- or two-line wrappers that do not add meaningful clarity or abstraction. Inline them instead, even when repeated in multiple places.
+- Tests can favor local duplication over helper extraction, but they must remain readable, directly tied to behavior, and easy to debug.
+
 ### Style + formatting preflight
 
 Goal: avoid accidental formatting/auto-import diffs by aligning repo style + (Neovim) editor behavior.
