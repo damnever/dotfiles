@@ -1,0 +1,127 @@
+#!/usr/bin/env bash
+# vim: ft=sh
+# Generate and verify bcrypt password hashes with htpasswd.
+
+set -euo pipefail
+
+cost=12
+verify_hash=""
+user="bcrypt"
+password_file=""
+
+usage() {
+    cat <<'EOF'
+Usage:
+  bcrypt [options] [password]
+  bcrypt --verify <hash> [password]
+
+Options:
+  -c, --cost <4-17>    Set bcrypt cost factor (default: 12)
+  -v, --verify <hash>  Verify password against an existing bcrypt hash
+  -h, --help           Show this help
+
+If password is omitted, bcrypt reads stdin when piped, otherwise prompts silently.
+EOF
+}
+
+die() {
+    echo "bcrypt: $*" >&2
+    exit 1
+}
+
+cleanup() {
+    if [[ -n "$password_file" ]]; then
+        rm -f "$password_file"
+    fi
+}
+trap cleanup EXIT
+
+read_password() {
+    local password
+
+    if [[ -t 0 ]]; then
+        read -r -s -p "Password: " password
+        printf '\n' >&2
+        printf '%s' "$password"
+    else
+        cat
+    fi
+}
+
+hash_password() {
+    local password="$1"
+    local record
+
+    record=$(printf '%s\n' "$password" | htpasswd -niB -C "$cost" "$user")
+    printf '%s\n' "${record#*:}"
+}
+
+verify_password() {
+    local password="$1"
+
+    password_file=$(mktemp "${TMPDIR:-/tmp}/bcrypt.XXXXXX")
+    printf '%s:%s\n' "$user" "$verify_hash" > "$password_file"
+
+    if printf '%s\n' "$password" | htpasswd -vi "$password_file" "$user" >/dev/null 2>&1; then
+        echo "OK"
+    else
+        echo "FAIL" >&2
+        exit 1
+    fi
+}
+
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        -c|--cost)
+            [[ $# -ge 2 ]] || die "$1 requires a value"
+            cost="$2"
+            shift 2
+            ;;
+        --cost=*)
+            cost="${1#*=}"
+            shift
+            ;;
+        -v|--verify)
+            [[ $# -ge 2 ]] || die "$1 requires a hash"
+            verify_hash="$2"
+            shift 2
+            ;;
+        --verify=*)
+            verify_hash="${1#*=}"
+            shift
+            ;;
+        -h|--help)
+            usage
+            exit 0
+            ;;
+        --)
+            shift
+            break
+            ;;
+        -*)
+            die "unknown option: $1"
+            ;;
+        *)
+            break
+            ;;
+    esac
+done
+
+command -v htpasswd >/dev/null 2>&1 || die "htpasswd is required"
+
+if ! [[ "$cost" =~ ^[0-9]+$ ]] || (( cost < 4 || cost > 17 )); then
+    die "cost must be an integer from 4 to 17"
+fi
+
+[[ $# -le 1 ]] || die "expected at most one password argument"
+
+password="${1-}"
+if [[ $# -eq 0 ]]; then
+    password=$(read_password)
+fi
+
+if [[ -n "$verify_hash" ]]; then
+    verify_password "$password"
+else
+    hash_password "$password"
+fi
