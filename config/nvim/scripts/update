@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+repo_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
+nvim_bin="${NVIM_BIN:-nvim}"
+
+cd "$repo_dir"
+
+"$nvim_bin" --headless -u "$repo_dir/init.lua" "+Lazy! sync" +qa
+"$nvim_bin" --headless -u "$repo_dir/init.lua" -l "$repo_dir/scripts/update_runtime_dependencies.lua"

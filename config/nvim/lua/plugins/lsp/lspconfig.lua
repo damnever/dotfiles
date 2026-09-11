@@ -1,13 +1,5 @@
 local config = function()
 	local lsp_servers = {
-		-- Github Copilot
-		copilot = {
-			settings = {
-				telemetry = {
-					telemetryLevel = "off",
-				},
-			},
-		},
 		-- Bash
 		bashls = {
 			filetypes = { "sh", "bash" },
@@ -367,35 +359,8 @@ local config = function()
 		end
 	end
 
-	-- Ref: https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#copilot
-	local function inline_completion_on_attach(client, bufnr)
-		if vim.fn.has("nvim-0.12") == 0 then
-			return
-		end
-
-		if client:supports_method(vim.lsp.protocol.Methods.textDocument_inlineCompletion, bufnr) then
-			vim.lsp.inline_completion.enable(true, { bufnr = bufnr })
-
-			vim.keymap.set(
-				"i",
-				"<C-J>",
-				vim.lsp.inline_completion.get,
-				{ desc = "LSP: accept inline completion", buffer = bufnr }
-			)
-			vim.keymap.set(
-				"i",
-				"<C-;>",
-				vim.lsp.inline_completion.select,
-				{ desc = "LSP: switch inline completion", buffer = bufnr }
-			)
-		end
-	end
-
 	local function lspconfig_on_attach(client, bufnr)
 		diagnostic_on_attach()(bufnr)
-
-		-- Inline Completion for Copilot
-		inline_completion_on_attach(client, bufnr)
 
 		-- LSP Signature
 		lsp_signature_on_attach(bufnr)

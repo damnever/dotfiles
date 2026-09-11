@@ -212,7 +212,7 @@ end
 return {
 	{
 		"nvim-telescope/telescope.nvim",
-		version = "0.2.0",
+		version = "0.2.1",
 		dependencies = {
 			{ "nvim-lua/plenary.nvim" },
 			{ "nvim-lua/popup.nvim" },

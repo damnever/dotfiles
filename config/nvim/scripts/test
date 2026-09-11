@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+repo_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
+nvim_bin="${NVIM_BIN:-nvim}"
+smoke_dir="$(mktemp -d "${TMPDIR:-/tmp}/nvim-smoke.XXXXXX")"
+
+trap 'rm -rf "$smoke_dir"' EXIT
+
+cd "$repo_dir"
+
+XDG_CACHE_HOME="$smoke_dir/cache" \
+	XDG_STATE_HOME="$smoke_dir/state" \
+	NVIM_LOG_FILE="$smoke_dir/nvim.log" \
+	"$nvim_bin" --headless -u "$repo_dir/init.lua" -l "$repo_dir/tests/smoke.lua"
