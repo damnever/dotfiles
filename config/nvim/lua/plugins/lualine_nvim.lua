@@ -61,7 +61,7 @@ local config = function()
 		},
 		winbar = {},
 		inactive_winbar = {},
-		extensions = { "nvim-tree" },
+		extensions = { "neo-tree" },
 	})
 end
 

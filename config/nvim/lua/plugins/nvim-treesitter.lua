@@ -165,42 +165,99 @@ local treesitter_textobjects_config = function()
         },
     })
 
-    -- select
-    vim.keymap.set({ "x", "o" }, "am", function()
-        require("nvim-treesitter-textobjects.select").select_textobject("@function.outer", "textobjects")
-    end)
-    vim.keymap.set({ "x", "o" }, "im", function()
-        require("nvim-treesitter-textobjects.select").select_textobject("@function.inner", "textobjects")
-    end)
-    vim.keymap.set({ "x", "o" }, "ac", function()
-        require("nvim-treesitter-textobjects.select").select_textobject("@class.outer", "textobjects")
-    end)
-    vim.keymap.set({ "x", "o" }, "ic", function()
-        require("nvim-treesitter-textobjects.select").select_textobject("@class.inner", "textobjects")
-    end)
-    vim.keymap.set({ "x", "o" }, "as", function()
-        require("nvim-treesitter-textobjects.select").select_textobject("@local.scope", "locals")
-    end)
+    require("lib").vimbatch.keymaps({
+        -- Select syntax-aware text objects.
+        {
+            mode = { "x", "o" },
+            lhs = "am",
+            rhs = function()
+                require("nvim-treesitter-textobjects.select").select_textobject("@function.outer", "textobjects")
+            end,
+            opts = { desc = "Select outer function with Treesitter" },
+        },
+        {
+            mode = { "x", "o" },
+            lhs = "im",
+            rhs = function()
+                require("nvim-treesitter-textobjects.select").select_textobject("@function.inner", "textobjects")
+            end,
+            opts = { desc = "Select inner function with Treesitter" },
+        },
+        {
+            mode = { "x", "o" },
+            lhs = "ac",
+            rhs = function()
+                require("nvim-treesitter-textobjects.select").select_textobject("@class.outer", "textobjects")
+            end,
+            opts = { desc = "Select outer class with Treesitter" },
+        },
+        {
+            mode = { "x", "o" },
+            lhs = "ic",
+            rhs = function()
+                require("nvim-treesitter-textobjects.select").select_textobject("@class.inner", "textobjects")
+            end,
+            opts = { desc = "Select inner class with Treesitter" },
+        },
+        {
+            mode = { "x", "o" },
+            lhs = "as",
+            rhs = function()
+                require("nvim-treesitter-textobjects.select").select_textobject("@local.scope", "locals")
+            end,
+            opts = { desc = "Select local scope with Treesitter" },
+        },
 
-    -- move
-    vim.keymap.set({ "n", "x", "o" }, "]m", function()
-        require("nvim-treesitter-textobjects.move").goto_next_start("@function.outer", "textobjects")
-    end)
-    vim.keymap.set({ "n", "x", "o" }, "]]", function()
-        require("nvim-treesitter-textobjects.move").goto_next_start("@class.outer", "textobjects")
-    end)
-    vim.keymap.set({ "n", "x", "o" }, "]s", function()
-        require("nvim-treesitter-textobjects.move").goto_next_start("@local.scope", "locals")
-    end)
-    vim.keymap.set({ "n", "x", "o" }, "]M", function()
-        require("nvim-treesitter-textobjects.move").goto_previous_end("@function.outer", "textobjects")
-    end)
-    vim.keymap.set({ "n", "x", "o" }, "][", function()
-        require("nvim-treesitter-textobjects.move").goto_previous_end("@class.outer", "textobjects")
-    end)
-    vim.keymap.set({ "n", "x", "o" }, "]S", function()
-        require("nvim-treesitter-textobjects.move").goto_previous_end("@local.scope", "locals")
-    end)
+        -- Move between syntax-aware text objects.
+        {
+            mode = { "n", "x", "o" },
+            lhs = "]m",
+            rhs = function()
+                require("nvim-treesitter-textobjects.move").goto_next_start("@function.outer", "textobjects")
+            end,
+            opts = { desc = "Go to next function start with Treesitter" },
+        },
+        {
+            mode = { "n", "x", "o" },
+            lhs = "]]",
+            rhs = function()
+                require("nvim-treesitter-textobjects.move").goto_next_start("@class.outer", "textobjects")
+            end,
+            opts = { desc = "Go to next class start with Treesitter" },
+        },
+        {
+            mode = { "n", "x", "o" },
+            lhs = "]s",
+            rhs = function()
+                require("nvim-treesitter-textobjects.move").goto_next_start("@local.scope", "locals")
+            end,
+            opts = { desc = "Go to next local scope start with Treesitter" },
+        },
+        {
+            mode = { "n", "x", "o" },
+            lhs = "]M",
+            rhs = function()
+                require("nvim-treesitter-textobjects.move").goto_previous_end("@function.outer", "textobjects")
+            end,
+            opts = { desc = "Go to previous function end with Treesitter" },
+        },
+        {
+            mode = { "n", "x", "o" },
+            lhs = "][",
+            rhs = function()
+                require("nvim-treesitter-textobjects.move").goto_previous_end("@class.outer", "textobjects")
+            end,
+            opts = { desc = "Go to previous class end with Treesitter" },
+        },
+        {
+            mode = { "n", "x", "o" },
+            lhs = "]S",
+            rhs = function()
+                require("nvim-treesitter-textobjects.move").goto_previous_end("@local.scope", "locals")
+            end,
+            opts = { desc = "Go to previous local scope end with Treesitter" },
+        },
+    })
 end
 
 local treesitter_context_config = function()

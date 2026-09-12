@@ -8,7 +8,12 @@ local config = function()
 
 	local vimbatch = require("lib").vimbatch
 	vimbatch.keymaps({
-		{ mode = "n", lhs = "<leader>s", rhs = ":Outline<CR>", opts = { remap = true } },
+		{
+			mode = "n",
+			lhs = "<leader>s",
+			rhs = ":Outline<CR>",
+			opts = { remap = true, desc = "Search symbols with Outline" },
+		},
 	})
 end
 

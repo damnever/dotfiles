@@ -6,12 +6,15 @@ local config = function()
 	local action_set = require("telescope.actions.set")
 	local action_state = require("telescope.actions.state")
 	local livegrepargs_actions = require("telescope-live-grep-args.actions")
+	local function open_in_trouble(prompt_bufnr)
+		return require("trouble.sources.telescope").open(prompt_bufnr)
+	end
 
 	-- Clone the default Telescope configuration
 	local vimgrep_arguments = { unpack(telescope_config.values.vimgrep_arguments) }
 	-- Search in hidden/dot files.
 	table.insert(vimgrep_arguments, "--hidden")
-	-- Do nott search in the `.git` directory.
+	-- Do not search in the `.git` directory.
 	table.insert(vimgrep_arguments, "--glob")
 	table.insert(vimgrep_arguments, "!.git/*")
 
@@ -24,7 +27,6 @@ local config = function()
 			borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
 			layout_strategy = "flex",
 			path_display = { truncate = 3 },
-			file_ignore_patterns = {},
 			layout_config = {
 				prompt_position = "bottom",
 				horizontal = {
@@ -40,64 +42,99 @@ local config = function()
 			},
 			mappings = {
 				i = {
-					-- ["<esc>"] = actions.close,
 					["<C-u>"] = false,
-					["<C-s>"] = actions.select_horizontal, -- your custom horizontal split
-					["<C-v>"] = actions.select_vertical, -- vertical split
-					["<C-c>"] = function()
-						vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, false, true), "tn", true)
-					end,
-					["<C-g>"] = function(prompt_bufnr)
-						-- Ref: https://github.com/nvim-telescope/telescope.nvim/wiki/Configuration-Recipes#using-nvim-window-picker-to-choose-a-target-window-when-opening-a-file-from-any-picker
-						-- Use nvim-window-picker to choose the window by dynamically attaching a function
-						local picker = action_state.get_current_picker(prompt_bufnr)
-						picker.get_selection_window = function(picker, entry)
-							local picked_window_id = require("window-picker").pick_window()
-								or vim.api.nvim_get_current_win()
-							-- Unbind after using so next instance of the picker acts normally
-							picker.get_selection_window = nil
-							return picked_window_id
-						end
+					["<C-s>"] = {
+						actions.select_horizontal,
+						type = "action",
+						opts = { desc = "Open selection in horizontal split" },
+					},
+					["<C-v>"] = {
+						actions.select_vertical,
+						type = "action",
+						opts = { desc = "Open selection in vertical split" },
+					},
+					["<C-c>"] = {
+						function()
+							vim.api.nvim_feedkeys(
+								vim.api.nvim_replace_termcodes("<Esc>", true, false, true),
+								"tn",
+								true
+							)
+						end,
+						type = "action",
+						opts = { desc = "Leave insert mode" },
+					},
+					["<C-g>"] = {
+						function(prompt_bufnr)
+							-- Ref: https://github.com/nvim-telescope/telescope.nvim/wiki/Configuration-Recipes#using-nvim-window-picker-to-choose-a-target-window-when-opening-a-file-from-any-picker
+							local picker = action_state.get_current_picker(prompt_bufnr)
+							picker.get_selection_window = function()
+								local picked_window_id = require("window-picker").pick_window()
+									or vim.api.nvim_get_current_win()
+								-- Restore the default selection behavior after one use.
+								picker.get_selection_window = nil
+								return picked_window_id
+							end
 
-						return action_set.edit(prompt_bufnr, "edit")
-					end,
-					["<C-t>"] = function(prompt_bufnr)
-						return require("trouble.sources.telescope").open(prompt_bufnr)
-					end,
+							return action_set.edit(prompt_bufnr, "edit")
+						end,
+						type = "action",
+						opts = { desc = "Open selection in chosen window" },
+					},
+					["<C-t>"] = {
+						open_in_trouble,
+						type = "action",
+						opts = { desc = "Open search results in Trouble" },
+					},
 				},
 				n = {
-					["s"] = actions.select_horizontal,
-					["v"] = actions.select_vertical,
-					["<esc>"] = actions.close,
-					["<c-t>"] = function(prompt_bufnr)
-						return require("trouble.sources.telescope").open(prompt_bufnr)
-					end,
+					["s"] = {
+						actions.select_horizontal,
+						type = "action",
+						opts = { desc = "Open selection in horizontal split" },
+					},
+					["v"] = {
+						actions.select_vertical,
+						type = "action",
+						opts = { desc = "Open selection in vertical split" },
+					},
+					["<esc>"] = { actions.close, type = "action", opts = { desc = "Close picker" } },
+					["<c-t>"] = {
+						open_in_trouble,
+						type = "action",
+						opts = { desc = "Open search results in Trouble" },
+					},
 				},
 			},
 		},
 		pickers = {
-			find_command = { "rg", "--files", "--hidden", "--glob", "!.git/*" },
-			-- find_files = { mappings = { i = { }, }, },
+			find_files = {
+				find_command = { "rg", "--files", "--hidden", "--glob", "!.git/*" },
+			},
 			commands = {
 				mappings = {
 					i = {
 						-- Set a value in the command line and run it (modified version of actions.set_command_line).
-						["<C-r>"] = function(prompt_bufnr)
-							local selection = action_state.get_selected_entry()
-							if selection == nil then
-								return
-							end
-							actions.close(prompt_bufnr)
-							vim.fn.histadd("cmd", selection.name)
-							vim.cmd(selection.name)
-						end,
+						["<C-r>"] = {
+							function(prompt_bufnr)
+								local selection = action_state.get_selected_entry()
+								if selection == nil then
+									return
+								end
+								actions.close(prompt_bufnr)
+								vim.fn.histadd("cmd", selection.name)
+								vim.cmd(selection.name)
+							end,
+							type = "action",
+							opts = { desc = "Run selected command" },
+						},
 					},
 				},
 			},
 		},
 		extensions = {
 			fzf = {
-				fuzzy = false,
+				fuzzy = true,
 				override_generic_sorter = true,
 				override_file_sorter = true,
 				case_mode = "smart_case",
@@ -111,13 +148,24 @@ local config = function()
 				require("telescope.themes").get_dropdown({}),
 			},
 			live_grep_args = {
-				auto_quoting = true, -- enable/disable auto-quoting
+				auto_quoting = true,
 				mappings = {
 					i = {
-						["<C-k>"] = livegrepargs_actions.quote_prompt(),
-						["<C-i>"] = livegrepargs_actions.quote_prompt({ postfix = " --iglob " }),
-						-- freeze the current list and start a fuzzy search in the frozen list
-						["<C-f>"] = livegrepargs_actions.to_fuzzy_refine,
+						["<C-k>"] = {
+							livegrepargs_actions.quote_prompt(),
+							type = "action",
+							opts = { desc = "Quote search prompt" },
+						},
+						["<C-i>"] = {
+							livegrepargs_actions.quote_prompt({ postfix = " --iglob " }),
+							type = "action",
+							opts = { desc = "Add file glob to search" },
+						},
+						["<C-f>"] = {
+							livegrepargs_actions.to_fuzzy_refine,
+							type = "action",
+							opts = { desc = "Fuzzy refine search results" },
+						},
 					},
 				},
 			},
@@ -189,23 +237,80 @@ local config = function()
 
 	local builtin = require("telescope.builtin")
 	local extensions = require("telescope").extensions
+	local function search_current_buffer_symbols()
+		local language = vim.treesitter.language.get_lang(vim.bo.filetype)
+		if language then
+			local parser_ok, parser_loaded = pcall(vim.treesitter.language.add, language)
+			local query_ok, query = pcall(vim.treesitter.query.get, language, "locals")
+			if parser_ok and parser_loaded and query_ok and query then
+				return builtin.treesitter()
+			end
+		end
+
+		return builtin.current_buffer_fuzzy_find()
+	end
+
 	require("lib").vimbatch.keymaps({
-		-- Lists available plugin/user commands and runs them on `<cr>`
-		{ mode = "", lhs = "<leader><space>", rhs = builtin.commands },
-		-- { mode = '', lhs = '<leader><space>', rhs = ':Telescope<CR>' },
-		-- Lists files in your current working directory, respects .gitignore
-		{ mode = "", lhs = "<leader>p", rhs = builtin.find_files },
-		-- Searches for the string under your cursor in your current working directory.
-		{ mode = "v", lhs = "<leader>g", rhs = builtin.grep_string },
-		-- Search for a string in your current working directory and get results live as you type (respecting .gitignore)
-		-- builtin.live_grep
-		{ mode = "", lhs = "<leader>G", rhs = extensions.live_grep_args.live_grep_args },
-		-- Lists commands that were executed recently, and reruns them on <cr>.
-		{ mode = "", lhs = "<leader>h", rhs = builtin.command_history },
-		-- Lists normal mode keymappings.
-		{ mode = "", lhs = "<leader>k", rhs = builtin.keymaps },
-		-- Launch the neoclip(clipboard manager).
-		{ mode = "", lhs = "<leader>cp", rhs = ":Telescope neoclip<CR>" },
+		{ mode = "n", lhs = "<leader><space>", rhs = builtin.commands, opts = { desc = "Search commands" } },
+		{
+			mode = "n",
+			lhs = "<leader>p",
+			rhs = builtin.find_files,
+			opts = { desc = "Find files in cwd with rg --files" },
+		},
+		{
+			mode = "n",
+			lhs = "<leader>P",
+			rhs = extensions.frecency.frecency,
+			opts = { desc = "Find recent files by frecency" },
+		},
+		{
+			mode = "v",
+			lhs = "<leader>g",
+			rhs = builtin.grep_string,
+			opts = { desc = "Search selected text in cwd with rg" },
+		},
+		{
+			mode = "n",
+			lhs = "<leader>G",
+			rhs = extensions.live_grep_args.live_grep_args,
+			opts = { desc = "Search text in cwd with rg and args" },
+		},
+		{
+			mode = "n",
+			lhs = "<leader>B",
+			rhs = builtin.current_buffer_fuzzy_find,
+			opts = { desc = "Search text in current buffer with fuzzy matching" },
+		},
+		{
+			mode = "n",
+			lhs = "<leader>S",
+			rhs = search_current_buffer_symbols,
+			opts = { desc = "Search current buffer symbols with Treesitter or text fallback" },
+		},
+		{
+			mode = "n",
+			lhs = "<leader>h",
+			rhs = builtin.command_history,
+			opts = { desc = "Search command history" },
+		},
+		{
+			mode = "n",
+			lhs = "<leader>k",
+			rhs = function()
+				builtin.keymaps({
+					modes = { "n", "i", "c", "x", "o", "t" },
+					show_plug = false,
+				})
+			end,
+			opts = { desc = "Search keymaps in all modes" },
+		},
+		{
+			mode = "n",
+			lhs = "<leader>cp",
+			rhs = ":Telescope neoclip<CR>",
+			opts = { desc = "Search clipboard history" },
+		},
 	})
 end
 
@@ -215,7 +320,6 @@ return {
 		version = "0.2.1",
 		dependencies = {
 			{ "nvim-lua/plenary.nvim" },
-			{ "nvim-lua/popup.nvim" },
 			{ "nvim-telescope/telescope-frecency.nvim", dependencies = { "tami5/sqlite.lua" } },
 			{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
 			{ "nvim-telescope/telescope-ui-select.nvim" },

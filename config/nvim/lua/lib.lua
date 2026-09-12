@@ -83,7 +83,10 @@ local vimbatch = {
     keymaps = function(keymaps)
         keymaps = keymaps or {}
         for _, keymap in ipairs(keymaps) do
-            -- unpack?
+            assert(
+                keymap.opts and keymap.opts.desc and keymap.opts.desc ~= "",
+                "missing keymap description for " .. keymap.lhs
+            )
             vim.keymap.set(keymap.mode, keymap.lhs, keymap.rhs, keymap.opts)
         end
     end,

@@ -132,7 +132,7 @@ local config = function()
 				local picked_window_id = windowpicker.pick_window() or vim.api.nvim_get_current_win()
 				vim.api.nvim_set_current_win(picked_window_id)
 			end,
-			opts = { desc = "Pick a window" },
+			opts = { desc = "Find and focus window" },
 		},
 	})
 end

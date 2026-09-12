@@ -355,7 +355,12 @@ local config = function()
 
 	local vimbatch = require("lib").vimbatch
 	vimbatch.keymaps({
-		{ mode = "n", lhs = "<leader>n", rhs = ":Neotree toggle<CR>", opts = { remap = true } },
+		{
+			mode = "n",
+			lhs = "<leader>n",
+			rhs = ":Neotree toggle<CR>",
+			opts = { remap = true, desc = "Toggle file explorer with Neo-tree" },
+		},
 	})
 end
 

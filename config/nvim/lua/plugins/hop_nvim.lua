@@ -13,6 +13,7 @@ local config = function()
 					current_line_only = true,
 				})
 			end,
+			opts = { desc = "Find character forward on current line with Hop" },
 		},
 		{
 			mode = "",
@@ -23,6 +24,7 @@ local config = function()
 					current_line_only = true,
 				})
 			end,
+			opts = { desc = "Find character backward on current line with Hop" },
 		},
 		{
 			mode = "",
@@ -34,6 +36,7 @@ local config = function()
 					hint_offset = -1,
 				})
 			end,
+			opts = { desc = "Find before character forward on current line with Hop" },
 		},
 		{
 			mode = "",
@@ -45,20 +48,23 @@ local config = function()
 					hint_offset = -1,
 				})
 			end,
+			opts = { desc = "Find after character backward on current line with Hop" },
 		},
 		{
 			mode = "",
 			lhs = "<leader><leader>g",
 			rhs = function()
-				require("hop").hint_lines()
-			end,
+					require("hop").hint_lines()
+				end,
+			opts = { desc = "Find and jump to visible line with Hop" },
 		},
 		{
 			mode = "",
 			lhs = "<leader><leader>w",
 			rhs = function()
-				require("hop").hint_words()
-			end,
+					require("hop").hint_words()
+				end,
+			opts = { desc = "Find and jump to visible word with Hop" },
 		},
 	})
 end

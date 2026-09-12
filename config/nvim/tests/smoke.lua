@@ -49,6 +49,35 @@ local function has_client(bufnr, name)
 	return false
 end
 
+local function check_search_keymap_descriptions()
+	local leader = vim.g.mapleader
+	local mappings = {
+		{ mode = "n", lhs = leader .. " ", name = "commands" },
+		{ mode = "n", lhs = leader .. "p", name = "files" },
+		{ mode = "n", lhs = leader .. "P", name = "recent files" },
+		{ mode = "x", lhs = leader .. "g", name = "selected text" },
+		{ mode = "n", lhs = leader .. "G", name = "project text" },
+		{ mode = "n", lhs = leader .. "B", name = "buffer text" },
+		{ mode = "n", lhs = leader .. "S", name = "buffer symbols" },
+		{ mode = "n", lhs = leader .. "h", name = "command history" },
+		{ mode = "n", lhs = leader .. "k", name = "keymaps" },
+		{ mode = "n", lhs = leader .. "cp", name = "clipboard history" },
+	}
+
+	for _, expected in ipairs(mappings) do
+		local mapping = vim.fn.maparg(expected.lhs, expected.mode, false, true)
+		if vim.tbl_isempty(mapping) then
+			fail("missing search keymap for " .. expected.name)
+		else
+			local description = mapping.desc or ""
+			local searchable_description = description:lower()
+			if not searchable_description:find("search", 1, true) and not searchable_description:find("find", 1, true) then
+				fail("search keymap description lacks Search/Find for " .. expected.name .. ": " .. description)
+			end
+		end
+	end
+end
+
 local function run()
 	local temp_root = vim.fn.tempname()
 	vim.fn.mkdir(vim.fs.joinpath(temp_root, ".git"), "p")
@@ -59,6 +88,7 @@ local function run()
 			path = "go/main.go",
 			filetype = "go",
 			parser = "go",
+			treesitter_symbols = true,
 			lsp = "gopls",
 			files = {
 				["go/go.mod"] = { "module example.com/nvim-smoke", "", "go 1.26.0" },
@@ -78,6 +108,7 @@ local function run()
 			path = "python/main.py",
 			filetype = "python",
 			parser = "python",
+			treesitter_symbols = true,
 			lsp = "pyright",
 			files = {
 				["python/pyproject.toml"] = { "[project]", 'name = "nvim-smoke"', 'version = "0.0.0"' },
@@ -89,6 +120,7 @@ local function run()
 			path = "swift/Sources/Smoke/main.swift",
 			filetype = "swift",
 			parser = "swift",
+			treesitter_symbols = true,
 			lsp = "sourcekit",
 			files = {
 				["swift/Package.swift"] = {
@@ -105,6 +137,7 @@ local function run()
 			path = "bash/smoke.sh",
 			filetype = "sh",
 			parser = "bash",
+			treesitter_symbols = true,
 			lsp = "bashls",
 			files = {
 				["bash/smoke.sh"] = { "#!/usr/bin/env bash", "set -euo pipefail", "", "printf '%s\\n' hello" },
@@ -115,6 +148,7 @@ local function run()
 			path = "typescript/src/main.ts",
 			filetype = "typescript",
 			parser = "typescript",
+			treesitter_symbols = true,
 			lsp = "ts_ls",
 			files = {
 				["typescript/package.json"] = { '{ "name": "nvim-smoke", "private": true, "type": "module" }' },
@@ -138,6 +172,7 @@ local function run()
 			path = "lua/init.lua",
 			filetype = "lua",
 			parser = "lua",
+			treesitter_symbols = true,
 			lsp = "lua_ls",
 			files = {
 				["lua/.luarc.json"] = {
@@ -153,6 +188,8 @@ local function run()
 			write_file(vim.fs.joinpath(temp_root, relative_path), lines)
 		end
 	end
+
+	check_search_keymap_descriptions()
 
 	local notify_ok, notify_error = pcall(vim.notify, "Neovim smoke notification", vim.log.levels.INFO, {
 		title = "nvim-smoke",
@@ -186,6 +223,13 @@ local function run()
 			return has_parser(bufnr, case.parser)
 		end, 100) then
 			fail(case.name .. " Tree-sitter parser did not attach")
+		end
+
+		if case.treesitter_symbols then
+			local query_ok, query = pcall(vim.treesitter.query.get, case.parser, "locals")
+			if not query_ok or not query then
+				fail(case.name .. " Tree-sitter locals query is unavailable for symbol search")
+			end
 		end
 
 		if case.lsp and not vim.wait(15000, function()

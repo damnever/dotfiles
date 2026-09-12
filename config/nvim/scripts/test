@@ -11,6 +11,11 @@ trap 'rm -rf "$smoke_dir"' EXIT
 cd "$repo_dir"
 
 XDG_CACHE_HOME="$smoke_dir/cache" \
-	XDG_STATE_HOME="$smoke_dir/state" \
-	NVIM_LOG_FILE="$smoke_dir/nvim.log" \
+	XDG_STATE_HOME="$smoke_dir/smoke-state" \
+	NVIM_LOG_FILE="$smoke_dir/smoke.log" \
 	"$nvim_bin" --headless -u "$repo_dir/init.lua" -l "$repo_dir/tests/smoke.lua"
+
+XDG_CACHE_HOME="$smoke_dir/cache" \
+	XDG_STATE_HOME="$smoke_dir/search-state" \
+	NVIM_LOG_FILE="$smoke_dir/search.log" \
+	"$nvim_bin" --headless -u "$repo_dir/init.lua" -l "$repo_dir/tests/search.lua"

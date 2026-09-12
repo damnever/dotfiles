@@ -31,52 +31,59 @@ local function set_global_variables()
 end
 
 local function set_common_keymaps()
-    vim.keymap.set("i", "<C-c>", "<ESC>")
-    vim.keymap.set("n", "<leader>q", ":q<CR>")
-    vim.keymap.set("n", "<leader>w", ":w<CR>")
-    vim.keymap.set("n", "<leader>x", ":wq<CR>") -- Tip: Shift + Z Z
+    lib.vimbatch.keymaps({
+        { mode = "i", lhs = "<C-c>", rhs = "<ESC>", opts = { desc = "Exit insert mode" } },
+        { mode = "n", lhs = "<leader>q", rhs = ":q<CR>", opts = { desc = "Quit current window" } },
+        { mode = "n", lhs = "<leader>w", rhs = ":w<CR>", opts = { desc = "Write current file" } },
+        { mode = "n", lhs = "<leader>x", rhs = ":wq<CR>", opts = { desc = "Write current file and quit" } },
 
-    -- Disable direction keys.
-    vim.keymap.set("", "<Left>", "<Nop>", { remap = true })
-    vim.keymap.set("", "<Right>", "<Nop>", { remap = true })
-    vim.keymap.set("", "<Up>", "<Nop>", { remap = true })
-    vim.keymap.set("", "<Down>", "<Nop>", { remap = true })
+        -- Disable direction keys.
+        { mode = "", lhs = "<Left>", rhs = "<Nop>", opts = { remap = true, desc = "Disable left arrow" } },
+        { mode = "", lhs = "<Right>", rhs = "<Nop>", opts = { remap = true, desc = "Disable right arrow" } },
+        { mode = "", lhs = "<Up>", rhs = "<Nop>", opts = { remap = true, desc = "Disable up arrow" } },
+        { mode = "", lhs = "<Down>", rhs = "<Nop>", opts = { remap = true, desc = "Disable down arrow" } },
 
-    -- Window movement.
-    vim.keymap.set("", "<C-j>", "<C-W>j", { remap = true })
-    vim.keymap.set("", "<C-k>", "<C-W>k", { remap = true })
-    vim.keymap.set("", "<C-h>", "<C-W>h", { remap = true })
-    vim.keymap.set("", "<C-l>", "<C-W>l", { remap = true })
+        -- Window movement.
+        { mode = "", lhs = "<C-j>", rhs = "<C-W>j", opts = { remap = true, desc = "Focus window below" } },
+        { mode = "", lhs = "<C-k>", rhs = "<C-W>k", opts = { remap = true, desc = "Focus window above" } },
+        { mode = "", lhs = "<C-h>", rhs = "<C-W>h", opts = { remap = true, desc = "Focus window left" } },
+        { mode = "", lhs = "<C-l>", rhs = "<C-W>l", opts = { remap = true, desc = "Focus window right" } },
 
-    -- Jump to line start/end.
-    vim.keymap.set("", "H", "^")
-    vim.keymap.set("", "L", "$")
+        -- Jump to line start/end.
+        { mode = "", lhs = "H", rhs = "^", opts = { desc = "Move to first non-blank character" } },
+        { mode = "", lhs = "L", rhs = "$", opts = { desc = "Move to end of line" } },
 
-    -- Increase/Decrease number.
-    vim.keymap.set("n", "+", "<C-a>")
-    vim.keymap.set("n", "-", "<C-x>")
+        -- Increase/Decrease number.
+        { mode = "n", lhs = "+", rhs = "<C-a>", opts = { desc = "Increase number under cursor" } },
+        { mode = "n", lhs = "-", rhs = "<C-x>", opts = { desc = "Decrease number under cursor" } },
 
-    -- Copy.
-    vim.keymap.set("", "Y", "y$", { remap = true })
-    vim.keymap.set("v", "<leader>y", '"+y')
+        -- Copy.
+        { mode = "", lhs = "Y", rhs = "y$", opts = { remap = true, desc = "Yank to end of line" } },
+        { mode = "v", lhs = "<leader>y", rhs = '"+y', opts = { desc = "Yank selection to system clipboard" } },
 
-    -- Search.
-    vim.keymap.set({ "n", "v" }, "/", "/\\v")
-    vim.keymap.set("", "<leader>/", ":nohls<CR>", { silent = true })
+        -- Search.
+        { mode = { "n", "v" }, lhs = "/", rhs = "/\\v", opts = { desc = "Search text with very magic" } },
+        { mode = "", lhs = "<leader>/", rhs = ":nohls<CR>", opts = { silent = true, desc = "Clear search highlights" } },
 
-    -- Tab related
-    vim.keymap.set("n", "<C-t>", ":tabnew<CR>")
-    vim.keymap.set("n", "<leader>1", "1gt")
-    vim.keymap.set("n", "<leader>2", "2gt")
-    vim.keymap.set("n", "<leader>3", "3gt")
-    vim.keymap.set("n", "<leader>4", "4gt")
-    vim.keymap.set("n", "<leader>5", "5gt")
-    vim.keymap.set("n", "<leader>6", "6gt")
-    vim.keymap.set("n", "<leader>7", "7gt")
-    vim.keymap.set("n", "<leader>8", "8gt")
-    vim.keymap.set("n", "<leader>9", "9gt")
-    vim.keymap.set("n", "<leader>0", ":tablast<CR>")
-    vim.keymap.set("n", "<leader>tt", [[:execute 'tabnext ' . g:last_active_tab<cr>]])
+        -- Tab related.
+        { mode = "n", lhs = "<C-t>", rhs = ":tabnew<CR>", opts = { desc = "Open new tab" } },
+        { mode = "n", lhs = "<leader>1", rhs = "1gt", opts = { desc = "Go to tab 1" } },
+        { mode = "n", lhs = "<leader>2", rhs = "2gt", opts = { desc = "Go to tab 2" } },
+        { mode = "n", lhs = "<leader>3", rhs = "3gt", opts = { desc = "Go to tab 3" } },
+        { mode = "n", lhs = "<leader>4", rhs = "4gt", opts = { desc = "Go to tab 4" } },
+        { mode = "n", lhs = "<leader>5", rhs = "5gt", opts = { desc = "Go to tab 5" } },
+        { mode = "n", lhs = "<leader>6", rhs = "6gt", opts = { desc = "Go to tab 6" } },
+        { mode = "n", lhs = "<leader>7", rhs = "7gt", opts = { desc = "Go to tab 7" } },
+        { mode = "n", lhs = "<leader>8", rhs = "8gt", opts = { desc = "Go to tab 8" } },
+        { mode = "n", lhs = "<leader>9", rhs = "9gt", opts = { desc = "Go to tab 9" } },
+        { mode = "n", lhs = "<leader>0", rhs = ":tablast<CR>", opts = { desc = "Go to last tab" } },
+        {
+            mode = "n",
+            lhs = "<leader>tt",
+            rhs = [[:execute 'tabnext ' . g:last_active_tab<cr>]],
+            opts = { desc = "Go to previously active tab" },
+        },
+    })
     vim.api.nvim_create_autocmd("TabLeave", {
         pattern = "*",
         callback = function()

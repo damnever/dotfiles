@@ -10,7 +10,12 @@ local config = function()
 	})
 
 	require("lib").vimbatch.keymaps({
-		{ mode = "n", lhs = "<leader>r", rhs = "<Plug>(quickrun)", opts = { remap = true } },
+		{
+			mode = "n",
+			lhs = "<leader>r",
+			rhs = "<Plug>(quickrun)",
+			opts = { remap = true, desc = "Run current file with QuickRun" },
+		},
 	})
 end
 

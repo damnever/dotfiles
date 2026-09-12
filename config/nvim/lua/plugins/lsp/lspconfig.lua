@@ -247,19 +247,28 @@ local config = function()
 	end
 
 	local function setup_diagnostic()
+		local severity = vim.diagnostic.severity
 		vim.diagnostic.config({
 			underline = true,
 			virtual_text = false,
 			-- float = {},
-			signs = true,
+			signs = {
+				text = {
+					[severity.ERROR] = " ",
+					[severity.WARN] = " ",
+					[severity.INFO] = " ",
+					[severity.HINT] = " ",
+				},
+				numhl = {
+					[severity.ERROR] = "DiagnosticSignError",
+					[severity.WARN] = "DiagnosticSignWarn",
+					[severity.INFO] = "DiagnosticSignInfo",
+					[severity.HINT] = "DiagnosticSignHint",
+				},
+			},
 			update_in_insert = false,
 			severity_sort = false,
 		})
-		local diagnostic_signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
-		for type, icon in pairs(diagnostic_signs) do
-			local hl = "DiagnosticSign" .. type
-			vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
-		end
 	end
 
 	local function diagnostic_on_attach()
@@ -368,33 +377,7 @@ local config = function()
 		-- 'neovim/nvim-lspconfig'
 		-- Mappings.
 		-- See `:help vim.diagnostic.*` for documentation on any of the below functions
-		local opts = { noremap = true, silent = true }
-		vim.keymap.set("n", "<space>e", vim.diagnostic.open_float, opts)
-		vim.keymap.set("n", "[d", function()
-			vim.diagnostic.jump({ count = -1, float = true })
-		end, opts)
-		vim.keymap.set("n", "]d", function()
-			vim.diagnostic.jump({ count = 1, float = true })
-		end, opts)
-		vim.keymap.set("n", "<space>q", function()
-			local ok, trouble = pcall(require, "trouble")
-			if ok then
-				return trouble.open({
-					mode = "diagnostics",
-					focus = true,
-					refresh = true,
-					new = false,
-					filter = { buf = 0 },
-				})
-			end
-
-			local ok, telescope_builtin = pcall(require, "telescope.builtin")
-			if ok then
-				return telescope_builtin.diagnostics({ bufnr = 0 })
-			else
-				return vim.diagnostic.setloclist()
-			end
-		end, opts)
+		local opts = { noremap = true, silent = true, buffer = bufnr }
 		-- Use an on_attach function to only map the following keys
 		-- after the language server attaches to the current buffer
 		-- Enable completion triggered by <c-x><c-o>
@@ -402,50 +385,147 @@ local config = function()
 
 		-- Mappings.
 		-- See `:help vim.lsp.*` for documentation on any of the below functions
-		local bufopts = { noremap = true, silent = true, buffer = bufnr }
-		vim.keymap.set("n", "<leader>jD", vim.lsp.buf.declaration, bufopts)
-		vim.keymap.set("n", "<leader>jd", function()
-			local ok, telescope_builtin = pcall(require, "telescope.builtin")
-			if ok then
-				return telescope_builtin.lsp_definitions({ jump_type = "split" })
-			else
-				return goto_definition("split") -- vim.lsp.buf.definition()
-			end
-		end, bufopts)
-		vim.keymap.set("n", "<leader>jt", function()
-			local ok, telescope_builtin = pcall(require, "telescope.builtin")
-			if ok then
-				return telescope_builtin.lsp_type_definitions({ jump_type = "split" })
-			else
-				return vim.lsp.buf.type_definition()
-			end
-		end, bufopts)
-		vim.keymap.set("n", "K", function()
-			vim.lsp.buf.hover({ border = "rounded" })
-		end, bufopts)
-		vim.keymap.set("n", "<leader>ji", function()
-			local ok, telescope_builtin = pcall(require, "telescope.builtin")
-			if ok then
-				return telescope_builtin.lsp_implementations({ jump_type = "split" })
-			else
-				return vim.lsp.buf.implementation()
-			end
-		end, bufopts)
-		vim.keymap.set("n", "<leader>jr", function()
-			local ok, telescope_builtin = pcall(require, "telescope.builtin")
-			if ok then
-				return telescope_builtin.lsp_references({ jump_type = "split" })
-			else
-				return vim.lsp.buf.references()
-			end
-		end, bufopts)
-		vim.keymap.set("n", "<leader>jk", function()
-			vim.lsp.buf.signature_help({ border = "rounded" })
-		end, bufopts)
-		vim.keymap.set("n", "<space>wa", vim.lsp.buf.add_workspace_folder, bufopts)
-		vim.keymap.set("n", "<space>wr", vim.lsp.buf.remove_workspace_folder, bufopts)
-		vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, bufopts)
-		vim.keymap.set("n", "<space>ca", vim.lsp.buf.code_action, bufopts)
+		require("lib").vimbatch.keymaps({
+			{
+				mode = "n",
+				lhs = "<space>e",
+				rhs = vim.diagnostic.open_float,
+				opts = vim.tbl_extend("force", opts, { desc = "Show diagnostics at cursor" }),
+			},
+			{
+				mode = "n",
+				lhs = "[d",
+				rhs = function()
+					vim.diagnostic.jump({ count = -1, float = true })
+				end,
+				opts = vim.tbl_extend("force", opts, { desc = "Go to previous diagnostic" }),
+			},
+			{
+				mode = "n",
+				lhs = "]d",
+				rhs = function()
+					vim.diagnostic.jump({ count = 1, float = true })
+				end,
+				opts = vim.tbl_extend("force", opts, { desc = "Go to next diagnostic" }),
+			},
+			{
+				mode = "n",
+				lhs = "<space>q",
+				rhs = function()
+					local ok, trouble = pcall(require, "trouble")
+					if ok then
+						return trouble.open({
+							mode = "diagnostics",
+							focus = true,
+							refresh = true,
+							new = false,
+							filter = { buf = 0 },
+						})
+					end
+
+					local telescope_ok, telescope_builtin = pcall(require, "telescope.builtin")
+					if telescope_ok then
+						return telescope_builtin.diagnostics({ bufnr = 0 })
+					end
+					return vim.diagnostic.setloclist()
+				end,
+				opts = vim.tbl_extend("force", opts, { desc = "Search current buffer diagnostics" }),
+			},
+			{
+				mode = "n",
+				lhs = "<leader>jD",
+				rhs = vim.lsp.buf.declaration,
+				opts = vim.tbl_extend("force", opts, { desc = "Find declaration with LSP" }),
+			},
+			{
+				mode = "n",
+				lhs = "<leader>jd",
+				rhs = function()
+					local ok, telescope_builtin = pcall(require, "telescope.builtin")
+					if ok then
+						return telescope_builtin.lsp_definitions({ jump_type = "split" })
+					end
+					return goto_definition("split")
+				end,
+				opts = vim.tbl_extend("force", opts, { desc = "Find definition with LSP" }),
+			},
+			{
+				mode = "n",
+				lhs = "<leader>jt",
+				rhs = function()
+					local ok, telescope_builtin = pcall(require, "telescope.builtin")
+					if ok then
+						return telescope_builtin.lsp_type_definitions({ jump_type = "split" })
+					end
+					return vim.lsp.buf.type_definition()
+				end,
+				opts = vim.tbl_extend("force", opts, { desc = "Find type definition with LSP" }),
+			},
+			{
+				mode = "n",
+				lhs = "K",
+				rhs = function()
+					vim.lsp.buf.hover({ border = "rounded" })
+				end,
+				opts = vim.tbl_extend("force", opts, { desc = "Show hover documentation with LSP" }),
+			},
+			{
+				mode = "n",
+				lhs = "<leader>ji",
+				rhs = function()
+					local ok, telescope_builtin = pcall(require, "telescope.builtin")
+					if ok then
+						return telescope_builtin.lsp_implementations({ jump_type = "split" })
+					end
+					return vim.lsp.buf.implementation()
+				end,
+				opts = vim.tbl_extend("force", opts, { desc = "Find implementation with LSP" }),
+			},
+			{
+				mode = "n",
+				lhs = "<leader>jr",
+				rhs = function()
+					local ok, telescope_builtin = pcall(require, "telescope.builtin")
+					if ok then
+						return telescope_builtin.lsp_references({ jump_type = "split" })
+					end
+					return vim.lsp.buf.references()
+				end,
+				opts = vim.tbl_extend("force", opts, { desc = "Find references with LSP" }),
+			},
+			{
+				mode = "n",
+				lhs = "<leader>jk",
+				rhs = function()
+					vim.lsp.buf.signature_help({ border = "rounded" })
+				end,
+				opts = vim.tbl_extend("force", opts, { desc = "Show signature help with LSP" }),
+			},
+			{
+				mode = "n",
+				lhs = "<space>wa",
+				rhs = vim.lsp.buf.add_workspace_folder,
+				opts = vim.tbl_extend("force", opts, { desc = "Add LSP workspace folder" }),
+			},
+			{
+				mode = "n",
+				lhs = "<space>wr",
+				rhs = vim.lsp.buf.remove_workspace_folder,
+				opts = vim.tbl_extend("force", opts, { desc = "Remove LSP workspace folder" }),
+			},
+			{
+				mode = "n",
+				lhs = "<space>rn",
+				rhs = vim.lsp.buf.rename,
+				opts = vim.tbl_extend("force", opts, { desc = "Rename symbol with LSP" }),
+			},
+			{
+				mode = "n",
+				lhs = "<space>ca",
+				rhs = vim.lsp.buf.code_action,
+				opts = vim.tbl_extend("force", opts, { desc = "Show code actions with LSP" }),
+			},
+		})
 	end
 
 	local function setup_lspconfig()

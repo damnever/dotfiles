@@ -127,13 +127,13 @@ local config = function()
 				guess_scheme = false, -- run "xcode-build-server config" with the scheme matching the current file's target
 			},
 			nvim_tree = {
-				enabled = true, -- enable updating Xcode project files when using nvim-tree
+				enabled = false,
 			},
 			neo_tree = {
 				enabled = true, -- enable updating Xcode project files when using neo-tree.nvim
 			},
 			oil_nvim = {
-				enabled = true, -- enable updating Xcode project files when using oil.nvim
+				enabled = false,
 			},
 			quick = { -- integration with Swift test framework: github.com/Quick/Quick
 				enabled = true, -- enable Quick tests support (requires Swift parser for nvim-treesitter)
