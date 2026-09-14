@@ -9,6 +9,22 @@ local function fail(message)
 	table.insert(failures, message)
 end
 
+local function check_frecency_search()
+	local extension_ok, extension = pcall(function()
+		return require("telescope").extensions.frecency
+	end)
+	if not extension_ok then
+		fail("Telescope frecency extension failed to load: " .. tostring(extension))
+	elseif type(extension.frecency) ~= "function" then
+		fail("Telescope frecency extension does not export the frecency picker")
+	end
+
+	local mapping = vim.fn.maparg(vim.g.mapleader .. "P", "n", false, true)
+	if vim.tbl_isempty(mapping) or type(mapping.callback) ~= "function" then
+		fail("missing Telescope frecency search keymap")
+	end
+end
+
 local function open_symbol_search(filetype, lines, expected_title)
 	vim.cmd.enew()
 	vim.bo.filetype = filetype
@@ -40,6 +56,7 @@ local function open_symbol_search(filetype, lines, expected_title)
 end
 
 local function run()
+	check_frecency_search()
 	open_symbol_search("lua", {
 		"local function greeting()",
 		'\treturn "hello"',
@@ -55,7 +72,7 @@ local function run()
 		return
 	end
 
-	vim.api.nvim_out_write("PASS Treesitter symbol search and Markdown text fallback\n")
+	vim.api.nvim_out_write("PASS Telescope frecency, Treesitter symbol search, and Markdown text fallback\n")
 	vim.cmd("qa!")
 end
 

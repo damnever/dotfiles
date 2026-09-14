@@ -320,7 +320,8 @@ return {
 		version = "0.2.1",
 		dependencies = {
 			{ "nvim-lua/plenary.nvim" },
-			{ "nvim-telescope/telescope-frecency.nvim", dependencies = { "tami5/sqlite.lua" } },
+			-- Frecency v2 owns its binary database and no longer uses sqlite.lua.
+			{ "nvim-telescope/telescope-frecency.nvim" },
 			{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
 			{ "nvim-telescope/telescope-ui-select.nvim" },
 			{ "nvim-telescope/telescope-live-grep-args.nvim" },

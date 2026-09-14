@@ -50,6 +50,6 @@ NVIM_BIN=/path/to/nvim ~/.config/nvim/scripts/update
 ~/.config/nvim/scripts/test
 ```
 
-The test opens valid Go, Python, Swift, Bash, TypeScript, Markdown, and Lua fixtures in one headless Neovim process. It verifies filetype detection, Tree-sitter attachment and symbol queries, the configured language server where applicable, saving through the normal editor configuration, search-keymap descriptions, notification rendering, and the absence of error notifications or messages. A second headless process verifies that `,S` opens Treesitter symbol search for code and falls back to current-buffer text search for Markdown.
+The test opens valid Go, Python, Swift, Bash, TypeScript, Markdown, and Lua fixtures in one headless Neovim process. It verifies filetype detection, Tree-sitter attachment and symbol queries, the configured language server where applicable, saving through the normal editor configuration, search-keymap descriptions, notification rendering, and the absence of error notifications or messages. A second headless process verifies that Telescope Frecency and its `,P` keymap are available, and that `,S` opens Treesitter symbol search for code and falls back to current-buffer text search for Markdown.
 
 Test caches and state live in a temporary directory and are removed afterward, so the run does not reuse the normal Neovim cache or the Telescope frecency database.
