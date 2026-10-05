@@ -30,7 +30,15 @@ zstyle ':antidote:static' file $antidotestaticfile
 zstyle ':antidote:bundle' use-friendly-names 'yes'
 # source antidote and load plugins from `${ZDOTDIR:-~}/.zsh_plugins.txt`
 source $antidotepath/antidote.zsh
-antidote load
+source ~/.config/zsh/functions/antidote.zsh
+# Generate into a verified temporary file; Antidote's own load path truncates
+# the live cache and can mistake an empty, newer file for a valid cache.
+if [[ ! -s $antidotestaticfile || ! $antidotestaticfile -nt $antidotebundlefile ||
+      ! -e "$(antidote home)/.antidote.load" ]] || ! zsh -dfn "$antidotestaticfile" 2>/dev/null; then
+  _antidote_rebuild_cache "$antidotebundlefile" "$antidotestaticfile" "$ZSH_CACHE" || \
+      print -ru2 -- 'zsh: automatic plugin repair failed; run zsh-repair to retry'
+fi
+[[ -s $antidotestaticfile ]] && source "$antidotestaticfile"
 
 
 # We will run some scripts to setup things, including compinit.

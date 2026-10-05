@@ -11,11 +11,15 @@ typeset -gi __ignoreeof_remaining=0
 _ignoreeof_ctrl_d() {
     if [[ -n $BUFFER ]]; then
         __ignoreeof_remaining=0
-        zle delete-char-or-list
+        if [[ $WIDGET == _ignoreeof_ctrl_d_vi ]]; then
+            zle list-choices
+        else
+            zle delete-char-or-list
+        fi
         return
     fi
 
-    if [[ $LASTWIDGET != _ignoreeof_ctrl_d ]]; then
+    if [[ $LASTWIDGET != $WIDGET ]] || (( __ignoreeof_remaining <= 0 )); then
         __ignoreeof_remaining=$IGNOREEOF
     fi
 
@@ -30,4 +34,9 @@ _ignoreeof_ctrl_d() {
 }
 
 zle -N _ignoreeof_ctrl_d
-bindkey '^D' _ignoreeof_ctrl_d
+# A separate widget preserves vi completion even when viins is aliased as main.
+zle -N _ignoreeof_ctrl_d_vi _ignoreeof_ctrl_d
+# Startup and zsh-vi-mode can switch the active keymap after this file is loaded.
+bindkey -M emacs '^D' _ignoreeof_ctrl_d
+bindkey -M viins '^D' _ignoreeof_ctrl_d_vi
+bindkey -M vicmd '^D' _ignoreeof_ctrl_d_vi
